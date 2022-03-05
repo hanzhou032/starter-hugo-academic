@@ -26,7 +26,7 @@ experience:
     company: Zhejiang University
     company_url: https://zju.edu.cn
     location: Hangzhou, China
-    date_start: 'Mar 2022'
+    date_start: '2022-03-01'
     date_end: ''
     description: Multi-lingual NLP and Clinical AI.
         
@@ -34,32 +34,32 @@ experience:
     company: Huawei Technologies Research & Development (UK) Ltd
     company_url: https://dev3.noahlab.com.hk/index.html
     location: London, UK
-    date_start: 'May 2021'
-    date_end: 'Jan 2022'
+    date_start: '2021-05-01'
+    date_end: '2022-01-01'
     description: Task-oriented Dialogue System, Low-resource NLP.
 
   - title: Game Designer
     company: Tencent
     company_url: https://www.tencent.com/en-us
     location: Shenzhen, China
-    date_start: 'Jul 2019'
-    date_end: 'Aug 2020'
+    date_start: '2019-07-01'
+    date_end: '2020-08-01'
     description: Game system design and AI developments.
 
   - title: Research Intern
     company: RACE, UK Atomic Energy Authority
     company_url: https://race.ukaea.uk/
     location: Cowley, UK
-    date_start: 'Jul 2018'
-    date_end: 'Sep 2018'
+    date_start: '2018-07-01'
+    date_end: '2018-09-01'
     description: Multi-Object Detection and Tracking.
 
   - title: Research Intern
     company: Battery Intelligence Lab, University of Oxford
     company_url: https://howey.eng.ox.ac.uk/
     location: Oxford, UK
-    date_start: 'Jul 2017'
-    date_end: 'Sep 2017'
+    date_start: '2017-07-01'
+    date_end: '2017-09-01'
     description: Degradation estimation of Lead-Acid batteries.
 
 design:
