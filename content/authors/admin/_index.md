@@ -31,14 +31,14 @@ education:
   courses:
     - course: PhD in Computation, Cognition, and Language
       institution: University of Cambridge
-      year: ""
+      year: "Oct 2022 - "
     - course: MSc in Machine Learning
       institution: University College London
-      year: ""
+      year: "2020 - 2021"
     - course: MEng in Engineering Science
       institution: University of Oxford
-      year: ""
-email: ""
+      year: "2015 - 2019"
+email: "han.zhou.20@ucl.ac.uk"
 superuser: true
 highlight_name: true
 ---
