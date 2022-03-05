@@ -48,3 +48,11 @@ Before starting my PhD, I was an undergraduate student reading [Engineering Scie
 
 My current research interests are low-resource NLP and multilingual learning. 
 
+design:
+  background:
+    image: background.jpg
+    image_darken: 0.6
+    image_size: cover
+    image_position: center
+    image_parallax: true
+    text_color_light: true
