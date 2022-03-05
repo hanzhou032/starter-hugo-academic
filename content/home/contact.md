@@ -26,7 +26,10 @@ content:
 
   # Contact details (edit or remove options as required)
   email: han.zhou.20 [at] ucl.ac.uk
-  address: Zijin'gang Campus, Zhejiang University
+  address:
+    street: Zhejiang University
+    city: Hangzhou
+    region: CN
 
 design:
   columns: '2'
