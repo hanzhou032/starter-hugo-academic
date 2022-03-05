@@ -14,8 +14,7 @@ weight: 20
 
 title: Biography
 
-design:
-  background:
+[design.background]
     # Name of image in `assets/media/`.
     image: background.jpg
     # Darken the image? Range 0-1 where 0 is transparent and 1 is opaque.
