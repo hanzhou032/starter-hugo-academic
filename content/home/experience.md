@@ -24,7 +24,7 @@ date_format: Jan 2006
 experience:
   - title: Research Assistant
     company: Zhejiang University
-    company_url: 'https://zju.edu.cn'
+    company_url: https://zju.edu.cn
     location: Hangzhou, China
     date_start: 'Mar 2022 -'
     date_end: ''
@@ -32,7 +32,7 @@ experience:
         
   - title: Research Student
     company: Huawei Technologies Research & Development (UK) Ltd
-    company_url: 'http://dev3.noahlab.com.hk/index.html'
+    company_url: https://dev3.noahlab.com.hk/index.html
     location: London, UK
     date_start: 'May 2021'
     date_end: 'Jan 2022'
@@ -40,7 +40,7 @@ experience:
 
   - title: Game Designer
     company: Tencent
-    company_url: 'https://www.tencent.com/en-us'
+    company_url: https://www.tencent.com/en-us
     location: Shenzhen, China
     date_start: 'Jul 2019'
     date_end: 'Aug 2020'
@@ -48,7 +48,7 @@ experience:
 
   - title: Research Intern
     company: RACE, UK Atomic Energy Authority
-    company_url: 'https://race.ukaea.uk/'
+    company_url: https://race.ukaea.uk/
     location: Cowley, UK
     date_start: 'Jul 2018'
     date_end: 'Sep 2018'
@@ -56,7 +56,7 @@ experience:
 
   - title: Research Intern
     company: Battery Intelligence Lab, University of Oxford
-    company_url: 'https://howey.eng.ox.ac.uk/'
+    company_url: https://howey.eng.ox.ac.uk/
     location: Oxford, UK
     date_start: 'Jul 2017'
     date_end: 'Sep 2017'
