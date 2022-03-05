@@ -2,8 +2,6 @@
 title: Han Zhou
 role: Research Assistant at Zhejiang University
 avatar_filename: avatar.jpg
-bio: My research interests include distributed robotics, mobile computing and
-  programmable matter.
 interests:
   - Low-resouece NLP
   - Multilinguality
