@@ -47,12 +47,3 @@ I am glad to join the [Language and Technology Lab](https://ltl.mmll.cam.ac.uk/)
 Before starting my PhD, I was an undergraduate student reading [Engineering Science](https://eng.ox.ac.uk/) at [St Hilda's College](https://www.st-hildas.ox.ac.uk/), [University of Oxford](https://www.ox.ac.uk/). I received my second Master degree in MSc Machine Learning, [University Collge London](https://www.ucl.ac.uk/). I graduated top of my class.
 
 My current research interests are low-resource NLP and multilingual learning. 
-
-design:
-  background:
-    image: background.jpg
-    image_darken: 0.6
-    image_size: cover
-    image_position: center
-    image_parallax: true
-    text_color_light: true
