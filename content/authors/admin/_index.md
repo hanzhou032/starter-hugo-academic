@@ -34,10 +34,10 @@ education:
       year: ""
     - course: MSc in Machine Learning
       institution: University College London
-      year: 2021
+      year: ""
     - course: MEng in Engineering Science
       institution: University of Oxford
-      year: 2019
+      year: ""
 email: ""
 superuser: true
 highlight_name: true
@@ -47,6 +47,6 @@ I am a Research Assistant in the [Healthcare and Artificial Intelligence Lab](ht
 I am glad to join the [Language and Technology Lab](https://ltl.mmll.cam.ac.uk/) to start my PhD journey at the [University of Cambridge](https://www.cam.ac.uk/) in this October.
 
 Before starting my PhD, I was an undergraduate student reading [Engineering Science](https://eng.ox.ac.uk/) at [St Hilda's College](https://www.st-hildas.ox.ac.uk/), [University of Oxford](https://www.ox.ac.uk/). I received my second Master degree in MSc Machine Learning, [University Collge London](https://www.ucl.ac.uk/). I graduated top of my class.
-
+2020 - 2021
 My current research interests are low-resource NLP and multilingual learning. 
 
