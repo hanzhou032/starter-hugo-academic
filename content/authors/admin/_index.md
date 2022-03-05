@@ -3,7 +3,7 @@ title: Han Zhou
 role: Research Assistant at Zhejiang University
 avatar_filename: avatar.jpg
 interests:
-  - Low-resouece NLP
+  - Low-resource NLP
   - Multilinguality
   - Task-oriented Dialogue Systems
 social:
