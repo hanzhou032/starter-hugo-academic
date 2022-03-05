@@ -32,10 +32,10 @@ education:
       year: "Oct 2022 - "
     - course: MSc in Machine Learning
       institution: University College London
-      year: "Sep 2020 - Sep 2021"
+      year: "2020 - 2021"
     - course: MEng in Engineering Science
       institution: University of Oxford
-      year: "Oct 2015 - Jun 2019"
+      year: "2015 - 2019"
 email: "han.zhou.20@ucl.ac.uk"
 superuser: true
 highlight_name: true
