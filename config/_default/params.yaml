@@ -22,6 +22,7 @@ marketing:
     twitter: 'wowchemy'
   analytics:
     google_analytics: 'G-C2Q5FJC5LL'
+    google_tag_manager: 'GTM-53CMCH2'
     baidu_tongji: ''
   verification:
     google: ''
