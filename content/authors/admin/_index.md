@@ -4,8 +4,9 @@ role: Research Assistant at Zhejiang University
 avatar_filename: avatar.jpg
 interests:
   - Low-resource NLP
-  - Multilinguality
+  - Multi-linguality
   - Task-oriented Dialogue Systems
+  - Reinforcement Learning
 social:
   - icon: envelope
     icon_pack: fas
