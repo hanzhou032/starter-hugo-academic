@@ -6,7 +6,7 @@ interests:
   - Low-resource NLP
   - Multi-linguality
   - Task-oriented Dialogue Systems
-  - Language Grounding
+  - Grounded Language Learning
   - Reinforcement Learning
 social:
   - icon: envelope

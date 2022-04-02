@@ -28,7 +28,7 @@ experience:
     location: Cambridge, UK
     date_start: '2022-03-01'
     date_end: ''
-    description: Multi-lingual dialogue systems.
+    description: Multi-lingual Dialogue Systems.
 
   - title: Research Assistant
     company: Zhejiang University
@@ -52,7 +52,7 @@ experience:
     location: Shenzhen, China
     date_start: '2019-07-01'
     date_end: '2020-08-01'
-    description: Game system design and AI developments.
+    description: Game System Design and AI Developments.
 
   - title: Research Intern
     company: RACE, UK Atomic Energy Authority
@@ -68,7 +68,7 @@ experience:
     location: Oxford, UK
     date_start: '2017-07-01'
     date_end: '2017-09-01'
-    description: Degradation estimation of Lead-Acid batteries.
+    description: Degradation Estimation of Lead-Acid Batteries.
 
 design:
   columns: '2'
