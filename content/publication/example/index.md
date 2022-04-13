@@ -4,9 +4,9 @@ title: "XQA-DST: Multi-Domain and Multi-Lingual Dialogue State Tracking"
 # Authors
 # If you created a profile for a user (e.g. the default `admin` user), write the username (folder name) here 
 # and it will be replaced with their full name and linked to their profile.
-abstract: "Null"
+abstract: "In a task-oriented dialogue system, Dialogue State Tracking (DST) keeps track of all important information by filling slots with values given through the conversation. Existing methods generally rely on a predefined set of values and struggle to generalise to previously unseen slots in new domains. In this paper, we propose a multi-domain and multi-lingual dialogue state tracker in a neural reading comprehension approach. Our approach fills the slot values using span prediction, where the values are extracted from the dialogue itself. With a novel training strategy and an independent domain classifier, empirical results demonstrate that our model is a domain-scalable and open-vocabulary model that achieves 53.2% Joint Goal Accuracy (JGA) on MultiWOZ 2.1. We show its competitive transferability by zero-shot domain-adaptation experiments on MultiWOZ 2.1 with an average JGA of 31.6% for five domains. In addition, it achieves cross-lingual transfer with state-of-the-art zero-shot results, 64.9% JGA from English to German and 68.6% JGA from English to Italian on WOZ 2.0."
 slides: ""
-url_pdf: "https://arxiv.org/pdf/2204.05895.pdf"
+url_pdf: "https://arxiv.org/pdf/2204.05895"
 publication_types:
   - "3"
 authors:
