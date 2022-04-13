@@ -14,8 +14,6 @@ authors:
   - Ignacio Iacobacci
   - Pasquale Minervini
 # Author notes (optional)
-author_notes:""
-
 date: "2022-04-13T00:00:00Z"
 doi: ""
 
