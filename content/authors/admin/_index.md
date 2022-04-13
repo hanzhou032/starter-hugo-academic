@@ -35,7 +35,7 @@ education:
     - course: MSc in Machine Learning
       institution: University College London
       year: "2020 - 2021"
-    - course: MEng in Engineering Science
+    - course: BA, MEng in Engineering Science
       institution: University of Oxford
       year: "2015 - 2019"
 email: "han.zhou.20@ucl.ac.uk"
