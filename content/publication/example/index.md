@@ -36,7 +36,7 @@ tags: []
 # Display this page in the Featured widget?
 url_source: ""
 url_video: ""
-title: XQA-DST: Multi-Domain and Multi-Lingual Dialogue State Tracking
+title: "XQA-DST: Multi-Domain and Multi-Lingual Dialogue State Tracking"
 doi: ""
 featured: true
 # Custom links (uncomment lines below)
