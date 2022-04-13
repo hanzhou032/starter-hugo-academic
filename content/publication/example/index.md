@@ -38,18 +38,18 @@ url_source: "https://arxiv.org/pdf/2204.05895"
 url_video: ""
 title: "XQA-DST: Multi-Domain and Multi-Lingual Dialogue State Tracking"
 doi: ""
-featured: false
+featured: true
 # Custom links (uncomment lines below)
 # links:
 # - name: Custom Link
 #   url: http://example.org
-url_pdf: ''
+url_pdf: 'https://arxiv.org/pdf/2204.05895.pdf'
 url_code: ''
-url_dataset: ''
+url_dataset: 'https://github.com/budzianowski/multiwoz'
 url_poster: ''
 url_project: ''
 url_slides: ''
-url_source: ''
+url_source: 'https://arxiv.org/pdf/2204.05895'
 url_video: ''
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder. 
