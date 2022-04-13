@@ -1,6 +1,6 @@
 ---
 title: Han Zhou
-role: Research Assistant at Zhejiang University
+role: Research Intern at University of Cambridge
 avatar_filename: avatar.jpg
 interests:
   - Low-resource NLP
@@ -25,8 +25,8 @@ social:
     icon_pack: fab
     link: https://www.linkedin.com/in/hanzhou032
 organizations:
-  - name: University College London
-    url: https://www.ucl.ac.uk/
+  - name: University of Cambridge
+    url: https://www.cam.ac.uk/
 education:
   courses:
     - course: PhD in Computation, Cognition, and Language
@@ -42,9 +42,9 @@ email: "han.zhou.20@ucl.ac.uk"
 superuser: true
 highlight_name: true
 ---
-I am a Research Assistant in the [Healthcare and Artificial Intelligence Lab](https://ylab.top) at the [Zhejiang University](https://www.zju.edu.cn/english/). I am supervised by [Dr Jie Yang](https://ylab.top/jieyang/). 
-
 I am glad to join the [Language and Technology Lab](https://ltl.mmll.cam.ac.uk/) to start my PhD journey as a member of [Downing College](https://www.dow.cam.ac.uk/), [University of Cambridge](https://www.cam.ac.uk/) in this October.
+
+Currently, I am a Research Assistant in the [Healthcare and Artificial Intelligence Lab](https://ylab.top) at the [Zhejiang University](https://www.zju.edu.cn/english/). I am supervised by [Dr Jie Yang](https://ylab.top/jieyang/).
 
 Before starting my PhD, I was an undergraduate student reading [Engineering Science](https://eng.ox.ac.uk/) at [St Hilda's College](https://www.st-hildas.ox.ac.uk/), [University of Oxford](https://www.ox.ac.uk/). I received my second Master degree in MSc Machine Learning, [University College London](https://www.ucl.ac.uk/). I graduated top of my class.
 
