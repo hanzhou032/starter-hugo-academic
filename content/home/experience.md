@@ -34,8 +34,8 @@ experience:
     company: Zhejiang University
     company_url: https://zju.edu.cn
     location: Hangzhou, China
-    date_start: '2022-03-01'
-    date_end: ''
+    date_start: '2022-02-15'
+    date_end: '2022-04-30'
     description: Multi-lingual NLP and Clinical AI.
         
   - title: Research Student
