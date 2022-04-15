@@ -18,9 +18,9 @@ content:
   # Contact details (edit or remove options as required)
   email: han.zhou.20 [at] ucl.ac.uk
   address:
-    street: Zhejiang University
-    city: Hangzhou
-    region: CN
+    street: LTL
+    city: University of Cambridge
+    region: UK
 
 design:
   columns: '2'
