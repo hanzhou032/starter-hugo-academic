@@ -2,6 +2,9 @@
 title: Han Zhou
 role: Research Intern at University of Cambridge
 avatar_filename: avatar.jpg
+Recent News:
+  - Jul 2022: I am reviewing for EMNLP 2022.
+
 interests:
   - Low-resource NLP
   - Multi-linguality
@@ -49,3 +52,4 @@ Currently, I am a Research Intern in the [Language Technology Lab](https://ltl.m
 Before starting my PhD, I was an undergraduate student reading [Engineering Science](https://eng.ox.ac.uk/) at [St Hilda's College](https://www.st-hildas.ox.ac.uk/), [University of Oxford](https://www.ox.ac.uk/). I received my second Master degree in MSc Machine Learning, [University College London](https://www.ucl.ac.uk/). I graduated top of my class.
 
 My current research interests are low-resource NLP. I am always exploring for more modular, parameter efficient, and transferable approaches in the field of ML. 
+
