@@ -2,9 +2,6 @@
 title: Han Zhou
 role: Research Intern at University of Cambridge
 avatar_filename: avatar.jpg
-Recent News:
-  - Jul 2022: I am reviewing for EMNLP 2022.
-
 interests:
   - Low-resource NLP
   - Multi-linguality
