@@ -38,7 +38,7 @@ education:
     - course: BA, MEng in Engineering Science
       institution: University of Oxford
       year: "2015 - 2019"
-email: "han.zhou.20@ucl.ac.uk"
+email: "hz416@cam.ac.uk"
 superuser: true
 highlight_name: true
 ---

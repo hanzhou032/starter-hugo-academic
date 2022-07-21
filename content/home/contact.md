@@ -16,7 +16,7 @@ content:
   autolink: false
 
   # Contact details (edit or remove options as required)
-  email: han.zhou.20 [at] ucl.ac.uk
+  email: hz416 [at] cam.ac.uk
   address:
     street: LTL
     city: University of Cambridge
