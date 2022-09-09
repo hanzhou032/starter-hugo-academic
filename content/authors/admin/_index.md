@@ -1,6 +1,6 @@
 ---
 title: Han Zhou
-role: PhD student at University of Cambridge
+role: PhD student at the University of Cambridge
 avatar_filename: avatar.jpg
 interests:
   - Multimodal Learning
