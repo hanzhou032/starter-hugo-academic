@@ -36,7 +36,7 @@ experience:
     location: Hangzhou, China
     date_start: '2022-02-15'
     date_end: '2022-04-30'
-    description: Multi-lingual NLP and Clinical AI.
+    description: Multi-lingual Language Models.
         
   - title: Research Student
     company: Huawei Technologies Research & Development (UK) Ltd
