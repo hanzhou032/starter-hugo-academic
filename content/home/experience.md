@@ -36,10 +36,10 @@ experience:
     location: Hangzhou, China
     date_start: '2022-02-15'
     date_end: '2022-04-30'
-    description: Multi-lingual Language Models.
+    description: GreenPLM: Cross-Lingual Pre-trained Language Models.
         
   - title: Research Student
-    company: Huawei Technologies Research & Development (UK) Ltd
+    company: Huawei Noah's Ark Lab (UK) 
     company_url: https://dev3.noahlab.com.hk/index.html
     location: London, UK
     date_start: '2021-05-01'
