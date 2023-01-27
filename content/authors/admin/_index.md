@@ -42,9 +42,13 @@ email: "hz416@cam.ac.uk"
 superuser: true
 highlight_name: true
 ---
-I am glad to join the [Language and Technology Lab](https://ltl.mmll.cam.ac.uk/) to start my PhD journey as a member of [Downing College](https://www.dow.cam.ac.uk/), [University of Cambridge](https://www.cam.ac.uk/). I am supervised by [Prof Anna Korhonen](https://sites.google.com/site/annakorhonen/) and [Dr Ivan Vulic](https://sites.google.com/site/ivanvulic/).
+I am glad to join the [Language and Technology Lab](https://ltl.mmll.cam.ac.uk/) to start my PhD journey as a member of [Downing College](https://www.dow.cam.ac.uk/), [University of Cambridge](https://www.cam.ac.uk/). I am supervised by [Dr Ivan Vulic](https://sites.google.com/site/ivanvulic/) and [Prof Anna Korhonen](https://sites.google.com/site/annakorhonen/).
 
 Before starting my PhD, I was an undergraduate student reading [Engineering Science](https://eng.ox.ac.uk/) at [St Hilda's College](https://www.st-hildas.ox.ac.uk/), [University of Oxford](https://www.ox.ac.uk/). I received my second Master degree in MSc Machine Learning, [University College London](https://www.ucl.ac.uk/). I graduated top of my class.
 
 My current research interests are efficient NLP. I am always exploring for more modular, parameter-efficient, and transferable approaches in the field of ML. 
 
+## Recent News
+  - Jan 2023: [Paper](https://arxiv.org/abs/2204.05895/) accepted at [EACL 2023](https://2023.eacl.org/).
+  - Oct 2022: I am reviewing for EMNLP 2022.
+  - Oct 2022: Start my PhD at the [Language and Technology Lab](https://ltl.mmll.cam.ac.uk/).
