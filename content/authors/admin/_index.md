@@ -3,11 +3,11 @@ title: Han Zhou
 role: PhD student at the University of Cambridge
 avatar_filename: avatar.jpg
 interests:
-  - Efficient Large Scale AI
-  - Adaptation/Transfer Learning
+  - Parameter-Efficient Fine-Tuning
+  - Large Language Model Reasoning
   - Task-oriented Dialogue Systems
-  - Grounded Language Learning
-  - Reinforcement Learning
+  - Multi-Lingual NLP
+
 social:
   - icon: envelope
     icon_pack: fas
@@ -51,4 +51,4 @@ My current research interests are efficient NLP. I am always exploring for more 
 ## Recent News
   - Jan 2023: [Paper](https://arxiv.org/abs/2204.05895/) accepted at [EACL 2023](https://2023.eacl.org/).
   - Oct 2022: I am reviewing for EMNLP 2022.
-  - Oct 2022: Start my PhD at the [Language and Technology Lab](https://ltl.mmll.cam.ac.uk/).
+  - Oct 2022: Start my PhD at [LTL](https://ltl.mmll.cam.ac.uk/).
