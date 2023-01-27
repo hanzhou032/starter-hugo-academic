@@ -9,11 +9,11 @@ authors:
   - Ignacio Iacobacci
   - Pasquale Minervini
 author_notes: []
-publication: "*arXiv preprint arXiv:2204.05895*"
+publication: "*Findings of EACL 2023*"
 summary: "Multi-domain and Multi-lingual Dialogue State Tracking in machine reading comprehension."
 url_dataset: "https://github.com/budzianowski/multiwoz"
 url_project: ""
-publication_short: "*arXiv preprint arXiv:2204.05895*"
+publication_short: "*Findings of EACL 2023*"
 url_source: ""
 url_video: ""
 title: "XQA-DST: Multi-Domain and Multi-Lingual Dialogue State Tracking"

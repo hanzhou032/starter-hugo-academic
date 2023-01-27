@@ -27,7 +27,7 @@ experience:
     company_url: https://ltl.mmll.cam.ac.uk/
     location: Cambridge, UK
     date_start: '2022-03-01'
-    date_end: ''
+    date_end: '2022-09-01'
     description: Multi-lingual Dialogue Systems.
 
   - title: Research Assistant

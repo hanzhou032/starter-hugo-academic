@@ -42,7 +42,7 @@ email: "hz416@cam.ac.uk"
 superuser: true
 highlight_name: true
 ---
-I am glad to join the [Language and Technology Lab](https://ltl.mmll.cam.ac.uk/) to start my PhD journey as a member of [Downing College](https://www.dow.cam.ac.uk/), [University of Cambridge](https://www.cam.ac.uk/) from this October. I am supervised by [Prof Anna Korhonen](https://sites.google.com/site/annakorhonen/) and [Dr Ivan Vulic](https://sites.google.com/site/ivanvulic/).
+I am glad to join the [Language and Technology Lab](https://ltl.mmll.cam.ac.uk/) to start my PhD journey as a member of [Downing College](https://www.dow.cam.ac.uk/), [University of Cambridge](https://www.cam.ac.uk/). I am supervised by [Prof Anna Korhonen](https://sites.google.com/site/annakorhonen/) and [Dr Ivan Vulic](https://sites.google.com/site/ivanvulic/).
 
 Before starting my PhD, I was an undergraduate student reading [Engineering Science](https://eng.ox.ac.uk/) at [St Hilda's College](https://www.st-hildas.ox.ac.uk/), [University of Oxford](https://www.ox.ac.uk/). I received my second Master degree in MSc Machine Learning, [University College London](https://www.ucl.ac.uk/). I graduated top of my class.
 
