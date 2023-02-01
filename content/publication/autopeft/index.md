@@ -6,14 +6,15 @@ publication_types:
   - "3"
 authors:
   - Han Zhou
-  - Ignacio Iacobacci
-  - Pasquale Minervini
+  - Xingchen Wan
+  - Ivan Vulić
+  - Anna Korhonen
 author_notes: []
-publication: "*arXiv*"
+publication: "*arXiv:2301.12132*"
 summary: "AutoPEFT: Automatic Configuration Search for Parameter-Efficient Fine-Tuning"
 url_dataset: ""
 url_project: ""
-publication_short: "*arXiv*"
+publication_short: "*arXiv:2301.12132*"
 url_source: ""
 url_video: ""
 title: "AutoPEFT: Automatic Configuration Search for Parameter-Efficient Fine-Tuning"
