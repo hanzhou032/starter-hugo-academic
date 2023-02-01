@@ -9,7 +9,9 @@ authors:
   - Xingchen Wan
   - Ivan Vulić
   - Anna Korhonen
-author_notes: []
+author_notes: 
+  - "Equal contribution"
+  - "Equal contribution"
 publication: "*arXiv:2301.12132*"
 summary: "AutoPEFT: Automatic Configuration Search for Parameter-Efficient Fine-Tuning"
 url_dataset: ""
