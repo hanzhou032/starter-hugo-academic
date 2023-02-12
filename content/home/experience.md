@@ -42,8 +42,8 @@ experience:
     company: Huawei Noah's Ark Lab (UK) 
     company_url: https://dev3.noahlab.com.hk/index.html
     location: London, UK
-    date_start: '2021-05-01'
-    date_end: '2022-01-01'
+    date_start: '2021-06-01'
+    date_end: '2022-09-01'
     description: Task-oriented Dialogue System, Low-resource NLP.
 
   - title: Game Designer

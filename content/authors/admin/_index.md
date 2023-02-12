@@ -49,6 +49,7 @@ Before starting my PhD, I was an undergraduate student reading [Engineering Scie
 My current research interests are efficient NLP. I am always exploring for more modular, parameter-efficient, and transferable approaches in the field of ML. 
 
 ## Recent News
+  - Feb 2023: I am reviewing for ACL 2023.
   - Jan 2023: [Paper](https://arxiv.org/abs/2204.05895/) accepted at [EACL 2023](https://2023.eacl.org/).
   - Oct 2022: I am reviewing for EMNLP 2022.
   - Oct 2022: Start my PhD at [LTL](https://ltl.mmll.cam.ac.uk/).
