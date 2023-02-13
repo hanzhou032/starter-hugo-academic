@@ -4,9 +4,9 @@ role: PhD student at the University of Cambridge
 avatar_filename: avatar.jpg
 interests:
   - Parameter-Efficient Fine-Tuning
-  - Large Language Model Reasoning
-  - Task-oriented Dialogue Systems
-  - Multi-Lingual NLP
+  - Prompt Learning/Optimisation
+  - Vision-Language Understanding
+  - Dialogues and Multi-Lingual NLP
 
 social:
   - icon: envelope
