@@ -25,6 +25,7 @@ experience:
   - title: Research Intern
     company: University of Cambridge
     company_url: https://ltl.mmll.cam.ac.uk/
+    company_logo: LTL_Color_Mini.png
     location: Cambridge, UK
     date_start: '2022-03-01'
     date_end: '2022-09-01'
@@ -38,14 +39,6 @@ experience:
     date_end: '2022-04-30'
     description: Cross-Lingual Pre-trained Language Models.
         
-  - title: Research Student
-    company: Huawei Noah's Ark Lab (UK) 
-    company_url: https://dev3.noahlab.com.hk/index.html
-    location: London, UK
-    date_start: '2021-06-01'
-    date_end: '2022-09-01'
-    description: Task-oriented Dialogue System, Low-resource NLP.
-
   - title: Game Designer
     company: Tencent
     company_url: https://www.tencent.com/en-us
@@ -54,7 +47,7 @@ experience:
     date_end: '2020-08-01'
     description: Game System Design and AI Developments.
 
-  - title: Research Intern
+  - title: Robotics Intern
     company: RACE, UK Atomic Energy Authority
     company_url: https://race.ukaea.uk/
     location: Cowley, UK
