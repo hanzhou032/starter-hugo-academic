@@ -50,8 +50,8 @@ My current research interests are efficient NLP. I am always exploring for more 
 
 ## Recent News
   - Apr 2023: Will start as Student Researcher in [Google Brain](https://research.google/teams/brain/).
-  - Apr 2023: Attending [EACL 2023](https://2023.eacl.org/) in-person. Feel free to connect with me.
-  - Feb 2023: I am reviewing for [ACL 2023](https://2023.aclweb.org/).
+  - Apr 2023: Attending EACL 2023 in-person. Feel free to connect with me.
+  - Feb 2023: I am reviewing for ACL 2023.
   - Jan 2023: [Paper](https://arxiv.org/abs/2204.05895/) accepted at [EACL 2023](https://2023.eacl.org/).
-  - Oct 2022: I am reviewing for [EMNLP 2022](https://2022.emnlp.org/).
-  - Oct 2022: Start my PhD at [LTL](https://ltl.mmll.cam.ac.uk/).
+  - Oct 2022: I am reviewing for EMNLP 2022.
+  - Oct 2022: Start my PhD at LTL.
