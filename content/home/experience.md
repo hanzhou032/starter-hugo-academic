@@ -50,6 +50,7 @@ experience:
   - title: Research Intern
     company: Battery Intelligence Lab, University of Oxford
     company_url: https://howey.eng.ox.ac.uk/
+    company_logo: bil-web-logo
     location: Oxford, UK
     date_start: '2017-07-01'
     date_end: '2017-09-01'
