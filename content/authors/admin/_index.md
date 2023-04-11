@@ -49,8 +49,8 @@ Before starting my PhD, I was an undergraduate student reading [Engineering Scie
 My current research interests are efficient NLP. I am always exploring for more modular, parameter-efficient, and transferable approaches in the field of ML. 
 
 ## Recent News
-  - Apr 2023: Will start as Student Researcher in Google Brain this summer!
-  - Apr 2023: Attending EACL 2023 in-person. Feel free to connect with me!
+  - Apr 2023: Will start as Student Researcher in Google Brain.
+  - Apr 2023: Attending EACL 2023 in-person. Feel free to connect with me.
   - Feb 2023: I am reviewing for ACL 2023.
   - Jan 2023: [Paper](https://arxiv.org/abs/2204.05895/) accepted at [EACL 2023](https://2023.eacl.org/)!
   - Oct 2022: I am reviewing for EMNLP 2022.
