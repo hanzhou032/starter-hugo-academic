@@ -25,7 +25,7 @@ experience:
   - title: Research Intern
     company: University of Cambridge
     company_url: https://ltl.mmll.cam.ac.uk/
-    company_logo: LTL_Color_Mini.png
+    company_logo: LTL_Color_Mini
     location: Cambridge, UK
     date_start: '2022-03-01'
     date_end: '2022-09-01'
