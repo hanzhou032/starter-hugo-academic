@@ -34,6 +34,7 @@ experience:
   - title: Game Designer
     company: Tencent
     company_url: https://www.tencent.com/en-us
+    company_logo: tencent
     location: Shenzhen, China
     date_start: '2019-07-01'
     date_end: '2020-08-01'
@@ -42,6 +43,7 @@ experience:
   - title: Robotics Intern
     company: RACE, UK Atomic Energy Authority
     company_url: https://race.ukaea.uk/
+    company_logo: RACE
     location: Cowley, UK
     date_start: '2018-07-01'
     date_end: '2018-09-01'
