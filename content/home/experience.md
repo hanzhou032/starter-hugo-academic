@@ -25,20 +25,12 @@ experience:
   - title: Research Intern
     company: University of Cambridge
     company_url: https://ltl.mmll.cam.ac.uk/
-    company_logo: LTL_Color_Mini
+    company_logo: LTL_BW_Mini
     location: Cambridge, UK
     date_start: '2022-03-01'
     date_end: '2022-09-01'
     description: Multi-lingual Dialogue Systems.
 
-  - title: Research Assistant
-    company: Zhejiang University
-    company_url: https://zju.edu.cn
-    location: Hangzhou, China
-    date_start: '2022-02-15'
-    date_end: '2022-04-30'
-    description: Cross-Lingual Pre-trained Language Models.
-        
   - title: Game Designer
     company: Tencent
     company_url: https://www.tencent.com/en-us
