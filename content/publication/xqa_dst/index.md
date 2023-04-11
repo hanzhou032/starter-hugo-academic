@@ -10,8 +10,8 @@ authors:
   - Pasquale Minervini
 author_notes: []
 publication: "*Findings of EACL 2023*"
-summary: "Multi-domain and Multi-lingual Dialogue State Tracking in machine reading comprehension."
-url_dataset: "https://github.com/budzianowski/multiwoz"
+summary: "Multi-domain and Multi-lingual Dialogue State Tracking."
+url_dataset: ""
 url_project: ""
 publication_short: "*Findings of EACL 2023*"
 url_source: ""
@@ -29,5 +29,5 @@ date: 2022-04-13T00:00:00.000Z
 url_slides: ""
 publishDate: 2022-04-13T00:00:00.000Z
 url_poster: ""
-url_code: ""
+url_code: "https://github.com/hanzhou032/xqa-dst"
 ---

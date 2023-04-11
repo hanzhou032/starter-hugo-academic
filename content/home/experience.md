@@ -23,7 +23,7 @@ date_format: Jan 2006
 #   Begin multi-line descriptions with YAML's `|2-` multi-line prefix.
 experience:
   - title: Research Intern
-    company: University of Cambridge
+    company: Language Technology Lab, University of Cambridge
     company_url: https://ltl.mmll.cam.ac.uk/
     company_logo: LTL_BW_Mini
     location: Cambridge, UK
@@ -34,7 +34,6 @@ experience:
   - title: Game Designer
     company: Tencent
     company_url: https://www.tencent.com/en-us
-    company_logo: tencent
     location: Shenzhen, China
     date_start: '2019-07-01'
     date_end: '2020-08-01'
