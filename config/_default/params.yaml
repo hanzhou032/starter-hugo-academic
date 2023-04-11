@@ -42,7 +42,7 @@ header:
 
 footer:
   copyright:
-    notice: '© {year} '
+    notice: '© 2019 - {year} Han Zhou. This work is licensed under CC BY NC ND 4.0'
 #  Me. This work is licensed under {license}'
 #    license:
 #      enable: true
