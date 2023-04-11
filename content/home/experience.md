@@ -22,6 +22,14 @@ date_format: Jan 2006
 #   Leave `date_end` empty if it's your current employer.
 #   Begin multi-line descriptions with YAML's `|2-` multi-line prefix.
 experience:
+  - title: Student Researcher
+    company: Google Brain, Responsible AI Team
+    company_url: https://research.google/teams/brain/
+    company_logo: google
+    location: London, UK
+    date_start: '2023-06-12'
+    date_end: '2023-10-13'
+    
   - title: Research Intern
     company: Language Technology Lab, University of Cambridge
     company_url: https://ltl.mmll.cam.ac.uk/
@@ -29,7 +37,6 @@ experience:
     location: Cambridge, UK
     date_start: '2022-03-01'
     date_end: '2022-09-01'
-    description: Multi-lingual Dialogue Systems.
 
   - title: Game Designer
     company: Tencent
@@ -38,16 +45,14 @@ experience:
     location: Shenzhen, China
     date_start: '2019-07-01'
     date_end: '2020-08-01'
-    description: Game System Design and AI Developments.
 
   - title: Robotics Intern
     company: RACE, UK Atomic Energy Authority
     company_url: https://race.ukaea.uk/
     company_logo: RACE
-    location: Cowley, UK
+    location: Culham, UK
     date_start: '2018-07-01'
     date_end: '2018-09-01'
-    description: Multi-Object Detection and Tracking.
 
   - title: Research Intern
     company: Battery Intelligence Lab, University of Oxford
@@ -56,7 +61,6 @@ experience:
     location: Oxford, UK
     date_start: '2017-07-01'
     date_end: '2017-09-01'
-    description: Degradation Estimation of Lead-Acid Batteries.
 
 design:
   columns: '2'
