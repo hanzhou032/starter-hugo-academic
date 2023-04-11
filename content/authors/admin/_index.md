@@ -4,9 +4,9 @@ role: PhD student in NLP
 avatar_filename: avatar.jpg
 interests:
   - Parameter-Efficient Fine-Tuning
-  - Prompt Learning/Optimisation
-  - Vision-Language Understanding
+  - Prompt Learning and Optimisation
   - Dialogues and Multi-Lingual NLP
+  - Multi-Modal Learning
 
 social:
   - icon: envelope
