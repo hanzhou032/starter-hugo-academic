@@ -12,7 +12,7 @@ authors:
   - Yining Hua
   - Jiageng Wu
   - Yikang Pan
-  - Han Zhou
+  - *Han Zhou*
   - Jie Yang
 author_notes: []
 publication: "*The 32nd International Joint
