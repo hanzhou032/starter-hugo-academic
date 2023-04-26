@@ -49,6 +49,7 @@ Before starting my PhD, I was an undergraduate student reading [Engineering Scie
 My current research interests are efficient NLP. I am always exploring for more modular, parameter-efficient, and transferable approaches in the field of ML. 
 
 ## Recent News
+  - Apr 2023: [Paper](https://arxiv.org/abs/2211.06993) accepted at [IJCAI 2023](https://ijcai-23.org/).
   - Apr 2023: Will start as Student Researcher in [Google Brain](https://research.google/teams/brain/).
   - Apr 2023: Attending EACL 2023 in-person. Feel free to connect with me.
   - Feb 2023: I am reviewing for ACL 2023.
