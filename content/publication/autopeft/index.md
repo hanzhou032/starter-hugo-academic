@@ -5,7 +5,7 @@ url_pdf: "https://arxiv.org/pdf/2204.05895.pdf"
 publication_types:
   - "3"
 authors:
-  - "*Han Zhou*"
+  - Han Zhou
   - Xingchen Wan
   - Ivan Vulić
   - Anna Korhonen
