@@ -1,8 +1,14 @@
-@misc{zhou2022xqadst,
-      title={XQA-DST: Multi-Domain and Multi-Lingual Dialogue State Tracking},
-      author={Han Zhou and Ignacio Iacobacci and Pasquale Minervini},
-      year={2022},
-      eprint={2204.05895},
-      archivePrefix={arXiv},
-      primaryClass={cs.CL}
+@inproceedings{zhou-etal-2023-xqa,
+    title = "{XQA}-{DST}: Multi-Domain and Multi-Lingual Dialogue State Tracking",
+    author = "Zhou, Han  and
+      Iacobacci, Ignacio  and
+      Minervini, Pasquale",
+    booktitle = "Findings of the Association for Computational Linguistics: EACL 2023",
+    month = may,
+    year = "2023",
+    address = "Dubrovnik, Croatia",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2023.findings-eacl.73",
+    pages = "969--979",
+    abstract = "Dialogue State Tracking (DST), a crucial component of task-oriented dialogue (ToD) systems, keeps track of all important information pertaining to dialogue history: filling slots with the most probable values throughout the conversation. Existing methods generally rely on a predefined set of values and struggle to generalise to previously unseen slots in new domains. To overcome these challenges, we propose a domain-agnostic extractive question answering (QA) approach with shared weights across domains. To disentangle the complex domain information in ToDs, we train our DST with a novel domain filtering strategy by excluding out-of-domain question samples. With an independent classifier that predicts the presence of multiple domains given the context, our model tackles DST by extracting spans in active domains. Empirical results demonstrate that our model can efficiently leverage domain-agnostic QA datasets by two-stage fine-tuning while being both domain-scalable and open vocabulary in DST. It shows strong transferability by achieving zero-shot domain-adaptation results on MultiWOZ 2.1 with an average JGA of 36.7{\%}. It further achieves cross-lingual transfer with state-of-the-art zero-shot results, 66.2{\%} JGA from English to German and 75.7{\%} JGA from English to Italian on WOZ 2.0.",
 }
