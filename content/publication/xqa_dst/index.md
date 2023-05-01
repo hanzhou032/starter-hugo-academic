@@ -5,7 +5,7 @@ url_pdf: "https://aclanthology.org/2023.findings-eacl.73"
 publication_types:
   - "3"
 authors:
-  - *Han Zhou*
+  - "*Han Zhou*"
   - Ignacio Iacobacci
   - Pasquale Minervini
 author_notes: []
