@@ -36,7 +36,7 @@ design:
   columns: '2'
   background: 
       image: background3.jpg
-      image_darken: 0.25
+      image_darken: 0.3
       image_size: default
       image_position: center
       image_parallax: true
