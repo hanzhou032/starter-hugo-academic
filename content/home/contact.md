@@ -24,11 +24,4 @@ content:
 
 design:
   columns: '2'
-  background: 
-      image: background5.jpg
-      image_darken: 0.3
-      image_size: default
-      image_position: center
-      image_parallax: true
-      text_color_light: true
 ---
