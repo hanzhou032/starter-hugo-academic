@@ -35,7 +35,7 @@ design:
   view: citation
   columns: '2'
   background: 
-      image: background2.jpg
+      image: background3.jpg
       image_darken: 0.3
       image_size: default
       image_position: center
