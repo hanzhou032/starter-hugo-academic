@@ -34,6 +34,13 @@ design:
   # Choose a view for the listings:
   view: citation
   columns: '2'
+  background: 
+      image: background2.jpg
+      image_darken: 0.3
+      image_size: default
+      image_position: center
+      image_parallax: true
+      text_color_light: true
 ---
 
 {{% callout note %}}
