@@ -3,7 +3,7 @@ abstract: "In a task-oriented dialogue system, Dialogue State Tracking (DST) kee
 slides: ""
 url_pdf: "https://aclanthology.org/2023.findings-eacl.73"
 publication_types:
-  - "3"
+  - "2"
 authors:
   - Han Zhou
   - Ignacio Iacobacci
