@@ -5,7 +5,8 @@ avatar_filename: avatar.jpg
 interests:
   - Parameter-Efficient Fine-Tuning
   - Prompt Learning and Optimisation
-  - Dialogues and Multi-Lingual NLP
+  - Large Language Models
+  - Multi-Lingual Dialogs 
   - Multi-Modal Learning
 
 social:
@@ -49,7 +50,7 @@ Before starting my PhD, I was an undergraduate student reading [Engineering Scie
 My current research interests are efficient NLP. I am always exploring for more modular, parameter-efficient, and transferable approaches in the field of ML. 
 
 ## Recent News
-  - May 2023: Attending EACL 2023 in-person. Feel free to connect with me.
+  - May 2023: Attended EACL 2023 in-person. Great to meet everyone in Dubrovnik.
   - Apr 2023: [Paper](https://arxiv.org/abs/2211.06993) accepted at [IJCAI 2023](https://ijcai-23.org/).
   - Apr 2023: Will start as Student Researcher in [Google](https://research.google/).
   - Feb 2023: I am reviewing for ACL 2023.
