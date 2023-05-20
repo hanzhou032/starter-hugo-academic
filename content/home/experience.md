@@ -23,7 +23,7 @@ date_format: Jan 2006
 #   Begin multi-line descriptions with YAML's `|2-` multi-line prefix.
 experience:
   - title: Student Researcher
-    company: Google, Responsible AI team
+    company: Google Research, Responsible AI team
     company_url: https://research.google/teams/responsible-ai/
     company_logo: google
     location: London, UK
