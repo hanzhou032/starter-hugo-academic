@@ -18,6 +18,9 @@ social:
     link: https://twitter.com/hanzhou032
   - icon: graduation-cap
     icon_pack: fas
+    link: https://www.semanticscholar.org/author/Han-Zhou/2111825271
+  - icon: google-scholar
+    icon_pack: ai
     link: https://scholar.google.com/citations?hl=en&user=7pXfJVgAAAAJ
   - icon: github
     icon_pack: fab
@@ -25,23 +28,23 @@ social:
   - icon: linkedin
     icon_pack: fab
     link: https://www.linkedin.com/in/hanzhou032
-  organizations:
-    - name: University of Cambridge
-      url: https://www.cam.ac.uk/
-  education:
-    courses:
-      - course: PhD in Computation, Cognition, and Language
-        institution: University of Cambridge
-        year: "Oct 2022 - "
-      - course: MSc in Machine Learning
-        institution: University College London
-        year: "2020 - 2021"
-      - course: BA, MEng in Engineering Science
-        institution: University of Oxford
-        year: "2015 - 2019"
-  email: "hz416@cam.ac.uk"
-  superuser: true
-  highlight_name: true
+organizations:
+  - name: University of Cambridge
+    url: https://www.cam.ac.uk/
+education:
+  courses:
+    - course: PhD in Computation, Cognition, and Language
+      institution: University of Cambridge
+      year: "Oct 2022 - "
+    - course: MSc in Machine Learning
+      institution: University College London
+      year: "2020 - 2021"
+    - course: BA, MEng in Engineering Science
+      institution: University of Oxford
+      year: "2015 - 2019"
+email: "hz416@cam.ac.uk"
+superuser: true
+highlight_name: true
 ---
 I am a first-year PhD student in *Computation, Cognition, ang Language* (NLP) at [Language and Technology Lab](https://ltl.mmll.cam.ac.uk/) and a member of [Downing College](https://www.dow.cam.ac.uk/), [University of Cambridge](https://www.cam.ac.uk/). I am supervised by [Dr Ivan Vulic](https://sites.google.com/site/ivanvulic/) and [Prof Anna Korhonen](https://sites.google.com/site/annakorhonen/).
 
