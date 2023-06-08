@@ -31,6 +31,8 @@ social:
 organizations:
   - name: University of Cambridge
     url: https://www.cam.ac.uk/
+  - name: Google Research
+    url: https://research.google/
 education:
   courses:
     - course: PhD in Computation, Cognition, and Language
