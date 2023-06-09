@@ -48,11 +48,11 @@ email: "hz416@cam.ac.uk"
 superuser: true
 highlight_name: true
 ---
-I am a first-year PhD student in *Computation, Cognition, ang Language* (NLP) at [Language and Technology Lab](https://ltl.mmll.cam.ac.uk/) and a member of [Downing College](https://www.dow.cam.ac.uk/), [University of Cambridge](https://www.cam.ac.uk/). I am supervised by [Dr Ivan Vulic](https://sites.google.com/site/ivanvulic/) and [Prof Anna Korhonen](https://sites.google.com/site/annakorhonen/). I am also a student researcher at [Google Responsible AI Research](https://research.google/teams/responsible-ai/).
+I am a first-year PhD student in *Computation, Cognition, and Language* (NLP) at [Language and Technology Lab](https://ltl.mmll.cam.ac.uk/) and a member of [Downing College](https://www.dow.cam.ac.uk/), [University of Cambridge](https://www.cam.ac.uk/). I am supervised by [Dr Ivan Vulic](https://sites.google.com/site/ivanvulic/) and [Prof Anna Korhonen](https://sites.google.com/site/annakorhonen/). I am also a student researcher at [Google Responsible AI Research](https://research.google/teams/responsible-ai/).
 
 Before starting my PhD, I was an undergraduate student reading [Engineering Science](https://eng.ox.ac.uk/) at [St Hilda's College](https://www.st-hildas.ox.ac.uk/), [University of Oxford](https://www.ox.ac.uk/). I received my second Master degree in MSc Machine Learning, [University College London](https://www.ucl.ac.uk/). I graduated top of my class.
 
-My current research interests are efficient NLP. I am always exploring for more modular, parameter-efficient, and transferable approaches in the field of ML. 
+My current research interests are efficient NLP. I am always exploring more modular, parameter-efficient, and transferable approaches in the field of ML. 
 
 ## Recent News
   - Jun 2023: Start as Student Researcher at [Google Research](https://research.google/).
