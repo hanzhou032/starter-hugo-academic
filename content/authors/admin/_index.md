@@ -16,9 +16,6 @@ social:
   - icon: twitter
     icon_pack: fab
     link: https://twitter.com/hanzhou032
-  - icon: graduation-cap
-    icon_pack: fas
-    link: https://www.semanticscholar.org/author/Han-Zhou/2111825271
   - icon: google-scholar
     icon_pack: ai
     link: https://scholar.google.com/citations?hl=en&user=7pXfJVgAAAAJ
