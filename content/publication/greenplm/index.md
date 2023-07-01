@@ -3,7 +3,7 @@ abstract: "Large pre-trained models have revolutionized natural language process
 slides: ""
 url_pdf: "https://arxiv.org/abs/2211.06993"
 publication_types:
-  - "3"
+  - "1"
 authors:
   - Qingcheng Zeng
   - Lucas Garay
