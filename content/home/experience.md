@@ -23,12 +23,19 @@ date_format: Jan 2006
 #   Begin multi-line descriptions with YAML's `|2-` multi-line prefix.
 experience:
   - title: Student Researcher
+    company: Google DeepMind
+    company_url: https://www.deepmind.com/
+    company_logo: deepmind
+    location: London, UK
+    date_start: '2023-07-13'
+
+  - title: Student Researcher
     company: Google Research
     company_url: https://research.google/
     company_logo: google
     location: London, UK
     date_start: '2023-06-12'
-    date_end: '2023-10-13'
+    date_end: '2023-07-13'
     
   - title: Research Intern
     company: Language Technology Lab, University of Cambridge
