@@ -17,7 +17,7 @@ authors:
 author_notes: []
 publication: "*The 32nd International Joint
 Conference on Artificial Intelligence (IJCAI), 2023.*"
-summary: "AutoPEFT: Automatic Configuration Search for Parameter-Efficient Fine-Tuning"
+summary: "GreenLLM: Cross-Lingual Transfer of Monolingual Large Language Models at Almost No Cost"
 url_dataset: ""
 url_project: ""
 publication_short: "*IJCAI 2023*"
