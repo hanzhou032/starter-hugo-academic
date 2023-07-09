@@ -34,7 +34,7 @@ image:
   preview_only: false
 date: 2023-07-05T00:00:00.000Z
 url_slides: ""
-publishDate: 2023-09-05T00:00:00.000Z
+publishDate: 2023-07-05T00:00:00.000Z
 url_poster: ""
 url_code: ""
 ---

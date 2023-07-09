@@ -28,9 +28,9 @@ image:
   caption: ""
   focal_point: ""
   preview_only: false
-date: 2023-01-28T00:00:00.000Z
+date: 2023-06-12T00:00:00.000Z
 url_slides: ""
-publishDate: 2023-01-28T00:00:00.000Z
+publishDate: 2023-06-12T00:00:00.000Z
 url_poster: ""
 url_code: "https://github.com/cambridgeltl/autopeft"
 ---
