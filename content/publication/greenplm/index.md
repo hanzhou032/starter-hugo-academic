@@ -33,7 +33,7 @@ image:
   preview_only: false
 date: 2022-11-15T00:00:00.000Z
 url_slides: ""
-publishDate: 2022-11-15T00:00:00.000Z
+publishDate: 2023-08-15T00:00:00.000Z
 url_poster: ""
 url_code: ""
 ---
