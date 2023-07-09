@@ -13,7 +13,7 @@ publication: "*Findings of the 17th Conference of the European Chapter of the As
 summary: "Multi-domain and Multi-lingual Dialogue State Tracking."
 url_dataset: ""
 url_project: ""
-publication_short: "*EACL 2023*"
+publication_short: "Findings of the Association for Computational Linguistics (EACL)"
 url_source: ""
 url_video: ""
 title: "XQA-DST: Multi-Domain and Multi-Lingual Dialogue State Tracking"
