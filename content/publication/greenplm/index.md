@@ -15,12 +15,11 @@ authors:
   - Han Zhou
   - Jie Yang
 author_notes: []
-publication: "*The 32nd International Joint
-Conference on Artificial Intelligence (IJCAI), 2023.*"
+publication: "*The 32nd International Joint Conference on Artificial Intelligence (IJCAI), 2023.*"
 summary: "GreenLLM: Cross-Lingual Transfer of Monolingual Large Language Models at Almost No Cost"
 url_dataset: ""
 url_project: ""
-publication_short: "*IJCAI 2023*"
+publication_short: "The 32nd International Joint Conference on Artificial Intelligence (IJCAI)"
 url_source: ""
 url_video: ""
 title: "GreenLLM: Cross-Lingual Transfer of Monolingual Large Language Models at Almost No Cost"
@@ -32,9 +31,9 @@ image:
   caption: ""
   focal_point: ""
   preview_only: false
-date: 2022-11-15T00:00:00.000Z
+date: 2023-05-26T00:00:00.000Z
 url_slides: ""
-publishDate: 2022-11-15T00:00:00.000Z
+publishDate: 2023-05-26T00:00:00.000Z
 url_poster: ""
 url_code: ""
 ---
