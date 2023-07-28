@@ -16,7 +16,7 @@ content:
   autolink: false
 
   # Contact details (edit or remove options as required)
-  email: hz416 [at] cam.ac.uk or hzhouml [at] google.com
+  email: hz416 [at] cam.ac.uk (Cambridge) / hzhouml [at] google.com (Google)
   address:
     street: LTL
     city: University of Cambridge
