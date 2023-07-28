@@ -45,11 +45,11 @@ email: "hz416@cam.ac.uk"
 superuser: true
 highlight_name: true
 ---
-I am a first-year PhD student in *Computation, Cognition, and Language* (NLP) at [Language and Technology Lab](https://ltl.mmll.cam.ac.uk/) and a member of [Downing College](https://www.dow.cam.ac.uk/), [University of Cambridge](https://www.cam.ac.uk/). I am supervised by [Dr Ivan Vulic](https://sites.google.com/site/ivanvulic/) and [Prof Anna Korhonen](https://sites.google.com/site/annakorhonen/). I am also a student researcher at [Google DeepMind](https://www.deepmind.com/).
+I am a first-year PhD student in *Computation, Cognition, and Language* (NLP) at [Language and Technology Lab](https://ltl.mmll.cam.ac.uk/) and a member of [Downing College](https://www.dow.cam.ac.uk/), [University of Cambridge](https://www.cam.ac.uk/). I am supervised by [Dr Ivan Vulic](https://sites.google.com/site/ivanvulic/) and [Prof Anna Korhonen](https://sites.google.com/site/annakorhonen/). I am also a student researcher at [Google Research](https://research.google/), collaborating with [Google DeepMind](https://deepmind.com/).
 
 Before starting my PhD, I was an undergraduate student reading [Engineering Science](https://eng.ox.ac.uk/) at [St Hilda's College](https://www.st-hildas.ox.ac.uk/), [University of Oxford](https://www.ox.ac.uk/). I received my second Master degree in MSc Machine Learning, [University College London](https://www.ucl.ac.uk/). I graduated top of my class.
 
-My current research interests are efficient NLP. I am always exploring more modular, parameter-efficient, and transferable approaches in the field of ML. 
+I am always interested in modular, efficient, and reward-driven responsible intelligence. 
 
 ## Recent News
   - Jul 2023: I am reviewing for EMNLP 2023.
