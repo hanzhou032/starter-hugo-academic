@@ -13,6 +13,7 @@ authors:
   - Jiageng Wu
   - Yikang Pan
   - Han Zhou
+  - Rob Voigt
   - Jie Yang
 author_notes: []
 publication: "*The 32nd International Joint Conference on Artificial Intelligence (IJCAI), 2023.*"
