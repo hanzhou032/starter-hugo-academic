@@ -16,13 +16,13 @@ authors:
   - Jie Yang
 author_notes: []
 publication: "*The 32nd International Joint Conference on Artificial Intelligence (IJCAI), 2023.*"
-summary: "GreenLLM: Cross-Lingual Transfer of Monolingual Large Language Models at Almost No Cost"
+summary: "GreenPLM: Cross-Lingual Transfer of Monolingual Large Language Models at Almost No Cost"
 url_dataset: ""
 url_project: ""
 publication_short: "The 32nd International Joint Conference on Artificial Intelligence (IJCAI)"
 url_source: ""
 url_video: ""
-title: "GreenLLM: Cross-Lingual Transfer of Monolingual Large Language Models at Almost No Cost"
+title: "GreenPLM: Cross-Lingual Transfer of Monolingual Large Language Models at Almost No Cost"
 doi: ""
 featured: true
 tags: []
