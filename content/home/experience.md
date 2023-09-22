@@ -21,14 +21,13 @@ date_format: Jan 2006
 #   Required fields are `title`, `company`, and `date_start`.
 #   Leave `date_end` empty if it's your current employer.
 #   Begin multi-line descriptions with YAML's `|2-` multi-line prefix.
+  # - title: Student Researcher
+  #   company: Google DeepMind
+  #   company_url: https://www.deepmind.com/
+  #   company_logo: deepmind
+  #   location: London, UK
+  #   date_start: '2023-07-13'
 experience:
-  - title: Student Researcher
-    company: Google DeepMind
-    company_url: https://www.deepmind.com/
-    company_logo: deepmind
-    location: London, UK
-    date_start: '2023-07-13'
-
   - title: Student Researcher
     company: Google Research
     company_url: https://research.google/
