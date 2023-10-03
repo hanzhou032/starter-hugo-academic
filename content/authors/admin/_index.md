@@ -51,7 +51,8 @@ Before starting my PhD, I was an undergraduate student reading [Engineering Scie
 I am always interested in modular, efficient, and reward-driven responsible intelligence. 
 
 ## Recent News
-  - Sep 2023: Check my new work on LLMs at Google: [Batch Calibration](https://arxiv.org/abs/2309.17249).
+  - Oct 2023: I will continue as a part-time Student Researcher at Google.
+  - Sep 2023: New work on LLMs at Google: [Batch Calibration](https://arxiv.org/abs/2309.17249).
   - Jul 2023: Paper accepted at [TACL 2023](https://transacl.org/index.php/tacl)!
   - Jun 2023: Start as Student Researcher at [Google Research](https://research.google/).
   - May 2023: Attended EACL 2023 in-person. Great to meet everyone in Dubrovnik.
