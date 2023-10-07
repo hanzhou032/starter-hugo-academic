@@ -51,6 +51,7 @@ Before starting my PhD, I was an undergraduate student reading [Engineering Scie
 I am always interested in modular, efficient, and reward-driven responsible intelligence. 
 
 ## Recent News
+  - Oct 2023: Two papers accepted at [EMNLP 2023](https://2023.emnlp.org/)! See you in Singapore!
   - Sep 2023: New work on LLMs at Google: [Batch Calibration](https://arxiv.org/abs/2309.17249).
   - Jul 2023: Paper accepted at [TACL 2023](https://transacl.org/index.php/tacl)!
   - Jun 2023: Start as Student Researcher at [Google Research](https://research.google/).
