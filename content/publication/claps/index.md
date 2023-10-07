@@ -12,11 +12,11 @@ authors:
 author_notes: 
   - "Equal contribution"
   - "Equal contribution"
-publication: "*Findings of The 2023 Conference on Empirical Methods in Natural Language Processing (EMNLP), 2023.*"
+publication: "Findings of The 2023 Conference on Empirical Methods in Natural Language Processing (EMNLP), 2023"
 summary: "Survival of the Most Influential Prompts: Efficient Black-Box Prompt Search via Clustering and Pruning"
 url_dataset: ""
 url_project: ""
-publication_short: "*Findings of The 2023 Conference on Empirical Methods in Natural Language Processing (EMNLP), 2023.*"
+publication_short: "Findings of the Association for Computational Linguistics (EMNLP)"
 url_source: ""
 url_video: ""
 title: "Survival of the Most Influential Prompts: Efficient Black-Box Prompt Search via Clustering and Pruning"

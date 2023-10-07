@@ -16,7 +16,7 @@ authors:
   - Rob Voigt
   - Jie Yang
 author_notes: []
-publication: "*The 32nd International Joint Conference on Artificial Intelligence (IJCAI), 2023.*"
+publication: "The 32nd International Joint Conference on Artificial Intelligence (IJCAI), 2023"
 summary: "GreenPLM: Cross-Lingual Transfer of Monolingual Large Language Models at Almost No Cost"
 url_dataset: ""
 url_project: ""
@@ -25,7 +25,7 @@ url_source: ""
 url_video: ""
 title: "GreenPLM: Cross-Lingual Transfer of Monolingual Large Language Models at Almost No Cost"
 doi: ""
-featured: true
+featured: false
 tags: []
 projects: []
 image:

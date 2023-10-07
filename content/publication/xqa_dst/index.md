@@ -9,7 +9,7 @@ authors:
   - Ignacio Iacobacci
   - Pasquale Minervini
 author_notes: []
-publication: "*Findings of the 17th Conference of the European Chapter of the Association for Computational Linguistics (EACL), 2023.*"
+publication: "*Findings of the 17th Conference of the European Chapter of the Association for Computational Linguistics (EACL), 2023*"
 summary: "Multi-domain and Multi-lingual Dialogue State Tracking."
 url_dataset: ""
 url_project: ""

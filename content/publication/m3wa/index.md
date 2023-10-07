@@ -13,11 +13,11 @@ authors:
   - Ignacio Iacobacci
   - Anna Korhonen
   - Ivan Vulić
-publication: "*Proceedings of The 2023 Conference on Empirical Methods in Natural Language Processing (EMNLP), 2023.*"
+publication: "In *Proceedings of The 2023 Conference on Empirical Methods in Natural Language Processing (EMNLP), 2023*"
 summary: "A Systematic Study of Performance Disparities in Multilingual Task-Oriented Dialogue Systems"
 url_dataset: ""
 url_project: ""
-publication_short: "*Proceedings of The 2023 Conference on Empirical Methods in Natural Language Processing (EMNLP), 2023.*"
+publication_short: "The 2023 Conference on Empirical Methods in Natural Language Processing (EMNLP)"
 url_source: ""
 url_video: ""
 title: "A Systematic Study of Performance Disparities in Multilingual Task-Oriented Dialogue Systems"
