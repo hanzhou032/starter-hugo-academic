@@ -27,7 +27,7 @@ item:
   date_end: ""
   date_start: "2023-10-01"
   description: ""
-  organization: EPSRC
+  organization: UKRI EPSRC
   organization_url: https://www.ukri.org/councils/epsrc/
   title: EPSRC/EQUATE PhD Studentship
   url: https://www.ukri.org/councils/epsrc/
