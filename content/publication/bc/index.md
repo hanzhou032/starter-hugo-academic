@@ -17,7 +17,7 @@ summary: "Batch Calibration: Rethinking Calibration for In-Context Learning and 
 url_dataset: ""
 url_project: ""
 publication_short: "*arXiv:2309.17249*"
-url_source: ""
+url_source: "https://blog.research.google/2023/10/batch-calibration-rethinking.html"
 url_video: ""
 title: "Batch Calibration: Rethinking Calibration for In-Context Learning and Prompt Engineering"
 doi: ""
