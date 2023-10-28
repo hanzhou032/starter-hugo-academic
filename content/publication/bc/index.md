@@ -12,11 +12,11 @@ authors:
   - Jilin Chen
   - Katherine Heller
   - Subhrajit Roy
-publication: "*arXiv:2309.17249*"
+publication: "Advances in Neural Information Processing Systems (NeurIPS 2023 R0-FoMo)"
 summary: "Batch Calibration: Rethinking Calibration for In-Context Learning and Prompt Engineering"
 url_dataset: ""
 url_project: ""
-publication_short: "*arXiv:2309.17249*"
+publication_short: "Advances in Neural Information Processing Systems (NeurIPS 2023 R0-FoMo)"
 url_source: ""
 url_video: ""
 title: "Batch Calibration: Rethinking Calibration for In-Context Learning and Prompt Engineering"
