@@ -28,9 +28,9 @@ image:
   caption: ""
   focal_point: ""
   preview_only: false
-date: 2023-09-29T00:00:00.000Z
+date: 2023-10-25T00:00:00.000Z
 url_slides: ""
-publishDate: 2023-09-29T00:00:00.000Z
+publishDate: 2023-10-25T00:00:00.000Z
 url_poster: ""
 url_code: ""
 links:
