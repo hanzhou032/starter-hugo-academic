@@ -51,10 +51,10 @@ Before starting my PhD, I was an undergraduate student reading [Engineering Scie
 I am always interested in modular, efficient, and reward-driven responsible intelligence. 
 
 ## Recent News
-  - Oct 2023: [Batch Calibration](https://arxiv.org/abs/2309.17249) was accepted at [NeurIPS 2023 R0-FoMo].
+  - Oct 2023: [Batch Calibration](https://arxiv.org/abs/2309.17249) was accepted at [NeurIPS 2023 R0-FoMo](https://sites.google.com/view/r0-fomo).
   - Oct 2023: [Two papers](https://arxiv.org/abs/2310.12774) accepted at [EMNLP 2023](https://2023.emnlp.org/)!
   - Sep 2023: New work on LLMs featured in Google AI blog: [Batch Calibration](https://blog.research.google/2023/10/batch-calibration-rethinking.html).
-  - Jul 2023: [Multi3WOZ] was accepted at [TACL 2023](https://transacl.org/index.php/tacl)!
+  - Jul 2023: [Multi3WOZ](https://arxiv.org/abs/2307.14031v1) was accepted at [TACL 2023](https://transacl.org/index.php/tacl)!
   - Jun 2023: Start as Student Researcher at [Google Research](https://research.google/).
   - May 2023: Attended EACL 2023 in-person. Great to meet everyone in Dubrovnik.
 
