@@ -1,7 +1,7 @@
 ---
-abstract: "https://arxiv.org/abs/2307.14031v1"
+abstract: "https://doi.org/10.1162/tacl\_a\_00609"
 slides: ""
-url_pdf: "https://arxiv.org/pdf/2307.14031v1.pdf"
+url_pdf: "https://direct.mit.edu/tacl/article-pdf/doi/10.1162/tacl\_a\_00609/2184060/tacl\_a\_00609.pdf"
 publication_types:
   - "2"
 authors:
