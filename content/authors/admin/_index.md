@@ -44,18 +44,16 @@ email: "hz416@cam.ac.uk"
 superuser: true
 highlight_name: true
 ---
-I am a second-year PhD student in *Computation, Cognition, and Language* (NLP) at [Language and Technology Lab](https://ltl.mmll.cam.ac.uk/), [University of Cambridge](https://www.cam.ac.uk/). I am supervised by [Dr Ivan Vulic](https://sites.google.com/site/ivanvulic/) and [Prof Anna Korhonen](https://sites.google.com/site/annakorhonen/). I am also a student researcher at [Google Research](https://research.google/).
+I am a second-year PhD student in *Computation, Cognition, and Language* (NLP) at [Language and Technology Lab](https://ltl.mmll.cam.ac.uk/), [University of Cambridge](https://www.cam.ac.uk/). I am supervised by [Dr Ivan Vulic](https://sites.google.com/site/ivanvulic/) and [Prof Anna Korhonen](https://sites.google.com/site/annakorhonen/). Previously, I was a student researcher at [Google Research](https://research.google/).
 
 Before starting my PhD, I was an undergraduate student reading [Engineering Science](https://eng.ox.ac.uk/) at [University of Oxford](https://www.ox.ac.uk/). I received my second Master degree in MSc Machine Learning, [University College London](https://www.ucl.ac.uk/). I graduated top of my class.
 
 I am always interested in modular, efficient, and reward-driven responsible intelligence. 
 
 ## Recent News
-  - Dec 2023: Attended EMNLP 2023 in-person. Lovely place!
-  - Oct 2023: [Batch Calibration](https://arxiv.org/abs/2309.17249) was accepted at [NeurIPS 2023 R0-FoMo](https://sites.google.com/view/r0-fomo).
+  - Jan 2024: [Batch Calibration](https://arxiv.org/abs/2309.17249) is accepted to ICLR 2024! Batch Calibration has been featured in Google AI blog: [Batch Calibration](https://blog.research.google/2023/10/batch-calibration-rethinking.html) and presented as a spotlight at [NeurIPS 2023 R0-FoMo](https://sites.google.com/view/r0-fomo).
+  - Dec 2023: Attended EMNLP 2023 in-person. Glad to meet everyone!
   - Oct 2023: [Two papers](https://arxiv.org/abs/2310.12774) accepted at [EMNLP 2023](https://2023.emnlp.org/)!
-  - Sep 2023: New work on LLMs featured in Google AI blog: [Batch Calibration](https://blog.research.google/2023/10/batch-calibration-rethinking.html).
   - Jul 2023: [Multi3WOZ](https://arxiv.org/abs/2307.14031v1) was accepted at [TACL 2023](https://transacl.org/index.php/tacl)!
   - Jun 2023: Start as Student Researcher at [Google Research](https://research.google/).
   - May 2023: Attended EACL 2023 in-person. Great to meet everyone in Dubrovnik.
-

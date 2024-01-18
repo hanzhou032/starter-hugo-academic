@@ -3,7 +3,7 @@ abstract: "Prompting and in-context learning (ICL) have become efficient learnin
 slides: ""
 url_pdf: "https://arxiv.org/abs/2309.17249"
 publication_types:
-  - "3"
+  - "1"
 authors:
   - Han Zhou
   - Xingchen Wan
@@ -12,11 +12,11 @@ authors:
   - Jilin Chen
   - Katherine Heller
   - Subhrajit Roy
-publication: "Advances in Neural Information Processing Systems (NeurIPS 2023 R0-FoMo)"
+publication: "International Conference on Learning Representations (ICLR)"
 summary: "Batch Calibration: Rethinking Calibration for In-Context Learning and Prompt Engineering"
 url_dataset: ""
 url_project: ""
-publication_short: "Advances in Neural Information Processing Systems (NeurIPS 2023 R0-FoMo)"
+publication_short: "International Conference on Learning Representations (ICLR)"
 url_source: ""
 url_video: ""
 title: "Batch Calibration: Rethinking Calibration for In-Context Learning and Prompt Engineering"
@@ -28,9 +28,9 @@ image:
   caption: ""
   focal_point: ""
   preview_only: false
-date: 2023-10-25T00:00:00.000Z
+date: 2024-01-01T00:00:00.000Z
 url_slides: ""
-publishDate: 2023-10-25T00:00:00.000Z
+publishDate: 2024-01-01T00:00:00.000Z
 url_poster: ""
 url_code: ""
 links:
