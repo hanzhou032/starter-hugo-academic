@@ -34,6 +34,7 @@ experience:
     company_logo: google
     location: London, UK
     date_start: '2023-06-12'
+    date_end: '2023-12-29'
     
   - title: Research Intern
     company: Language Technology Lab, University of Cambridge
