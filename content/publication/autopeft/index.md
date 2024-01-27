@@ -22,7 +22,9 @@ url_video: ""
 title: "AutoPEFT: Automatic Configuration Search for Parameter-Efficient Fine-Tuning"
 doi: ""
 featured: true
-tags: []
+tags: 
+  - "Parameter-Efficient Fine-Tuning"
+  - "AutoML"
 projects: []
 image:
   caption: ""
