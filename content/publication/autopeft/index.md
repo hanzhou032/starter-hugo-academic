@@ -3,7 +3,7 @@ abstract: "Large pretrained language models have been widely used in downstream 
 slides: ""
 url_pdf: "https://arxiv.org/abs/2301.12132"
 publication_types:
-  - "3"
+  - "2"
 authors:
   - Han Zhou
   - Xingchen Wan
@@ -12,11 +12,11 @@ authors:
 author_notes: 
   - "Equal contribution"
   - "Equal contribution"
-publication: "*arXiv:2301.12132*"
+publication: "*Transactions of the Association for Computational Linguistics (TACL)*"
 summary: "AutoPEFT: Automatic Configuration Search for Parameter-Efficient Fine-Tuning"
 url_dataset: ""
 url_project: ""
-publication_short: "*arXiv:2301.12132*"
+publication_short: "Transactions of the Association for Computational Linguistics (TACL)"
 url_source: ""
 url_video: ""
 title: "AutoPEFT: Automatic Configuration Search for Parameter-Efficient Fine-Tuning"
@@ -28,9 +28,9 @@ image:
   caption: ""
   focal_point: ""
   preview_only: false
-date: 2023-06-12T00:00:00.000Z
+date: 2024-01-02T00:00:00.000Z
 url_slides: ""
-publishDate: 2023-06-12T00:00:00.000Z
+publishDate: 2024-01-02T00:00:00.000Z
 url_poster: ""
 url_code: "https://github.com/cambridgeltl/autopeft"
 ---
