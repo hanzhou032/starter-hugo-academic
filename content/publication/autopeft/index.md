@@ -13,7 +13,7 @@ author_notes:
   - "Equal contribution"
   - "Equal contribution"
 publication: "*Transactions of the Association for Computational Linguistics (TACL)*"
-summary: "Automatic discovery of families of high-performing PEFT configurations"
+summary: "Automatic discovery of families of high-performing PEFT configurations."
 url_dataset: ""
 url_project: ""
 publication_short: "Transactions of the Association for Computational Linguistics (TACL)"
