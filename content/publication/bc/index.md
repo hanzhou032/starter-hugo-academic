@@ -5,7 +5,7 @@ url_pdf: "https://arxiv.org/pdf/2309.17249.pdf"
 publication_types:
   - "1"
 authors:
-  - Han Zhou
+  - admin
   - Xingchen Wan
   - Lev Proleev
   - Diana Mincu
