@@ -21,7 +21,7 @@ url_source: ""
 url_video: ""
 title: "Survival of the Most Influential Prompts: Efficient Black-Box Prompt Search via Clustering and Pruning"
 doi: ""
-featured: true
+featured: false
 tags: 
   - "Natural Language Processing"
   - "Large Language Models"

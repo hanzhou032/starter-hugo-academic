@@ -18,7 +18,7 @@ url_source: ""
 url_video: ""
 title: "XQA-DST: Multi-Domain and Multi-Lingual Dialogue State Tracking"
 doi: ""
-featured: true
+featured: false
 tags: 
   - "Natural Language Processing"
   - "Large Language Models"

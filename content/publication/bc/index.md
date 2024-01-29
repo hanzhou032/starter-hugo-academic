@@ -13,7 +13,7 @@ authors:
   - Katherine Heller
   - Subhrajit Roy
 publication: "International Conference on Learning Representations (ICLR)"
-summary: "Batch Calibration: Rethinking Calibration for In-Context Learning and Prompt Engineering"
+summary: "Mitigating prompt biases and unifying existing calibration approaches without labeled data."
 url_dataset: ""
 url_project: ""
 publication_short: "International Conference on Learning Representations (ICLR)"

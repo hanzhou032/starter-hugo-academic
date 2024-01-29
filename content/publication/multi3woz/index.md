@@ -25,7 +25,7 @@ url_source: ""
 url_video: ""
 title: "Multi3WOZ: A Multilingual, Multi-Domain, Multi-Parallel Dataset for Training and Evaluating Culturally Adapted Task-Oriented Dialog Systems"
 doi: ""
-featured: true
+featured: false
 tags: 
   - "Natural Language Processing"
   - "Multi-Lingual Learning"
