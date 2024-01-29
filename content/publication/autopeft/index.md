@@ -30,7 +30,7 @@ tags:
 projects: []
 image:
   caption: ""
-  focal_point: Smart
+  focal_point: “”
   preview_only: false
 date: 2024-01-02T00:00:00.000Z
 url_slides: ""
