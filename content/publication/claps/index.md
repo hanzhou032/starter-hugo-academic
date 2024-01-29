@@ -43,8 +43,6 @@ links:
   url: https://arxiv.org/abs/2310.12774
 - name: "OpenReview"
   url: https://openreview.net/forum?id=BB1qrcPgRu
-- name: "EMNLP 2023"
-  url: https://aclanthology.org/2023.findings-emnlp.870.pdf
 - name: "ACL Anthology"
   url: https://aclanthology.org/2023.findings-emnlp.870
 ---

@@ -37,7 +37,7 @@ image:
 date: 2024-01-03T00:00:00.000Z
 url_slides: ""
 publishDate: 2024-01-03T00:00:00.000Z
-url_poster: "https://neurips.cc/media/PosterPDFs/NeurIPS%202023/76688.png?t=1700446247.1879952"
+url_poster: ""
 url_code: ""
 links:
 - name: "Abstract"

@@ -24,7 +24,7 @@ publication_short: "The 32nd International Joint Conference on Artificial Intell
 url_source: ""
 url_video: ""
 title: "GreenPLM: Cross-Lingual Transfer of Monolingual Large Language Models at Almost No Cost"
-doi: "10.24963/ijcai.2023/698"
+doi: ""
 featured: false
 tags: 
   - "Natural Language Processing"

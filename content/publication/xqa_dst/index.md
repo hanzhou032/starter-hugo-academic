@@ -17,7 +17,7 @@ publication_short: "Findings of the Association for Computational Linguistics (E
 url_source: ""
 url_video: ""
 title: "XQA-DST: Multi-Domain and Multi-Lingual Dialogue State Tracking"
-doi: "10.18653/v1/2023.findings-eacl.73"
+doi: ""
 featured: true
 tags: 
   - "Natural Language Processing"
@@ -37,8 +37,6 @@ url_code: "https://github.com/hanzhou032/xqa-dst"
 links:
 - name: "Abstract"
   url: https://arxiv.org/abs/2204.05895
-- name: "EACL 2023"
-  url: https://aclanthology.org/2023.findings-eacl.73.pdf
 - name: "ACL Anthology"
   url: https://aclanthology.org/2023.findings-eacl.73
 ---
