@@ -42,7 +42,7 @@ email: "hz416@cam.ac.uk"
 superuser: true
 highlight_name: true
 ---
-I am a second-year PhD student in *Computation, Cognition, and Language* (NLP) at [Language and Technology Lab](https://ltl.mmll.cam.ac.uk/), [University of Cambridge](https://www.cam.ac.uk/). I am supervised by [Dr Ivan Vulic](https://sites.google.com/site/ivanvulic/) and [Prof Anna Korhonen](https://sites.google.com/site/annakorhonen/). Previously, I was a student researcher at [Google Research](https://research.google/).
+I am a second-year PhD student in *Computation, Cognition, and Language* (NLP) at [Language and Technology Lab](https://ltl.mmll.cam.ac.uk/), [University of Cambridge](https://www.cam.ac.uk/). I am supervised by [Dr Ivan Vulic](https://sites.google.com/site/ivanvulic/) and [Prof Anna Korhonen](https://sites.google.com/site/annakorhonen/). Previously, I was a student researcher in the [Gemini & Bard Safety Team](https://research.google/teams/responsible-ai/) at [Google Research](https://research.google/).
 
 Before starting my PhD, I was an undergraduate student reading [Engineering Science](https://eng.ox.ac.uk/) at [University of Oxford](https://www.ox.ac.uk/). I received my second Master degree in MSc Machine Learning, [University College London](https://www.ucl.ac.uk/). I graduated top of my class.
 
