@@ -22,7 +22,13 @@ url_video: ""
 title: "Batch Calibration: Rethinking Calibration for In-Context Learning and Prompt Engineering"
 doi: ""
 featured: true
-tags: []
+tags: 
+  - "Natural Language Processing"
+  - "Large Language Models"
+  - "In-Context Learning"
+  - "Prompt Engineering"
+  - "Calibration"
+  - "Responsible AI"
 projects: []
 image:
   caption: ""
@@ -31,7 +37,7 @@ image:
 date: 2024-01-03T00:00:00.000Z
 url_slides: ""
 publishDate: 2024-01-03T00:00:00.000Z
-url_poster: ""
+url_poster: "https://neurips.cc/media/PosterPDFs/NeurIPS%202023/76688.png?t=1700446247.1879952"
 url_code: ""
 links:
 - name: "Abstract"
@@ -40,6 +46,6 @@ links:
   url: https://openreview.net/forum?id=L3FHMoKZcS
 - name: "Blog (Google AI)"
   url: https://blog.research.google/2023/10/batch-calibration-rethinking.html
-- name: "NeurIPS R0-FoMo [Spotlight]"
+- name: "Talk (NeurIPS Spotlight)"
   url: https://neurips.cc/virtual/2023/76688
 ---
