@@ -5,7 +5,7 @@ url_pdf: "https://arxiv.org/pdf/2310.12774.pdf"
 publication_types:
   - "1"
 authors:
-  - Han Zhou
+  - admin
   - Xingchen Wan
   - Ivan Vulić
   - Anna Korhonen

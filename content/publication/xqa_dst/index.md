@@ -5,7 +5,7 @@ url_pdf: "https://arxiv.org/pdf/2204.05895.pdf"
 publication_types:
   - "1"
 authors:
-  - Han Zhou
+  - admin
   - Ignacio Iacobacci
   - Pasquale Minervini
 author_notes: []

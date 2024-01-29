@@ -6,7 +6,7 @@ publication_types:
   - "2"
 authors:
   - Songbo Hu
-  - Han Zhou
+  - admin
   - Mete Hergul
   - Milan Gritta
   - Guchun Zhang

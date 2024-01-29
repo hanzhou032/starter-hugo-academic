@@ -6,7 +6,7 @@ publication_types:
   - "1"
 authors:
   - Songbo Hu
-  - Han Zhou
+  - admin
   - Zhangdie Yuan
   - Milan Gritta
   - Guchun Zhang
