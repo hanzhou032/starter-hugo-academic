@@ -19,11 +19,7 @@ url_video: ""
 title: "XQA-DST: Multi-Domain and Multi-Lingual Dialogue State Tracking"
 doi: ""
 featured: false
-tags: 
-  - "Natural Language Processing"
-  - "Large Language Models"
-  - "Multi-Lingual Learning"
-  - "Task-Oriented Dialogues"
+tags: []
 projects: []
 image:
   caption: ""
