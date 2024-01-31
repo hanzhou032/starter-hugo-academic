@@ -42,7 +42,7 @@ email: "hz416@cam.ac.uk"
 superuser: true
 highlight_name: true
 ---
-I am a second-year PhD student in *Computation, Cognition, and Language* (NLP) at [Language and Technology Lab](https://ltl.mmll.cam.ac.uk/), [University of Cambridge](https://www.cam.ac.uk/). I am supervised by [Dr Ivan Vulic](https://sites.google.com/site/ivanvulic/) and [Prof Anna Korhonen](https://sites.google.com/site/annakorhonen/). Previously, I was a student researcher in the [Gemini & Bard Safety Team](https://research.google/teams/responsible-ai/) at [Google Research](https://research.google/).
+I am a second-year PhD student in *Computation, Cognition, and Language* (NLP) at [Language Technology Lab](https://ltl.mmll.cam.ac.uk/), [University of Cambridge](https://www.cam.ac.uk/). I am supervised by [Ivan Vulić](https://sites.google.com/site/ivanvulic/) and [Anna Korhonen](https://sites.google.com/site/annakorhonen/). Previously, I interned at the [Gemini & Bard Safety Team](https://research.google/teams/responsible-ai/) at [Google Research](https://research.google/).
 
 Before starting my PhD, I was an undergraduate student reading [Engineering Science](https://eng.ox.ac.uk/) at [University of Oxford](https://www.ox.ac.uk/). I received my second Master degree in MSc Machine Learning, [University College London](https://www.ucl.ac.uk/). I graduated top of my class.
 
@@ -54,5 +54,5 @@ I am always interested in modular, efficient, and reward-driven responsible inte
   - Dec 2023: Attended EMNLP 2023 in-person. Glad to meet folks in Singapore!
   - Oct 2023: **[ClaPS](https://arxiv.org/abs/2310.12774) and [Multilingual Disparity](https://arxiv.org/pdf/2310.12892.pdf) were accepted at [EMNLP 2023](https://2023.emnlp.org/)!**
   - Jul 2023: **[Multi3WOZ](https://arxiv.org/abs/2307.14031v1) was accepted at [TACL 2023](https://transacl.org/index.php/tacl)!**
-  - Jun 2023: Start as Student Researcher at [Google Research](https://research.google/).
+  - Jun 2023: Start my intern journey at [Google Research](https://research.google/).
   - May 2023: Attended EACL 2023 in-person. Great to meet everyone in Dubrovnik.
