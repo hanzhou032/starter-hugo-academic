@@ -13,7 +13,7 @@ author_notes:
   - "Equal contribution"
   - "Equal contribution"
 publication: "Findings of The 2023 Conference on Empirical Methods in Natural Language Processing (EMNLP), 2023"
-summary: "The critical role of search space design and optimization in the efficiency of black-box prompt learning."
+summary: "Efficient prompt optimization via influential search space pruning."
 url_dataset: ""
 url_project: ""
 publication_short: "Findings of the Association for Computational Linguistics (EMNLP)"
