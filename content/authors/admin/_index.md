@@ -6,8 +6,9 @@ interests:
   - Parameter-Efficient Fine-Tuning
   - Large Language Models
   - Prompt Optimization
-  - Reasoning and Planning
-  - Responsible AI
+  - Reasoning (Multi-Modal)
+  - Controlled Generation
+  - Human Alignment
 
 social:
   - icon: twitter
