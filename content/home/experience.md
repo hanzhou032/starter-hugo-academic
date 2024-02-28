@@ -29,7 +29,7 @@ date_format: Jan 2006
   #   date_start: '2023-07-13'
 experience:
   - title: Student Researcher
-    company: Google Research, Gemini Safety Team
+    company: Google Research
     company_url: https://research.google/
     company_logo: google
     location: London, UK
