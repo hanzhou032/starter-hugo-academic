@@ -60,6 +60,14 @@ experience:
     date_start: '2019-07-01'
     date_end: '2020-08-01'
 
+  - title: Research Student
+    company: Oxford Robotics Institute
+    company_url: https://ori.ox.ac.uk/
+    company_logo: ori
+    location: Oxford, UK
+    date_start: '2019-06-01'
+    date_end: '2019-02-01'
+
   - title: Robotics Intern
     company: RACE, UK Atomic Energy Authority
     company_url: https://race.ukaea.uk/
