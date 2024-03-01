@@ -37,7 +37,7 @@ experience:
     date_end: '2023-12-29'
     
   - title: Research Intern
-    company: Language Technology Lab, University of Cambridge
+    company: Language Technology Lab
     company_url: https://ltl.mmll.cam.ac.uk/
     company_logo: LTL_BW_Mini
     location: Cambridge, UK
@@ -69,7 +69,7 @@ experience:
     date_end: '2018-09-01'
 
   - title: Research Intern
-    company: Battery Intelligence Lab, University of Oxford
+    company: Battery Intelligence Lab
     company_url: https://howey.eng.ox.ac.uk/
     company_logo: oxford
     location: Oxford, UK
