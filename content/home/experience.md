@@ -43,6 +43,14 @@ experience:
     location: Cambridge, UK
     date_start: '2022-03-01'
     date_end: '2022-09-01'
+    
+  - title: Research Student
+    company: UCL NLP Lab
+    company_url: https://nlp.cs.ucl.ac.uk/
+    company_logo: uclnlp
+    location: London, UK
+    date_start: '2021-05-01'
+    date_end: '2021-10-01'
 
   - title: Game Designer
     company: Tencent
