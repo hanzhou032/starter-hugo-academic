@@ -42,8 +42,8 @@ publishDate: 2024-01-03T00:00:00.000Z
 url_poster: ""
 url_code: ""
 links:
-- name: "Abstract"
-  url: https://arxiv.org/abs/2309.17249
+- name: "Abstract (Google Research)"
+  url: https://research.google/pubs/batch-calibration-rethinking-calibration-for-in-context-learning-and-prompt-engineering/
 - name: "OpenReview"
   url: https://openreview.net/forum?id=L3FHMoKZcS
 - name: "Blog (Google AI)"
