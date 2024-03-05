@@ -3,18 +3,18 @@ abstract: "Following the standard supervised fine-tuning (SFT) paradigm, in-cont
 slides: ""
 url_pdf: "https://arxiv.org/pdf/2312.13772.pdf"
 publication_types:
-  - "3"
+  - "1"
 authors:
   - Chengzu Li
   - admin
   - Goran Glavaš
   - Anna Korhonen
   - Ivan Vulić
-publication: "*arXiv preprint arXiv:2312.13772*"
+publication: "ICLR 2024 Workshop on Reliable and Responsible Foundation Models"
 summary: "On Task Performance and Model Calibration with Supervised and Self-Ensembled In-Context Learning."
 url_dataset: ""
 url_project: ""
-publication_short: "arXiv preprint arXiv:2312.13772"
+publication_short: "ICLR 2024 Workshop on Reliable and Responsible Foundation Models"
 url_source: ""
 url_video: ""
 title: "On Task Performance and Model Calibration with Supervised and Self-Ensembled In-Context Learning"
