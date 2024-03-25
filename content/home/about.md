@@ -17,7 +17,7 @@ title: Biography
 design:
   columns: "1"
   background: 
-    image: background2.jpg
+    image: background.jpg
     image_darken: 0.3
     image_size: default
     image_position: center
