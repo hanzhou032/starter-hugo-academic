@@ -27,9 +27,9 @@ item:
   date_end: ""
   date_start: "2023-10-01"
   description: ""
-  organization: UKRI EPSRC
+  organization: UKRI ERC
   organization_url: https://www.ukri.org/councils/epsrc/
-  title: EPSRC/EQUATE PhD Studentship
+  title: UKRI Frontier EQUATE PhD Studentship
   url: https://www.ukri.org/councils/epsrc/
 - certificate_url: ""
   date_end: ""
