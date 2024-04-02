@@ -60,8 +60,8 @@ experience:
     date_start: '2019-07-01'
     date_end: '2020-08-01'
 
-  - title: Robotics Intern
-    company: RACE, UK Atomic Energy Authority
+  - title: Research Intern
+    company: RACE
     company_url: https://race.ukaea.uk/
     company_logo: RACE
     location: Culham, UK
