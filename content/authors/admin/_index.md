@@ -3,13 +3,11 @@ title: Han Zhou
 role: PhD student in NLP
 avatar_filename: avatar.jpg
 interests:
-  - Parameter-Efficient Fine-Tuning
   - Large Language Models
+  - Parameter-Efficient Fine-Tuning
   - Prompt Optimization
-  - Reasoning (Multi-Modal)
-  - Controlled Generation
-  - Human Alignment
-
+  - Modularity
+  
 social:
   - icon: twitter
     icon_pack: fab
@@ -51,10 +49,10 @@ Before starting my PhD, I was an undergraduate student reading [Engineering Scie
 I am always interested in modular, efficient, and reward-driven responsible intelligence. 
 
 ## Recent News
+  - Apr 2024: I will be joining [Google Cloud AI Research](https://research.google/teams/cloud-ai/) as a Student Researcher this summer.
   - Jan 2024: **[AutoPEFT](https://arxiv.org/abs/2301.12132) was accepted at [TACL 2024](https://transacl.org/index.php/tacl)!** We will present this work at [ACL 2024](https://2024.aclweb.org/).
   - Jan 2024: **[Batch Calibration](https://arxiv.org/abs/2309.17249) is accepted to ICLR 2024!** Batch Calibration has been featured in [Google AI blog](https://blog.research.google/2023/10/batch-calibration-rethinking.html) and presented as a spotlight at [NeurIPS 2023 R0-FoMo](https://sites.google.com/view/r0-fomo).
   - Dec 2023: Attended EMNLP 2023 in-person. Glad to meet folks in Singapore.
   - Oct 2023: **[ClaPS](https://arxiv.org/abs/2310.12774) and [Multilingual Disparity](https://arxiv.org/pdf/2310.12892.pdf) were accepted at [EMNLP 2023](https://2023.emnlp.org/)!**
   - Jul 2023: **[Multi3WOZ](https://arxiv.org/abs/2307.14031v1) was accepted at [TACL 2023](https://transacl.org/index.php/tacl)!** We will present it at [EMNLP 2023](https://2023.emnlp.org/).
   - Jun 2023: Start as Student Researcher at [Google Research](https://research.google/).
-  - May 2023: Attended EACL 2023 in-person. Great to meet everyone in Dubrovnik.
