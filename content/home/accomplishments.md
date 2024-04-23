@@ -26,7 +26,7 @@ item:
 - certificate_url: ""
   date_end: ""
   date_start: "2024-04-01"
-  description: ""
+  description: "Monetary value: $5000. Awarded to advance research with Google Gemma Models."
   organization: Google
   organization_url: https://blog.google/technology/developers/gemma-open-models/
   title: Google Gemma Research Credits Award
@@ -34,7 +34,7 @@ item:
 - certificate_url: ""
   date_end: ""
   date_start: "2024-01-01"
-  description: ""
+  description: "Monetary value: $3000. Awarded to present at ICLR 2024."
   organization: Google
   organization_url: https://buildyourfuture.withgoogle.com/scholarships/google-conference-scholarships
   title: Google Conference Scholarship
@@ -42,7 +42,7 @@ item:
 - certificate_url: ""
   date_end: ""
   date_start: "2023-10-01"
-  description: ""
+  description: "Fully funded PhD studentship for research towards globally equitable language technologies."
   organization: UKRI ERC
   organization_url: https://www.ukri.org/councils/epsrc/
   title: UKRI Frontier EQUATE PhD Studentship
@@ -50,7 +50,7 @@ item:
 - certificate_url: ""
   date_end: ""
   date_start: "2021-09-01"
-  description: ""
+  description: "Awarded to rank 1 for MSc Machine Learning in the academic year at UCL."
   organization: University College London
   organization_url: https://www.ucl.ac.uk/
   title: Machine Learning Programme Director Award for Best Performance
@@ -58,7 +58,7 @@ item:
 - certificate_url: ""
   date_end: "2019-07-01"
   date_start: "2016-10-01"
-  description: ""
+  description: "Monetary value: £600. Awarded to the distinct Engineering Science student at Oxford."
   organization: University of Oxford
   organization_url: https://www.ox.ac.uk/
   title: 'Scholarship for Distinctive Performance in Engineering Science'
