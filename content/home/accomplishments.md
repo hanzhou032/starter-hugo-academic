@@ -26,15 +26,15 @@ item:
 - certificate_url: ""
   date_end: ""
   date_start: "2024-04-01"
-  description: "Monetary value: $5000. Awarded to advance research with Google Gemma Models."
+  description: "Awarded to advance research with Google Gemma Models."
   organization: Google
   organization_url: https://blog.google/technology/developers/gemma-open-models/
-  title: Google Gemma Research Credits Award
+  title: Google Gemma Research Award
   url: https://blog.google/technology/developers/gemma-open-models/
 - certificate_url: ""
   date_end: ""
   date_start: "2024-01-01"
-  description: "Monetary value: $3000. Awarded to present at ICLR 2024."
+  description: "Awarded to present at ICLR 2024."
   organization: Google
   organization_url: https://buildyourfuture.withgoogle.com/scholarships/google-conference-scholarships
   title: Google Conference Scholarship
@@ -58,10 +58,10 @@ item:
 - certificate_url: ""
   date_end: "2019-07-01"
   date_start: "2016-10-01"
-  description: "Monetary value: £600. Awarded to the distinct Engineering Science student at Oxford."
+  description: "Awarded to the distinct Engineering Science student at Oxford."
   organization: University of Oxford
   organization_url: https://www.ox.ac.uk/
-  title: 'Scholarship for Distinctive Performance in Engineering Science'
+  title: 'St. Hilda's Scholarship for Distinctive Performance in Engineering Science'
   url: https://www.ox.ac.uk/
 
 design:
