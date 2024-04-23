@@ -25,6 +25,22 @@ date_format: Jan 2006
 item:
 - certificate_url: ""
   date_end: ""
+  date_start: "2024-04-01"
+  description: ""
+  organization: Google
+  organization_url: https://blog.google/technology/developers/gemma-open-models/
+  title: Google Gemma Research Credits Award
+  url: https://blog.google/technology/developers/gemma-open-models/
+- certificate_url: ""
+  date_end: ""
+  date_start: "2024-01-01"
+  description: ""
+  organization: Google
+  organization_url: https://buildyourfuture.withgoogle.com/scholarships/google-conference-scholarships
+  title: Google Conference Scholarship
+  url: https://buildyourfuture.withgoogle.com/scholarships/google-conference-scholarships
+- certificate_url: ""
+  date_end: ""
   date_start: "2023-10-01"
   description: ""
   organization: UKRI ERC
