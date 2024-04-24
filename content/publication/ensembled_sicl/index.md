@@ -11,13 +11,13 @@ authors:
   - Anna Korhonen
   - Ivan Vulić
 publication: "ICLR 2024 Workshop on Reliable and Responsible Foundation Models"
-summary: "Can Large Language Models Retain Calibration with In-Context Learning?"
+summary: "Can Large Language Models Achieve Calibration with In-Context Learning?"
 url_dataset: ""
 url_project: ""
 publication_short: "ICLR 2024 Workshop on Reliable and Responsible Foundation Models"
 url_source: ""
 url_video: ""
-title: "Can Large Language Models Retain Calibration with In-Context Learning?"
+title: "Can Large Language Models Achieve Calibration with In-Context Learning?"
 doi: ""
 featured: false
 tags: 
