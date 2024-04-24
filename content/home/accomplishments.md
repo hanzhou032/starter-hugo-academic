@@ -61,7 +61,7 @@ item:
   description: "Awarded to the distinct Engineering Science student at Oxford."
   organization: University of Oxford
   organization_url: https://www.ox.ac.uk/
-  title: 'St. Hilda's Scholarship for Distinctive Performance in Engineering Science'
+  title: Scholarship for Distinctive Performance in Engineering Science
   url: https://www.ox.ac.uk/
 
 design:
