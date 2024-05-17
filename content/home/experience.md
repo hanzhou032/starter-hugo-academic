@@ -37,9 +37,9 @@ experience:
     date_end: '2024-10-18'
 
   - title: Student Researcher
-    company: Google DeepMind, Responsible AI Team
+    company: Google Research, Responsible AI Team
     company_url: https://research.google/teams/responsible-ai/
-    company_logo: deepmind
+    company_logo: google
     location: London, UK
     date_start: '2023-06-12'
     date_end: '2023-12-29'

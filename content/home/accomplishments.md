@@ -34,7 +34,7 @@ item:
 - certificate_url: ""
   date_end: ""
   date_start: "2024-01-01"
-  description: "Awarded to present at ICLR 2024."
+  description: "Awarded to present at International Conference on Learning Representations (ICLR 2024)."
   organization: Google
   organization_url: https://buildyourfuture.withgoogle.com/scholarships/google-conference-scholarships
   title: Google Conference Scholarship

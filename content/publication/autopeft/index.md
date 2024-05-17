@@ -41,7 +41,7 @@ links:
 - name: "Abstract"
   url: https://arxiv.org/abs/2301.12132
 - name: "MIT Press"
-  url: https://arxiv.org/abs/2301.12132
+  url: https://direct.mit.edu/tacl/article/doi/10.1162/tacl_a_00662/120914
 - name: "ACL Anthology"
   url: https://arxiv.org/abs/2301.12132
 ---
