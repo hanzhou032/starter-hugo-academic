@@ -42,7 +42,7 @@ email: "hz416@cam.ac.uk"
 superuser: true
 highlight_name: true
 ---
-I am a second-year PhD student in *Computation, Cognition, and Language* (NLP) at [Language Technology Lab](https://ltl.mmll.cam.ac.uk/), [University of Cambridge](https://www.cam.ac.uk/). I am supervised by [Prof. Anna Korhonen](https://sites.google.com/site/annakorhonen/) and [Dr. Ivan Vulić](https://sites.google.com/site/ivanvulic/). Previously, I interned at [Gemini](https://deepmind.google/technologies/gemini/#introduction) (RADML) and [Context in AI Research](https://blog.research.google/2023/11/responsible-ai-at-google-research.html#:~:text=To%20these%20ends%2C%20the%20Context,data%20to%20end%2Duser%20feedback.) (CAIR) Teams at [Google DeepMind](https://deepmind.google/) (formerly [Google Research](https://research.google/)).
+I am a second-year PhD student in *Computation, Cognition, and Language* (NLP) at [Language Technology Lab](https://ltl.mmll.cam.ac.uk/), [University of Cambridge](https://www.cam.ac.uk/). I am supervised by [Prof. Anna Korhonen](https://sites.google.com/site/annakorhonen/) and [Dr. Ivan Vulić](https://sites.google.com/site/ivanvulic/). Previously, I interned at [Gemini](https://deepmind.google/technologies/gemini/#introduction) (RADML) and [CAIR](https://blog.research.google/2023/11/responsible-ai-at-google-research.html#:~:text=To%20these%20ends%2C%20the%20Context,data%20to%20end%2Duser%20feedback.) Teams at [Google DeepMind](https://deepmind.google/) (formerly [Google Research](https://research.google/)).
 
 Before starting my PhD, I was an undergraduate student reading [Engineering Science](https://eng.ox.ac.uk/) at [University of Oxford](https://www.ox.ac.uk/). I received my second Master degree in MSc Machine Learning, [UCL NLP Lab](https://nlp.cs.ucl.ac.uk/). I graduated top of my class.
 
@@ -56,3 +56,7 @@ I am always interested in modular, efficient, and reward-driven responsible inte
   - Oct 2023: **[ClaPS](https://arxiv.org/abs/2310.12774) and [Multilingual Disparity](https://arxiv.org/pdf/2310.12892.pdf) were accepted at [EMNLP 2023](https://2023.emnlp.org/)!**
   - Jul 2023: **[Multi3WOZ](https://arxiv.org/abs/2307.14031v1) was accepted at [TACL 2023](https://transacl.org/index.php/tacl)!** We will present it at [EMNLP 2023](https://2023.emnlp.org/).
   - Jun 2023: Start as Student Researcher at [Google Research](https://research.google/).
+
+# Academic Services
+
+Reviewer/program committee member at ACL (2023-24), EMNLP (2022-23), ICML (2024, external), NeurIPS R0-FoMo(2023).

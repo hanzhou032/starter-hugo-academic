@@ -40,4 +40,6 @@ url_code: "https://github.com/cambridgeltl/ensembled-sicl"
 links:
 - name: "Abstract"
   url: https://arxiv.org/abs/2312.13772
+- name: "OpenReview"
+  url: https://openreview.net/forum?id=8rfsSokbeq
 ---
