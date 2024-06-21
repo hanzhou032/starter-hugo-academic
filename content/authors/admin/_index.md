@@ -60,4 +60,4 @@ I am always interested in modular, efficient, and reward-driven responsible inte
 
 ### Academic Services
 
-Reviewer/program committee member at ACL (2023-24), EMNLP (2022-23), ICML (2024, external), NeurIPS (2024), NeurIPS R0-FoMo (2023).
+Reviewer/program committee member at ACL (2023-24), EMNLP (2022-24), ICML (2024, external), NeurIPS (2024), NeurIPS R0-FoMo (2023).
