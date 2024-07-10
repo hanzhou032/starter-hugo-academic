@@ -49,8 +49,9 @@ Before starting my PhD, I was an undergraduate student reading [Engineering Scie
 I am always interested in modular, efficient, and reward-driven responsible intelligence. 
 
 ## Recent News
-  - May 2024: Attended ICLR 2024 in-person 🇦🇹. Miss Wiener Schnitzel.
-  - Apr 2024: I will join [Google Cloud AI Research](https://research.google/teams/cloud-ai/) as a Student Researcher this summer.
+  - Jul 2024: Start as Student Researcher at [Google Cloud AI Research](https://research.google/).
+  - Jul 2024: **[PairS](https://arxiv.org/abs/2403.16950) was accepted at [COLM 2024](https://colmweb.org/)!**
+  - May 2024: Attended ICLR 2024 in-person 🇦🇹.
   - Jan 2024: **[AutoPEFT](https://arxiv.org/abs/2301.12132) was accepted at [TACL 2024](https://transacl.org/index.php/tacl)!**
   - Jan 2024: **[Batch Calibration](https://arxiv.org/abs/2309.17249) is accepted to ICLR 2024!** Batch Calibration has been featured in [Google AI blog](https://blog.research.google/2023/10/batch-calibration-rethinking.html) and presented as a spotlight at [NeurIPS 2023 R0-FoMo](https://sites.google.com/view/r0-fomo).
   - Dec 2023: Attended EMNLP 2023 in-person. Glad to meet folks in Singapore.

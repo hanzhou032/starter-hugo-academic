@@ -3,7 +3,7 @@ abstract: "Large Language Models (LLMs) have demonstrated promising capabilities
 slides: ""
 url_pdf: "https://arxiv.org/pdf/2403.16950.pdf"
 publication_types:
-  - "3"
+  - "1"
 authors:
   - Yinhong Liu
   - admin
@@ -15,11 +15,11 @@ authors:
 author_notes: 
   - "Equal contribution"
   - "Equal contribution"
-publication: "arXiv preprint arXiv:2403.16950"
+publication: "The First Conference on Language Modeling (COLM)"
 summary: "Aligning with Human Judgement: The Role of Pairwise Preference in Large Language Model Evaluators."
 url_dataset: ""
 url_project: ""
-publication_short: "arXiv preprint arXiv:2403.16950"
+publication_short: "The First Conference on Language Modeling (COLM)"
 url_source: ""
 url_video: ""
 title: "Aligning with Human Judgement: The Role of Pairwise Preference in Large Language Model Evaluators"
@@ -34,9 +34,9 @@ image:
   caption: ""
   focal_point: “”
   preview_only: false
-date: 2024-03-26T00:00:00.000Z
+date: 2024-07-09T00:00:00.000Z
 url_slides: ""
-publishDate: 2024-03-26T00:00:00.000Z
+publishDate: 2024-07-09T00:00:00.000Z
 url_poster: ""
 url_code: "https://github.com/cambridgeltl/pairs"
 links:
