@@ -29,6 +29,14 @@ date_format: Jan 2006
   #   date_start: '2023-07-13'
 experience:
   - title: Student Researcher
+    company: Google Research, Cloud AI Team
+    company_url: https://research.google/teams/cloud-ai/
+    company_logo: google
+    location: San Francisco, US
+    date_start: '2024-07-12'
+    date_end: '2024-12-29'
+
+  - title: Student Researcher
     company: Google Research, Responsible AI Team
     company_url: https://research.google/teams/responsible-ai/
     company_logo: google

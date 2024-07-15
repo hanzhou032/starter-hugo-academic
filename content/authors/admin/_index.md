@@ -27,6 +27,8 @@ social:
 organizations:
   - name: University of Cambridge
     url: https://www.cam.ac.uk/
+  - name: Google
+    url: https://research.google/
 education:
   courses:
     - course: PhD in Computation, Cognition, and Language
@@ -42,7 +44,7 @@ email: "hz416@cam.ac.uk"
 superuser: true
 highlight_name: true
 ---
-I am a second-year PhD student in *Computation, Cognition, and Language* (NLP) at [Language Technology Lab](https://ltl.mmll.cam.ac.uk/), [University of Cambridge](https://www.cam.ac.uk/). I am supervised by [Prof. Anna Korhonen](https://sites.google.com/site/annakorhonen/) and [Dr. Ivan Vulić](https://sites.google.com/site/ivanvulic/). Previously, I interned at [Gemini](https://deepmind.google/technologies/gemini/#introduction) (RADML) and [CAIR](https://blog.research.google/2023/11/responsible-ai-at-google-research.html#:~:text=To%20these%20ends%2C%20the%20Context,data%20to%20end%2Duser%20feedback.) Teams at [Google DeepMind](https://deepmind.google/) (formerly [Google Research](https://research.google/)).
+I am a second-year PhD student in *Computation, Cognition, and Language* (NLP) at [Language Technology Lab](https://ltl.mmll.cam.ac.uk/), [University of Cambridge](https://www.cam.ac.uk/). I am supervised by [Prof. Anna Korhonen](https://sites.google.com/site/annakorhonen/) and [Dr. Ivan Vulić](https://sites.google.com/site/ivanvulic/). I am also a Student Researcher at [Google Cloud AI Research](https://research.google/). Previously, I interned at [Gemini](https://deepmind.google/technologies/gemini/#introduction) (RADML) and [CAIR](https://blog.research.google/2023/11/responsible-ai-at-google-research.html#:~:text=To%20these%20ends%2C%20the%20Context,data%20to%20end%2Duser%20feedback.) Teams at [Google DeepMind](https://deepmind.google/) (formerly [Google Research](https://research.google/)).
 
 Before starting my PhD, I was an undergraduate student reading [Engineering Science](https://eng.ox.ac.uk/) at [University of Oxford](https://www.ox.ac.uk/). I received my second Master degree in MSc Machine Learning, [UCL NLP Lab](https://nlp.cs.ucl.ac.uk/). I graduated top of my class.
 
