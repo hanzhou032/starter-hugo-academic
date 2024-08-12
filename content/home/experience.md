@@ -44,7 +44,7 @@ experience:
     date_start: '2023-10-12'
     date_end: '2023-12-29'
 
-- title: Student Researcher
+  - title: Student Researcher
     company: Google Research, Responsible AI Team
     company_url: https://research.google/teams/responsible-ai/
     company_logo: google
