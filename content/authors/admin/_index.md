@@ -51,6 +51,7 @@ Before starting my PhD, I was an undergraduate student reading [Engineering Scie
 I am always interested in modular, efficient, and reward-driven responsible intelligence. 
 
 ## Recent News
+  - Sep 2024: **[ZEPO](https://arxiv.org/abs/2406.11370) and [TopViewRS]() were accepted at [EMNLP 2024](https://arxiv.org/abs/2406.02537)!**
   - Jul 2024: Start as Student Researcher at [Google Cloud AI Research](https://research.google/).
   - Jul 2024: **[PairS](https://arxiv.org/abs/2403.16950) was accepted at [COLM 2024](https://colmweb.org/)!**
   - May 2024: Attended ICLR 2024 in-person 🇦🇹.
@@ -63,4 +64,4 @@ I am always interested in modular, efficient, and reward-driven responsible inte
 
 ### Academic Services
 
-Reviewer/program committee member at ACL (2023-24), EMNLP (2022-24), ICML (2024, external), NeurIPS (2024), NeurIPS R0-FoMo (2023).
+Reviewer/program committee member at ACL (2023-24), EMNLP (2022-24), ICML (2024, external), NeurIPS (2023-24), ICLR (2025). 
