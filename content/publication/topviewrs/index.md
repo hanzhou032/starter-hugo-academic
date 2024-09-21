@@ -12,11 +12,11 @@ authors:
   - Anna Korhonen
   - Ivan Vulić
 author_notes: []
-publication: "arXiv preprint arXiv:2406.02537"
+publication: "The 2024 Conference on Empirical Methods in Natural Language Processing (EMNLP)"
 summary: "TopViewRS: Vision-Language Models as Top-View Spatial Reasoners."
 url_dataset: ""
 url_project: ""
-publication_short: "arXiv preprint arXiv:2406.02537"
+publication_short: "The 2024 Conference on Empirical Methods in Natural Language Processing (EMNLP)"
 url_source: ""
 url_video: ""
 title: "TopViewRS: Vision-Language Models as Top-View Spatial Reasoners"

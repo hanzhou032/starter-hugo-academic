@@ -12,11 +12,11 @@ authors:
   - Ivan Vulić
   - Anna Korhonen
 author_notes: []
-publication: "arXiv preprint arXiv:2406.11370"
+publication: "The 2024 Conference on Empirical Methods in Natural Language Processing (EMNLP)"
 summary: "Fairer Preferences Elicit Improved Human-Aligned Large Language Model Judgments"
 url_dataset: ""
 url_project: ""
-publication_short: "arXiv preprint arXiv:2406.11370"
+publication_short: "The 2024 Conference on Empirical Methods in Natural Language Processing (EMNLP)"
 url_source: ""
 url_video: ""
 title: "Fairer Preferences Elicit Improved Human-Aligned Large Language Model Judgments"
