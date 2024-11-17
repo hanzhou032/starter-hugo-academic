@@ -31,12 +31,14 @@ image:
   caption: ""
   focal_point: “”
   preview_only: false
-date: 2024-06-17T00:00:00.000Z
+date: 2024-11-12T00:00:00.000Z
 url_slides: ""
-publishDate: 2024-06-17T00:00:00.000Z
+publishDate: 2024-11-12T00:00:00.000Z
 url_poster: ""
 url_code: "https://github.com/cambridgeltl/zepo"
 links:
 - name: "Abstract"
   url: https://arxiv.org/abs/2406.11370
+- name: "ACL Anthology"
+  url: https://aclanthology.org/2024.emnlp-main.72/
 ---

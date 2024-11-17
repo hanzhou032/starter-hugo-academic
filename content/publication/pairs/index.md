@@ -42,4 +42,6 @@ url_code: "https://github.com/cambridgeltl/pairs"
 links:
 - name: "Abstract"
   url: https://arxiv.org/abs/2403.16950
+- name: "OpenReview"
+  url: https://openreview.net/forum?id=9gdZI7c6yr
 ---

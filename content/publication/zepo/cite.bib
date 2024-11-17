@@ -1,6 +1,20 @@
-@article{zhou2024fairer,
-  title={Fairer Preferences Elicit Improved Human-Aligned Large Language Model Judgments},
-  author={Zhou, Han and Wan, Xingchen and Liu, Yinhong and Collier, Nigel and Vuli{\'c}, Ivan and Korhonen, Anna},
-  journal={arXiv preprint arXiv:2406.11370},
-  year={2024}
+@inproceedings{zhou-etal-2024-fairer,
+    title = "Fairer Preferences Elicit Improved Human-Aligned Large Language Model Judgments",
+    author = "Zhou, Han  and
+      Wan, Xingchen  and
+      Liu, Yinhong  and
+      Collier, Nigel  and
+      Vuli{\'c}, Ivan  and
+      Korhonen, Anna",
+    editor = "Al-Onaizan, Yaser  and
+      Bansal, Mohit  and
+      Chen, Yun-Nung",
+    booktitle = "Proceedings of the 2024 Conference on Empirical Methods in Natural Language Processing",
+    month = nov,
+    year = "2024",
+    address = "Miami, Florida, USA",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2024.emnlp-main.72",
+    pages = "1241--1252",
+    abstract = "Large language models (LLMs) have shown promising abilities as cost-effective and reference-free evaluators for assessing language generation quality. In particular, pairwise LLM evaluators, which compare two generated texts and determine the preferred one, have been employed in a wide range of applications. However, LLMs exhibit preference biases and worrying sensitivity to prompt designs. In this work, we first reveal that the predictive preference of LLMs can be highly brittle and skewed, even with semantically equivalent instructions. We find that fairer predictive preferences from LLMs consistently lead to judgments that are better aligned with humans. Motivated by this phenomenon, we propose an automatic Zero-shot Evaluation-oriented Prompt Optimization framework, ZEPO, which aims to produce fairer preference decisions and improve the alignment of LLM evaluators with human judgments. To this end, we propose a zero-shot learning objective based on the preference decision fairness. ZEPO demonstrates substantial performance improvements over state-of-the-art LLM evaluators, without requiring labeled data, on representative meta-evaluation benchmarks. Our findings underscore the critical correlation between preference fairness and human alignment, positioning ZEPO as an efficient prompt optimizer for bridging the gap between LLM evaluators and human judgments.",
 }

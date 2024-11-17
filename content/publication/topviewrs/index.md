@@ -32,9 +32,9 @@ image:
   caption: ""
   focal_point: “”
   preview_only: false
-date: 2024-06-05T00:00:00.000Z
+date: 2024-11-11T00:00:00.000Z
 url_slides: ""
-publishDate: 2024-06-05T00:00:00.000Z
+publishDate: 2024-11-11T00:00:00.000Z
 url_poster: ""
 url_code: "https://github.com/cambridgeltl/topviewrs"
 links:
@@ -42,4 +42,6 @@ links:
   url: https://arxiv.org/abs/2406.02537
 - name: "Project Page"
   url: https://topviewrs.github.io/
+- name: "ACL Anthology"
+  url: https://aclanthology.org/2024.emnlp-main.106/
 ---
