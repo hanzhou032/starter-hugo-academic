@@ -34,6 +34,7 @@ experience:
     company_logo: deepmind
     location: London, UK
     date_start: '2024-11-30'
+    date_end: '2025-04-04'
 
   - title: Student Researcher
     company: Google Research, Cloud AI Team
@@ -41,7 +42,7 @@ experience:
     company_logo: google
     location: San Francisco, US
     date_start: '2024-07-12'
-    date_end: '2024-12-29'
+    date_end: '2024-11-29'
 
   - title: Student Researcher
     company: Google Research, Responsible AI Team
