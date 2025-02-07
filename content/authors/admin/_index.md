@@ -49,13 +49,14 @@ I am a third-year PhD student in *Computation, Cognition, and Language* (NLP) at
 I am always interested in modular, efficient, and reward-driven intelligence. 
 
 ## Recent News
+  - Jan 2025: **[BRIDGE](https://www.arxiv.org/abs/2502.00330) was accepted at ICLR 2025!**
   - Sep 2024: **[ZEPO](https://arxiv.org/abs/2406.11370) and [TopViewRS]() were accepted at [EMNLP 2024](https://arxiv.org/abs/2406.02537)!**
   - Jul 2024: Start as Student Researcher at [Google Cloud AI Research](https://research.google/).
   - Jul 2024: **[PairS](https://arxiv.org/abs/2403.16950) was accepted at [COLM 2024](https://colmweb.org/)!**
   - May 2024: Attended ICLR 2024 in-person 🇦🇹.
   - Jan 2024: **[AutoPEFT](https://arxiv.org/abs/2301.12132) was accepted at [TACL 2024](https://transacl.org/index.php/tacl)!**
-  - Jan 2024: **[Batch Calibration](https://arxiv.org/abs/2309.17249) is accepted to ICLR 2024!** Batch Calibration has been featured in [Google AI blog](https://blog.research.google/2023/10/batch-calibration-rethinking.html) and presented as a spotlight at [NeurIPS 2023 R0-FoMo](https://sites.google.com/view/r0-fomo).
+  - Jan 2024: **[Batch Calibration](https://arxiv.org/abs/2309.17249) is accepted to ICLR 2024!** Batch Calibration has been featured in [Google AI blog](https://blog.research.google/2023/10/batch-calibration-rethinking.html)!
 
 ### Academic Services
 
-Reviewer/program committee member at ACL (2023-24), EMNLP (2022-24), ICML (2024), NeurIPS (2023-24), ICLR (2025). 
+Reviewer/program committee member at ACL (2023-25), EMNLP (2022-24), ICML (2024-25), NeurIPS (2023-24), ICLR (2025). 

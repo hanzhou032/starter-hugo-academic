@@ -13,11 +13,11 @@ authors:
   - Ivan Vulić
   - Anna Korhonen
   - Sercan Ö. Arık
-publication: "preprint"
+publication: "arXiv preprint arXiv:2502.02533"
 summary: "Multi-Agent Design: Optimizing Agents with Better Prompts and Topologies"
 url_dataset: ""
 url_project: ""
-publication_short: "preprint"
+publication_short: "arXiv preprint arXiv:2502.02533"
 url_source: ""
 url_video: ""
 title: "Multi-Agent Design: Optimizing Agents with Better Prompts and Topologies"
