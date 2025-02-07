@@ -7,6 +7,7 @@ interests:
   - Parameter-Efficient Fine-Tuning
   - Prompt Optimization
   - Modularity
+  - Reinforcement Learning
   
 social:
   - icon: twitter
