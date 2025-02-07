@@ -27,9 +27,7 @@ title: "Multi3WOZ: A Multilingual, Multi-Domain, Multi-Parallel Dataset for Trai
 doi: ""
 featured: false
 tags: 
-  - "Natural Language Processing"
   - "Multi-Lingual Learning"
-  - "Task-Oriented Dialogues"
 projects: []
 image:
   caption: ""

@@ -23,8 +23,6 @@ title: "AutoPEFT: Automatic Configuration Search for Parameter-Efficient Fine-Tu
 doi: ""
 featured: true
 tags: 
-  - "Natural Language Processing"
-  - "Large Language Models"
   - "Parameter-Efficient Fine-Tuning"
   - "AutoML"
 projects: []

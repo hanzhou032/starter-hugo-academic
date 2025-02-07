@@ -26,7 +26,8 @@ url_video: ""
 title: "GreenPLM: Cross-Lingual Transfer of Monolingual Large Language Models at Almost No Cost"
 doi: ""
 featured: false
-tags: []
+tags: 
+  - "Multi-Lingual Learning"
 projects: []
 image:
   caption: ""

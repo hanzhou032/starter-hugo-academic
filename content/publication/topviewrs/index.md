@@ -23,10 +23,8 @@ title: "TopViewRS: Vision-Language Models as Top-View Spatial Reasoners"
 doi: ""
 featured: false
 tags: 
-  - "Natural Language Processing"
-  - "Computer Vision"
+  - "Spatial Reasoning"
   - "Vision Language Models"
-  - "Reasoning"
 projects: []
 image:
   caption: ""

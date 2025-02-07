@@ -18,10 +18,9 @@ url_source: ""
 url_video: ""
 title: "From Few to Many: Self-Improving Many-Shot Reasoners Through Iterative Optimization and Generation"
 doi: ""
-featured: true
+featured: false
 tags: 
-  - "Natural Language Processing"
-  - "Large Language Models"
+  - "Prompt Optimization"
   - "In-Context Learning"
 projects: []
 image:

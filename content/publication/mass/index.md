@@ -13,19 +13,17 @@ authors:
   - Ivan Vulić
   - Anna Korhonen
   - Sercan Ö. Arık
-publication: "ArXiv Preprint."
+publication: "preprint"
 summary: "Multi-Agent Design: Optimizing Agents with Better Prompts and Topologies"
 url_dataset: ""
 url_project: ""
-publication_short: "ArXiv Preprint."
+publication_short: "preprint"
 url_source: ""
 url_video: ""
 title: "Multi-Agent Design: Optimizing Agents with Better Prompts and Topologies"
 doi: ""
-featured: true
+featured: false
 tags: 
-  - "Natural Language Processing"
-  - "Large Language Models"
   - "Language Agent"
 projects: []
 image:

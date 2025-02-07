@@ -25,12 +25,8 @@ title: "Batch Calibration: Rethinking Calibration for In-Context Learning and Pr
 doi: ""
 featured: true
 tags: 
-  - "Natural Language Processing"
-  - "Large Language Models"
   - "In-Context Learning"
-  - "Prompt Engineering"
   - "Calibration"
-  - "Responsible AI"
 projects: []
 image:
   caption: ""

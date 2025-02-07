@@ -19,7 +19,8 @@ url_video: ""
 title: "XQA-DST: Multi-Domain and Multi-Lingual Dialogue State Tracking"
 doi: ""
 featured: false
-tags: []
+tags: 
+  - "Multi-Lingual Learning"
 projects: []
 image:
   caption: ""

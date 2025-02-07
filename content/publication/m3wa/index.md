@@ -24,10 +24,7 @@ title: "A Systematic Study of Performance Disparities in Multilingual Task-Orien
 doi: ""
 featured: false
 tags: 
-  - "Natural Language Processing"
-  - "Large Language Models"
   - "Multi-Lingual Learning"
-  - "Task-Oriented Dialogues"
 projects: []
 image:
   caption: ""

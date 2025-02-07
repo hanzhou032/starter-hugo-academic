@@ -23,9 +23,8 @@ title: "Fairer Preferences Elicit Improved Human-Aligned Large Language Model Ju
 doi: ""
 featured: false
 tags: 
-  - "Natural Language Processing"
-  - "Large Language Models"
-  - "Human Alignment"
+  - "Prompt Optimization"
+  - "LLM-as-a-Judge"
 projects: []
 image:
   caption: ""
