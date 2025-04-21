@@ -14,7 +14,7 @@ authors:
   - Anna Korhonen
   - Sercan Ö. Arık
 publication: "arXiv preprint arXiv:2502.02533"
-summary: "Multi-Agent Design: Optimizing Agents with Better Prompts and Topologies"
+summary: "Automatic multi-agent design via joint prompt and topology optimization."
 url_dataset: ""
 url_project: ""
 publication_short: "arXiv preprint arXiv:2502.02533"

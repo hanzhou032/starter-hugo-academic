@@ -10,7 +10,7 @@ authors:
   - Ruoxi Sun
   - Sercan Ö. Arık
 publication: "International Conference on Learning Representations (ICLR)"
-summary: "From Few to Many: Self-Improving Many-Shot Reasoners Through Iterative Optimization and Generation"
+summary: "Self-improving reasoners taking advantage of long-context capabilities (ICLR 2025)"
 url_dataset: ""
 url_project: ""
 publication_short: "International Conference on Learning Representations (ICLR)"
