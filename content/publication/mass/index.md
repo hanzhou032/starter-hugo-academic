@@ -22,7 +22,7 @@ url_source: ""
 url_video: ""
 title: "Multi-Agent Design: Optimizing Agents with Better Prompts and Topologies"
 doi: ""
-featured: false
+featured: true
 tags: 
   - "Language Agent"
 projects: []

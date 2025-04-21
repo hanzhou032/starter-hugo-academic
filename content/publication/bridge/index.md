@@ -18,7 +18,7 @@ url_source: ""
 url_video: ""
 title: "From Few to Many: Self-Improving Many-Shot Reasoners Through Iterative Optimization and Generation"
 doi: ""
-featured: false
+featured: true
 tags: 
   - "Prompt Optimization"
   - "In-Context Learning"
