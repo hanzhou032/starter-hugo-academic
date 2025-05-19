@@ -3,7 +3,7 @@ abstract: "Large language models, employed as multiple agents that interact and 
 slides: ""
 url_pdf: "https://arxiv.org/pdf/2502.02533.pdf"
 publication_types:
-  - "2"
+  - "3"
 authors:
   - admin
   - Xingchen Wan
