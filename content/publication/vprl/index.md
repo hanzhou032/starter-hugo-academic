@@ -1,7 +1,7 @@
 ---
 abstract: "Recent advancements in Large Language Models (LLMs) and their multimodal extensions (MLLMs) have substantially enhanced machine reasoning across diverse tasks. However, these models predominantly rely on pure text as the medium for both expressing and structuring reasoning, even when visual information is present. In this work, we argue that language may not always be the most natural or effective modality for reasoning, particularly in tasks involving spatial and geometrical information. Motivated by this, we propose a new paradigm, Visual Planning, which enables planning through purely visual representations, independent of text. In this paradigm, planning is executed via sequences of images that encode step-by-step inference in the visual domain, akin to how humans sketch or visualize future actions. We introduce a novel reinforcement learning framework, Visual Planning via Reinforcement Learning (VPRL), empowered by GRPO for post-training large vision models, leading to substantial improvements in planning in a selection of representative visual navigation tasks, FrozenLake, Maze, and MiniBehavior. Our visual planning paradigm outperforms all other planning variants that conduct reasoning in the text-only space. Our results establish Visual Planning as a viable and promising alternative to language-based reasoning, opening new avenues for tasks that benefit from intuitive, image-based inference."
 slides: ""
-url_pdf: "https://arxiv.org/pdf/2502.02533.pdf"
+url_pdf: "https://arxiv.org/pdf/2505.11409.pdf"
 publication_types:
   - "3"
 authors:
@@ -17,7 +17,7 @@ author_notes:
   - "Equal contribution"
   - "Equal contribution"
 publication: "arXiv preprint arXiv:2505.11409"
-summary: "Visual Planning: Let's Think Only with Images"
+summary: "Visual Planning enables thinking through purely visual representations, independent of text"
 url_dataset: ""
 url_project: ""
 publication_short: "arXiv preprint arXiv:2502.02533"
