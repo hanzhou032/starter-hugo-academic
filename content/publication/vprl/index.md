@@ -17,7 +17,7 @@ author_notes:
   - "Equal contribution"
   - "Equal contribution"
 publication: "arXiv preprint arXiv:2505.11409"
-summary: "Visual Planning enables thinking through purely visual representations, independent of text"
+summary: "Visual Planning enables thinking through purely visual representations, independent of text."
 url_dataset: ""
 url_project: ""
 publication_short: "arXiv preprint arXiv:2505.11409"
