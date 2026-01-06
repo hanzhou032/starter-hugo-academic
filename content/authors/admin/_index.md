@@ -4,9 +4,9 @@ role: PhD student in NLP
 avatar_filename: avatar.jpg
 interests:
   - Large Language Models
-  - Modularity
-  - Prompt Optimization
   - Reinforcement Learning
+  - Agents and Tools
+  - Visual Reasoning
   
 social:
   - icon: twitter
@@ -32,7 +32,7 @@ education:
   courses:
     - course: PhD in Computation, Cognition, and Language
       institution: University of Cambridge
-      year: "Oct 2022 - "
+      year: "Oct 2022 - 2026"
     - course: MSc in Machine Learning (rank 1st)
       institution: University College London
       year: "2020 - 2021"
@@ -43,19 +43,18 @@ email: "hz416@cam.ac.uk"
 superuser: true
 highlight_name: true
 ---
-I am a final-year PhD student in *Computation, Cognition, and Language* (NLP) at [Language Technology Lab](https://ltl.mmll.cam.ac.uk/), [University of Cambridge](https://www.cam.ac.uk/). I am supervised by [Prof. Anna Korhonen](https://sites.google.com/site/annakorhonen/) and [Dr. Ivan Vulić](https://sites.google.com/site/ivanvulic/). Previously, I interned as a Student Researcher at [Google DeepMind](https://www.deepmind.com/), [Google Cloud AI Research](https://research.google/), and [Google Research](https://research.google/).
+I am a final-year PhD student in *Computation, Cognition, and Language* (NLP) at [Language Technology Lab](https://ltl.mmll.cam.ac.uk/), [University of Cambridge](https://www.cam.ac.uk/). I am supervised by [Prof. Anna Korhonen](https://sites.google.com/site/annakorhonen/) and [Dr. Ivan Vulić](https://sites.google.com/site/ivanvulic/). Currently, I am an AI Scientist Intern in the Reasoning team in Mistral AI. Previously, I interned as a Student Researcher at [Google DeepMind](https://www.deepmind.com/), [Google Cloud AI Research](https://research.google/), and [Google Research](https://research.google/).
 
-I am always interested in modular and reward-driven intelligence. 
+I am always interested in modular and reward-driven intelligence. I am open to full-time Research Scientist roles.
 
 ## Recent News
+  - Jul 2024: Start as AI Scientist Intern at [Mistral AI](https://mistral.ai/).
   - Jan 2025: **[BRIDGE](https://www.arxiv.org/abs/2502.00330) was accepted at ICLR 2025!**
   - Sep 2024: **[ZEPO](https://arxiv.org/abs/2406.11370) and [TopViewRS]() were accepted at [EMNLP 2024](https://arxiv.org/abs/2406.02537)!**
   - Jul 2024: Start as Student Researcher at [Google Cloud AI Research](https://research.google/).
   - Jul 2024: **[PairS](https://arxiv.org/abs/2403.16950) was accepted at [COLM 2024](https://colmweb.org/)!**
   - May 2024: Attended ICLR 2024 in-person 🇦🇹.
-  - Jan 2024: **[AutoPEFT](https://arxiv.org/abs/2301.12132) was accepted at [TACL 2024](https://transacl.org/index.php/tacl)!**
-  - Jan 2024: **[Batch Calibration](https://arxiv.org/abs/2309.17249) is accepted to ICLR 2024!** Batch Calibration has been featured in [Google AI blog](https://blog.research.google/2023/10/batch-calibration-rethinking.html)!
 
 ### Academic Services
 
-Reviewer/program committee member at ACL (2023-24), EMNLP (2022-24), ICML (2024-25), NeurIPS (2023-25), ICLR (2025). 
+Reviewer/program committee member at ACL (2023-24), EMNLP (2022-24), ICML (2024-26), NeurIPS (2023-25), ICLR (2025-26). 

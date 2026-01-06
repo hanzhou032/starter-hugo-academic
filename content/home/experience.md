@@ -28,6 +28,13 @@ date_format: Jan 2006
   #   location: London, UK
   #   date_start: '2023-07-13'
 experience:
+  - title: AI Scientist Intern
+    company: Mistral AI
+    company_url: https://mistral.ai/
+    company_logo: mistral
+    location: London, UK
+    date_start: '2026-01-01'
+    
   - title: Student Researcher
     company: Google DeepMind
     company_url: https://www.deepmind.com/
