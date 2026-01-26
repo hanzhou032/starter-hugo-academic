@@ -48,9 +48,10 @@ I am a final-year PhD student in *Computation, Cognition, and Language* (NLP) at
 I am always interested in modular and reward-driven intelligence. I am open to full-time Research Scientist roles.
 
 ## Recent News
+  - Jan 2026: **[MASS](https://arxiv.org/abs/2502.02533) and [VPRL](https://arxiv.org/abs/2505.11409) were accepted at [ICLR 2026](https://iclr.cc/)!**
   - Jan 2026: Start as AI Scientist Intern at [Mistral AI](https://mistral.ai/).
   - Jan 2025: **[BRIDGE](https://www.arxiv.org/abs/2502.00330) was accepted at ICLR 2025!**
-  - Sep 2024: **[ZEPO](https://arxiv.org/abs/2406.11370) and [TopViewRS]() were accepted at [EMNLP 2024](https://arxiv.org/abs/2406.02537)!**
+  - Sep 2024: **[ZEPO](https://arxiv.org/abs/2406.11370) and [TopViewRS](https://arxiv.org/abs/2406.02537) were accepted at [EMNLP 2024](https://2024.emnlp.org/)!**
   - Jul 2024: Start as Student Researcher at [Google Cloud AI Research](https://research.google/).
   - Jul 2024: **[PairS](https://arxiv.org/abs/2403.16950) was accepted at [COLM 2024](https://colmweb.org/)!**
   - May 2024: Attended ICLR 2024 in-person 🇦🇹.

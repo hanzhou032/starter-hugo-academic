@@ -3,7 +3,7 @@ abstract: "Recent advancements in Large Language Models (LLMs) and their multimo
 slides: ""
 url_pdf: "https://arxiv.org/pdf/2505.11409.pdf"
 publication_types:
-  - "3"
+  - "1"
 authors:
   - Yi Xu
   - Chengzu Li
@@ -16,11 +16,11 @@ author_notes:
   - "Equal contribution"
   - "Equal contribution"
   - "Equal contribution"
-publication: "arXiv preprint arXiv:2505.11409"
+publication: "International Conference on Learning Representations (ICLR)"
 summary: "Visual Planning enables thinking through purely visual representations, independent of text."
 url_dataset: ""
 url_project: ""
-publication_short: "arXiv preprint arXiv:2505.11409"
+publication_short: "International Conference on Learning Representations (ICLR)"
 url_source: ""
 url_video: ""
 title: "Visual Planning: Let's Think Only with Images"
@@ -35,7 +35,7 @@ image:
   preview_only: false
 date: 2025-05-19T00:00:00.000Z
 url_slides: ""
-publishDate: 2025-05-19T00:00:00.000Z
+publishDate: 2026-01-25T00:00:00.000Z
 url_poster: ""
 url_code: ""
 links:

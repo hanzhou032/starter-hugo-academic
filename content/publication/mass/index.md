@@ -3,7 +3,7 @@ abstract: "Large language models, employed as multiple agents that interact and 
 slides: ""
 url_pdf: "https://arxiv.org/pdf/2502.02533.pdf"
 publication_types:
-  - "3"
+  - "1"
 authors:
   - admin
   - Xingchen Wan
@@ -13,11 +13,11 @@ authors:
   - Ivan Vulić
   - Anna Korhonen
   - Sercan Ö. Arık
-publication: "arXiv preprint arXiv:2502.02533"
+publication: "International Conference on Learning Representations (ICLR)"
 summary: "Automatic multi-agent design via joint prompt and topology optimization."
 url_dataset: ""
 url_project: ""
-publication_short: "arXiv preprint arXiv:2502.02533"
+publication_short: "International Conference on Learning Representations (ICLR)"
 url_source: ""
 url_video: ""
 title: "Multi-Agent Design: Optimizing Agents with Better Prompts and Topologies"
@@ -32,7 +32,7 @@ image:
   preview_only: false
 date: 2025-02-04T00:00:00.000Z
 url_slides: ""
-publishDate: 2025-02-04T00:00:00.000Z
+publishDate: 2026-01-25T00:00:00.000Z
 url_poster: ""
 url_code: ""
 links:
