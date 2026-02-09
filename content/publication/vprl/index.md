@@ -43,4 +43,8 @@ links:
   url: https://arxiv.org/abs/2505.11409
 - name: "OpenReview"
   url: https://openreview.net/forum?id=wsnse46kRO
+- name: "机器之心"
+  url: https://mp.weixin.qq.com/s/KXx1t3jIlhLWu0rlVoQWNA
+- name: "量子位"
+  url: https://mp.weixin.qq.com/s/FNeGEV7Vccfga53GxC9MMg
 ---

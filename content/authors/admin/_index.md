@@ -5,9 +5,9 @@ avatar_filename: avatar.jpg
 interests:
   - Large Language Models
   - Reinforcement Learning
-  - Agents and Tools
-  - Visual Reasoning
-  
+  - Reasoning
+  - Visual Intelligence
+
 social:
   - icon: twitter
     icon_pack: fab
@@ -45,7 +45,7 @@ highlight_name: true
 ---
 I am a final-year PhD student in *Computation, Cognition, and Language* (NLP) at [Language Technology Lab](https://ltl.mmll.cam.ac.uk/), [University of Cambridge](https://www.cam.ac.uk/). I am supervised by [Prof. Anna Korhonen](https://sites.google.com/site/annakorhonen/) and [Dr. Ivan Vulić](https://sites.google.com/site/ivanvulic/). Currently, I am an AI Scientist Intern in the Reasoning team in [Mistral AI](https://mistral.ai/). Previously, I interned as a Student Researcher at [Google DeepMind](https://www.deepmind.com/), [Google Cloud AI Research](https://research.google/), and [Google Research](https://research.google/).
 
-I am always interested in modular and reward-driven intelligence. I am open to full-time Research Scientist roles.
+I am always interested in reward-driven intelligence. I am open to full-time Research Scientist roles.
 
 ## Recent News
   - Jan 2026: **[MASS](https://arxiv.org/abs/2502.02533) and [VPRL](https://arxiv.org/abs/2505.11409) were accepted at [ICLR 2026](https://iclr.cc/)!**

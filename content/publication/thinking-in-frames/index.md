@@ -42,4 +42,6 @@ url_code: ""
 links:
 - name: "Abstract"
   url: https://arxiv.org/abs/2601.21037
+- name: "Blog"
+  url: https://thinking-in-frames.github.io
 ---

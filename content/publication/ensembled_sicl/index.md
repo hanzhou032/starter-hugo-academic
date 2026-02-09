@@ -38,4 +38,6 @@ links:
   url: https://arxiv.org/abs/2312.13772
 - name: "OpenReview"
   url: https://openreview.net/forum?id=8rfsSokbeq
+- name: "ACL Anthology"
+  url: https://aclanthology.org/2025.findings-acl.603
 ---
