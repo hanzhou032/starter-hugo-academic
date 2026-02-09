@@ -1,0 +1,45 @@
+---
+abstract: "Vision-Language Models have excelled at textual reasoning, but they often struggle with fine-grained spatial understanding and continuous action planning, failing to simulate the dynamics required for complex visual reasoning. In this work, we formulate visual reasoning by means of video generation models, positing that generated frames can act as intermediate reasoning steps between initial states and solutions. We evaluate their capacity in two distinct regimes: Maze Navigation for sequential discrete planning with low visual change and Tangram Puzzle for continuous manipulation with high visual change. Our experiments reveal three critical insights: (1) Robust Zero-Shot Generalization: In both tasks, the model demonstrates strong performance on unseen data distributions without specific finetuning. (2) Visual Context: The model effectively uses visual context as explicit control, such as agent icons and tangram shapes, enabling it to maintain high visual consistency and adapt its planning capability robustly to unseen patterns. (3) Visual Test-Time Scaling: We observe a test-time scaling law in sequential planning; increasing the generated video length (visual inference budget) empowers better zero-shot generalization to spatially and temporally complex paths. These findings suggest that video generation is not merely a media tool, but a scalable, generalizable paradigm for visual reasoning."
+slides: ""
+url_pdf: "https://arxiv.org/abs/2601.21037"
+publication_types:
+  - "3"
+authors:
+  - Chengzu Li
+  - Zanyi Wang
+  - Jiaang Li
+  - Yi Xu
+  - admin
+  - Huanyu Zhang
+  - Ruichuan An
+  - Dengyang Jiang
+  - Zhaochong An
+  - Ivan Vulić
+  - Serge Belongie
+  - Anna Korhonen
+publication: "arXiv preprint arXiv:2601.21037"
+summary: "Thinking in Frames: How Visual Context and Test-Time Scaling Empower Video Reasoning"
+url_dataset: ""
+url_project: ""
+publication_short: "arXiv preprint arXiv:2601.21037"
+url_source: ""
+url_video: ""
+title: "Thinking in Frames: How Visual Context and Test-Time Scaling Empower Video Reasoning"
+doi: ""
+featured: false
+tags: 
+  - "Computer Vision"
+projects: []
+image:
+  caption: ""
+  focal_point: ""
+  preview_only: false
+date: 2026-01-25T00:00:00.000Z
+url_slides: ""
+publishDate: 2026-01-25T00:00:00.000Z
+url_poster: ""
+url_code: ""
+links:
+- name: "Abstract"
+  url: https://arxiv.org/abs/2601.21037
+---

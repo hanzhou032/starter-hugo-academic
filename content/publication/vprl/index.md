@@ -16,7 +16,7 @@ author_notes:
   - "Equal contribution"
   - "Equal contribution"
   - "Equal contribution"
-publication: "International Conference on Learning Representations (ICLR)"
+publication: "International Conference on Learning Representations (ICLR) Oral"
 summary: "Visual Planning enables thinking through purely visual representations, independent of text."
 url_dataset: ""
 url_project: ""
@@ -37,8 +37,10 @@ date: 2025-05-19T00:00:00.000Z
 url_slides: ""
 publishDate: 2026-01-25T00:00:00.000Z
 url_poster: ""
-url_code: ""
+url_code: "https://github.com/yix8/VisualPlanning"
 links:
 - name: "Abstract"
   url: https://arxiv.org/abs/2505.11409
+- name: "OpenReview"
+  url: https://openreview.net/forum?id=wsnse46kRO
 ---

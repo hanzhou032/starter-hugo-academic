@@ -38,4 +38,6 @@ url_code: ""
 links:
 - name: "Abstract"
   url: https://arxiv.org/abs/2502.02533
+- name: "OpenReview"
+  url: https://openreview.net/forum?id=I05H9RUzHB
 ---
