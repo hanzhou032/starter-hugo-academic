@@ -21,7 +21,7 @@ url_source: ""
 url_video: ""
 title: "Maestro: Self-Improving Text-to-Image Generation via Agent Orchestration"
 doi: ""
-featured: true
+featured: false
 tags: 
   - "Computer Vision"
 projects: []
