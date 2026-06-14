@@ -34,6 +34,7 @@ experience:
     company_logo: mistral
     location: London, UK
     date_start: '2026-01-01'
+    date_end: '2026-05-12'
     
   - title: Student Researcher
     company: Google DeepMind

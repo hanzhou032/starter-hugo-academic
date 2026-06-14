@@ -43,19 +43,18 @@ email: "hz416@cam.ac.uk"
 superuser: true
 highlight_name: true
 ---
-I am a final-year PhD student in *Computation, Cognition, and Language* (NLP) at [Language Technology Lab](https://ltl.mmll.cam.ac.uk/), [University of Cambridge](https://www.cam.ac.uk/). I am supervised by [Prof. Anna Korhonen](https://sites.google.com/site/annakorhonen/) and [Dr. Ivan Vulić](https://sites.google.com/site/ivanvulic/). Currently, I am an AI Scientist Intern in the Reasoning team in [Mistral AI](https://mistral.ai/). Previously, I interned as a Student Researcher at [Google DeepMind](https://www.deepmind.com/), [Google Cloud AI Research](https://research.google/), and [Google Research](https://research.google/).
+I am a final-year PhD student in *Computation, Cognition, and Language* (NLP) at [Language Technology Lab](https://ltl.mmll.cam.ac.uk/), [University of Cambridge](https://www.cam.ac.uk/). I am supervised by [Prof. Anna Korhonen](https://sites.google.com/site/annakorhonen/) and [Dr. Ivan Vulić](https://sites.google.com/site/ivanvulic/). My research interests are all about reward-driven intelligence. Previously, I interned as an AI Scientist Intern at [Mistral AI](https://mistral.ai/) and as a Student Researcher at [Google DeepMind](https://www.deepmind.com/), [Google Cloud AI Research](https://research.google/), and [Google Research](https://research.google/).
 
-I am always interested in reward-driven intelligence. I am open to full-time Research Scientist roles.
+I am looking for full-time Research Scientist roles. Feel free to contact me for any research collaboration and potential job opportunities.
 
 ## Recent News
+  - Apr 2026: Attended ICLR 2026 in-person 🇧🇷.
   - Jan 2026: **[MASS](https://arxiv.org/abs/2502.02533) and [VPRL](https://arxiv.org/abs/2505.11409) were accepted at [ICLR 2026](https://iclr.cc/)!**
   - Jan 2026: Start as AI Scientist Intern at [Mistral AI](https://mistral.ai/).
   - Jan 2025: **[BRIDGE](https://www.arxiv.org/abs/2502.00330) was accepted at ICLR 2025!**
   - Sep 2024: **[ZEPO](https://arxiv.org/abs/2406.11370) and [TopViewRS](https://arxiv.org/abs/2406.02537) were accepted at [EMNLP 2024](https://2024.emnlp.org/)!**
   - Jul 2024: Start as Student Researcher at [Google Cloud AI Research](https://research.google/).
-  - Jul 2024: **[PairS](https://arxiv.org/abs/2403.16950) was accepted at [COLM 2024](https://colmweb.org/)!**
-  - May 2024: Attended ICLR 2024 in-person 🇦🇹.
 
 ### Academic Services
 
-Reviewer/program committee member at ACL (2023-24), EMNLP (2022-24), ICML (2024-26), NeurIPS (2023-25), ICLR (2025-26). 
+Reviewer/program committee member at ACL (2023-24), EMNLP (2022-24), ICML (2024-26), NeurIPS (2023-26), ICLR (2025-26). 

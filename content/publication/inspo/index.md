@@ -21,6 +21,7 @@ doi: ""
 featured: false
 tags: 
   - "Language Agent"
+  - "Reinforcement Learning"
 projects: []
 image:
   caption: ""
