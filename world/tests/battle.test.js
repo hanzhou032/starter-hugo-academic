@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createLane, BRIDGE } from '../lane.js';
-import { createBattleSimulation } from '../battle-simulation.js';
+import { createBattleSimulation, COMBAT } from '../battle-simulation.js';
 
 test('bridge formation, heading and feet share the deck centerline', () => {
   const route = createLane((x, z) => 2.2 + x * .025 - z * .02);
@@ -42,7 +42,8 @@ test('every strike draws from its attacker’s range and resolves real health lo
         const attacker = attackers.get(event.attacker);
         assert.ok(attacker.health > 0, 'dead units never start an attack');
         assert.ok(Number.isInteger(event.damage));
-        assert.ok(event.damage >= attacker.damageMin && event.damage <= attacker.damageMax);
+        assert.ok(event.rolledDamage >= attacker.damageMin && event.rolledDamage <= attacker.damageMax);
+        assert.equal(event.damage, event.rolledDamage * (event.critical ? 2 : 1));
         const previous = event.type === 'hit' ? health.get(event.target) : bases[event.target];
         assert.equal(event.health, Math.max(0, previous - event.damage));
         if (event.type === 'hit') health.set(event.target, event.health); else bases[event.target] = event.health;
@@ -63,6 +64,7 @@ test('every strike draws from its attacker’s range and resolves real health lo
     if (state.phase === 'ended') break;
   }
   const strikes = events.filter(e => e.type === 'hit' || e.type === 'base-hit');
+  assert.ok(strikes.some(e => e.critical) && strikes.some(e => !e.critical));
   assert.ok(new Set(strikes.map(e => e.damage)).size >= 8, 'damage varies between attacks');
   assert.ok(events.some(e => e.type === 'despawn'), 'fallen characters are removed');
   assert.ok(events.some(e => e.type === 'base-hit'), 'survivors attack the opposing base');
@@ -80,7 +82,7 @@ test('rapid reinforcements are retained and leave a clear, bounded exit queue', 
     const state = sim.snapshot();
     assert.deepEqual(state.reinforced, recruited);
     for (const side of [0, 1]) {
-      assert.equal(spawned[side] - 3 + state.pending[side], recruited[side], 'every click is either spawned or queued');
+      assert.equal(spawned[side] - state.wave * 3 + state.pending[side], recruited[side], 'scheduled groups and clicks are either spawned or queued');
       const living = state.units.filter(u => u.side === side && u.health > 0);
       assert.ok(living.length <= 18);
       const home = side ? route.max : route.min;
@@ -94,11 +96,11 @@ test('rapid reinforcements are retained and leave a clear, bounded exit queue', 
   assert.deepEqual(sim.snapshot().pending, [0, 0]);
 });
 
-test('simultaneous lethal hits resolve together and an empty battlefield respawns', () => {
+test('simultaneous lethal hits resolve together and the next scheduled group returns', () => {
   const sim = makeBattle({ seed: 1 });
   for (const unit of sim.units) unit.health = 1;
   const events = [];
-  for (let frame = 0; frame < 60 * 30; frame++) { sim.advance(1 / 60); events.push(...sim.drainEvents()); if (sim.snapshot().wave === 2) break; }
+  for (let frame = 0; frame < 60 * 25; frame++) { sim.advance(1 / 60); events.push(...sim.drainEvents()); }
   const deaths = events.filter(e => e.type === 'death');
   assert.equal(deaths.length, 6);
   assert.ok(deaths.some(a => deaths.some(b => a.id !== b.id && a.time === b.time)), 'opponents can die in the same impact step');
@@ -109,7 +111,7 @@ test('simultaneous lethal hits resolve together and an empty battlefield respawn
 test('base collapse is clamped, completes once, and ends combat across different seeds', () => {
   for (const seed of [1, 2, 3, 100, 999]) {
     const sim = makeBattle({ seed }), events = [];
-    for (let frame = 0; frame < 60 * 180; frame++) { sim.advance(1 / 60); events.push(...sim.drainEvents()); if (sim.snapshot().phase === 'ended') break; }
+    for (let frame = 0; frame < 60 * 600; frame++) { sim.advance(1 / 60); events.push(...sim.drainEvents()); if (sim.snapshot().phase === 'ended') break; }
     const state = sim.snapshot(), destruction = events.filter(e => e.type === 'base-destroyed'), endings = events.filter(e => e.type === 'game-over');
     assert.equal(state.phase, 'ended');
     assert.equal(destruction.length, 1); assert.equal(endings.length, 1);
@@ -120,6 +122,36 @@ test('base collapse is clamped, completes once, and ends combat across different
     assert.deepEqual(sim.snapshot().units, state.units); assert.deepEqual(sim.snapshot().bases, state.bases);
     assert.deepEqual(sim.drainEvents(), []);
   }
+});
+
+test('three units per base are scheduled every 20 seconds while survivors remain', () => {
+  const sim = makeBattle({ seed: 11, baseHealth: 100000 }), events = [];
+  sim.reinforce(0); sim.reinforce(1);
+  for (let frame = 0; frame < 60 * 81; frame++) {
+    sim.advance(1 / 60); events.push(...sim.drainEvents());
+    const state = sim.snapshot();
+    assert.equal(state.nextWave, state.wave * COMBAT.waveInterval);
+    for (const side of [0, 1]) {
+      const spawns = events.filter(e => e.type === 'spawn' && e.side === side).length;
+      assert.equal(spawns + state.pending[side], state.wave * 3 + 1);
+    }
+  }
+  const waves = events.filter(e => e.type === 'wave');
+  assert.equal(waves.length, 5);
+  waves.forEach((wave, i) => assert.ok(Math.abs(wave.time - i * 20) < 1e-8));
+  assert.deepEqual(sim.snapshot().reinforced, [1, 1], 'automatic groups are separate from click counts');
+});
+
+test('critical strikes are uncommon independent rolls and work against both targets', () => {
+  const hits = [];
+  for (let seed = 1; seed <= 80; seed++) {
+    const sim = makeBattle({ seed });
+    for (let frame = 0; frame < 60 * 80; frame++) { sim.advance(1 / 60); hits.push(...sim.drainEvents().filter(e => e.type === 'hit' || e.type === 'base-hit')); }
+  }
+  const critical = hits.filter(e => e.critical), rate = critical.length / hits.length;
+  assert.ok(rate > .08 && rate < .12, `expected about 10%, observed ${rate}`);
+  assert.ok(critical.some(e => e.type === 'hit') && critical.some(e => e.type === 'base-hit'));
+  for (const hit of hits) assert.equal(hit.damage, hit.rolledDamage * (hit.critical ? COMBAT.criticalMultiplier : 1));
 });
 
 test('simulation is independent of display refresh rate', () => {

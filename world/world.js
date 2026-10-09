@@ -14,7 +14,7 @@ import { createRiver } from './water.js';
 import { createIslandRock, createCloudSea } from './sky-island.js';
 import { createWaterfalls } from './waterfall.js';
 
-export function createWorld(onVisit, { onBaseDestroyed = () => {}, onGameOver = () => {} } = {}) {
+export function createWorld(onVisit, { onBaseDestroyed = () => {}, onGameOver = () => {}, onHit = () => {} } = {}) {
   let resolveReady;
   const ready = new Promise(resolve => { resolveReady = resolve; });
   const mobile = matchMedia('(max-width: 720px)').matches;
@@ -315,6 +315,7 @@ export function createWorld(onVisit, { onBaseDestroyed = () => {}, onGameOver = 
 
   const baseDestruction=createBaseDestruction(scene,[oxfordBase,cambridgeBase],baseExits,camera,fogTexture,reduced);
   const meepoBattle=createMeepoBattle(scene,midRoute,camera,reduced,(event,state)=>{
+    if(event.type==='hit'||event.type==='base-hit')onHit(event,state);
     if(event.type==='base-destroyed'){
       onBaseDestroyed(event,state);
       const p=(event.side?cambridgeBase:oxfordBase).position;

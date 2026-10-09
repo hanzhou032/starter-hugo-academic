@@ -101,6 +101,9 @@ function createMeepo(side, index) {
 }
 
 export function createMeepoBattle(scene, route, camera, reduced, onEvent = () => {}) {
+  // Canvas text does not load web fonts by itself. Warm the local display faces
+  // before the first clash, with a readable serif fallback if a font is missing.
+  Promise.allSettled([document.fonts.load('500 72px Cinzel'), document.fonts.load('700 80px Cinzel')]);
   const seed = crypto.getRandomValues(new Uint32Array(1))[0];
   const simulation = createBattleSimulation({ spawnDistances: [-route.min, route.max], seed, collapseDuration: reduced ? .25 : 3.6 });
   const actors = new Map(), templates = [createMeepo(0, 0), createMeepo(1, 0)], bursts = [], numbers = [];
@@ -121,11 +124,11 @@ export function createMeepoBattle(scene, route, camera, reduced, onEvent = () =>
     const g = new THREE.Group(); battle.add(g); g.visible = false;
     for (let j = 0; j < 7; j++) g.add(new THREE.Mesh(sparkGeometry, sparkMaterial));
     bursts.push({ g, age: 10 });
-    const canvas = document.createElement('canvas'); canvas.width = 128; canvas.height = 64;
+    const canvas = document.createElement('canvas'); canvas.width = 256; canvas.height = 128;
     const texture = new THREE.CanvasTexture(canvas); texture.colorSpace = THREE.SRGBColorSpace;
     const material = new THREE.SpriteMaterial({ map: texture, transparent: true, depthTest: false, depthWrite: false, toneMapped: false });
-    const sprite = new THREE.Sprite(material); sprite.scale.set(1.35, .675, 1); sprite.visible = false; sprite.renderOrder = 8; battle.add(sprite);
-    numbers.push({ sprite, canvas, texture, age: 10, y: 0 });
+    const sprite = new THREE.Sprite(material); sprite.visible = false; sprite.renderOrder = 8; sprite.name = 'floating-damage'; battle.add(sprite);
+    numbers.push({ sprite, canvas, texture, age: 10, y: 0, critical: false, duration: 1 });
   }
   let burstIndex = 0;
   const label = document.querySelector('#battle-status');
@@ -142,8 +145,16 @@ export function createMeepoBattle(scene, route, camera, reduced, onEvent = () =>
           const lateral = event.type === 'hit' ? route.formationLateral(distance, target.lateral) : 0;
           const p = route.sample(distance, lateral), slot = burstIndex++ % bursts.length, burst = bursts[slot], number = numbers[slot];
           burst.g.position.set(p.x, route.surface(distance, lateral) + 1, p.z); burst.g.visible = !reduced; burst.age = 0;
-          const ctx = number.canvas.getContext('2d'); ctx.clearRect(0, 0, 128, 64); ctx.font = 'bold 42px monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-          ctx.strokeStyle = '#152322'; ctx.lineWidth = 7; ctx.strokeText(`−${event.damage}`, 64, 33); ctx.fillStyle = event.type === 'base-hit' ? '#ffe0a0' : '#e7dec5'; ctx.fillText(`−${event.damage}`, 64, 33); number.texture.needsUpdate = true;
+          const critical = event.critical, ctx = number.canvas.getContext('2d'), text = String(event.damage);
+          ctx.clearRect(0, 0, 256, 128); ctx.font = `${critical ? '700 80' : '500 72'}px Cinzel, Georgia, serif`;
+          ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.lineJoin = 'round';
+          ctx.shadowColor = critical ? '#ee611b' : '#071c17'; ctx.shadowBlur = critical ? 14 : 6; ctx.shadowOffsetY = 3;
+          ctx.strokeStyle = critical ? '#542318' : '#18382d'; ctx.lineWidth = critical ? 6 : 5; ctx.strokeText(text, 128, 67);
+          const color = ctx.createLinearGradient(0, 30, 0, 105);
+          color.addColorStop(0, critical ? '#fff4bb' : '#fff9e4'); color.addColorStop(.5, critical ? '#ffc262' : '#f3dfac'); color.addColorStop(1, critical ? '#f47935' : '#d7b977');
+          ctx.shadowBlur = 0; ctx.shadowOffsetY = 0; ctx.fillStyle = color; ctx.fillText(text, 128, 67); number.texture.needsUpdate = true;
+          number.critical = critical; number.duration = critical ? 1.3 : 1;
+          number.sprite.userData = { damage: event.damage, critical };
           number.sprite.position.set(p.x, route.surface(distance, lateral) + 2.35, p.z); number.y = number.sprite.position.y; number.age = 0;
         }
       }
@@ -154,7 +165,13 @@ export function createMeepoBattle(scene, route, camera, reduced, onEvent = () =>
       if (!burst.g.visible) continue;
       burst.g.children.forEach((p, i) => { const a = i * Math.PI * 2 / 7; p.position.set(Math.cos(a) * burst.age * 1.8, Math.sin(a * 3) * burst.age + .13 - burst.age * burst.age * 3, Math.sin(a) * burst.age * 1.8); p.scale.setScalar(1 - burst.age / .34); });
     }
-    for (const n of numbers) { n.age += delta; n.sprite.visible = n.age < .85; n.sprite.position.y = n.y + (reduced ? 0 : n.age * .8); n.sprite.material.opacity = Math.max(0, 1 - n.age / .85); }
+    for (const n of numbers) {
+      n.age += delta; n.sprite.visible = n.age < n.duration;
+      n.sprite.position.y = n.y + (reduced ? 0 : n.age * (n.critical ? .95 : .7));
+      const pop = reduced ? 1 : 1 + (n.critical ? .22 : .06) * Math.exp(-n.age * 10);
+      const size = (n.critical ? 1.95 : 1.48) * pop; n.sprite.scale.set(size, size / 2, 1);
+      n.sprite.material.opacity = Math.max(0, 1 - Math.max(0, n.age - .3) / (n.duration - .3));
+    }
     for (const u of state.units) {
       const lateral = route.formationLateral(u.distance, u.lateral);
       const a = actorFor(u), p = route.sample(u.distance, lateral), dead = u.state === 'dying';
@@ -197,7 +214,8 @@ export function createMeepoBattle(scene, route, camera, reduced, onEvent = () =>
     }
     const alive = side => state.units.filter(u => u.side === side && u.health > 0).length;
     const phase = state.phase !== 'playing' ? 'A base has fallen' : state.units.some(u => u.state === 'sieging') ? 'The bases are under attack' : state.units.some(u => u.state === 'fighting') ? 'Shovels clash' : 'Marching to battle';
-    const text = `${phase} · ${alive(0)} : ${alive(1)}${state.pending.some(Boolean) ? ` · ${state.pending.reduce((a, b) => a + b, 0)} incoming` : ''}`;
+    const countdown = state.phase === 'playing' ? ` · Next wave ${Math.max(0, Math.ceil(state.nextWave - state.time))}s` : '';
+    const text = `${phase} · ${alive(0)} : ${alive(1)}${state.pending.some(Boolean) ? ` · ${state.pending.reduce((a, b) => a + b, 0)} incoming` : ''}${countdown}`;
     if (label && text !== oldLabel) { label.textContent = text; oldLabel = text; }
     return state;
   }

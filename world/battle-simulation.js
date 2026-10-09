@@ -1,7 +1,7 @@
 // Fixed-step combat with a seeded damage stream, independent of render timing.
-export const COMBAT = Object.freeze({ reach: 1.6, spacing: 1.5, speed: 1.42, baseHealth: 600, collapseDuration: 3.6 });
+export const COMBAT = Object.freeze({ reach: 1.6, spacing: 1.5, speed: 1.42, baseHealth: 600, collapseDuration: 3.6, waveInterval: 20, criticalChance: .1, criticalMultiplier: 2 });
 export function createBattleSimulation({ spawnDistances = [13, 13], seed = 0x5eeda11, baseHealth = COMBAT.baseHealth, collapseDuration = COMBAT.collapseDuration } = {}) {
-  let time = 0, accumulator = 0, wave = 1, nextWave = 0, nextId = 0, phase = 'playing', endsAt = 0;
+  let time = 0, accumulator = 0, wave = 1, nextWave = COMBAT.waveInterval, nextId = 0, phase = 'playing', endsAt = 0;
   let randomState = seed >>> 0;
   const random = () => { randomState = (1664525 * randomState + 1013904223) >>> 0; return randomState / 4294967296; };
   const units = [], events = [], pending = [0, 0], reinforced = [0, 0], laneCounters = [0, 0];
@@ -15,12 +15,15 @@ export function createBattleSimulation({ spawnDistances = [13, 13], seed = 0x5ee
   function spawn(side, offset = 0) {
     const lane = laneCounters[side]++ % 3, damage = [[18, 30], [16, 28], [20, 32]][lane];
     const u = { id: nextId++, side, lane, lateral: (lane - 1) * 1.15, distance: home(side) + direction(side) * offset,
-      state: 'marching', health: 100, maxHealth: 100, damageMin: damage[0], damageMax: damage[1], lastDamage: null,
+      state: 'marching', health: 100, maxHealth: 100, damageMin: damage[0], damageMax: damage[1], lastDamage: null, lastCritical: false,
       age: 0, attackAge: 0, attackDuration: 1.35 + lane * .12, struck: false, target: null, targetBase: null, hitAge: 10 };
     units.push(u); events.push({ type: 'spawn', id: u.id, side, time }); return u;
   }
-  function spawnWave() {
-    for (const side of [0, 1]) for (const offset of [0, 1.6, 3.2]) spawn(side, offset);
+  function spawnWave(initial = false) {
+    for (const side of [0, 1]) {
+      if (initial) for (const offset of [0, 1.6, 3.2]) spawn(side, offset);
+      else pending[side] += 3;
+    }
     events.push({ type: 'wave', wave, time });
   }
   function reinforce(side) {
@@ -55,11 +58,10 @@ export function createBattleSimulation({ spawnDistances = [13, 13], seed = 0x5ee
       const u = units[i]; u.age += step; u.hitAge += step;
       if (u.state === 'dying' && u.age >= 2.6) { units.splice(i, 1); events.push({ type: 'despawn', id: u.id, time }); }
     }
+    // Waves follow a regular clock even while previous waves are still alive.
+    // Automatic groups and click recruits share the same collision-safe exits.
+    if (time + 1e-9 >= nextWave) { wave++; nextWave += COMBAT.waveInterval; spawnWave(); }
     releaseReinforcements();
-    if (!units.length && !pending.some(Boolean)) {
-      if (!nextWave) nextWave = time + 2.4;
-      if (time >= nextWave) { wave++; nextWave = 0; spawnWave(); }
-    } else nextWave = 0;
 
     // Resolve movements from the same old positions, so iteration order cannot
     // let opponents walk through each other or allies overtake a blocked queue.
@@ -96,15 +98,18 @@ export function createBattleSimulation({ spawnDistances = [13, 13], seed = 0x5ee
       u.attackAge += step;
       if (!u.struck && u.attackAge >= .56) {
         u.struck = true;
-        const damage = u.damageMin + Math.floor(random() * (u.damageMax - u.damageMin + 1));
-        u.lastDamage = damage; strikes.push({ u, target, damage, base: u.targetBase !== null });
+        const rolledDamage = u.damageMin + Math.floor(random() * (u.damageMax - u.damageMin + 1));
+        const critical = random() < COMBAT.criticalChance;
+        const damage = rolledDamage * (critical ? COMBAT.criticalMultiplier : 1);
+        u.lastDamage = damage; u.lastCritical = critical;
+        strikes.push({ u, target, damage, rolledDamage, critical, base: u.targetBase !== null });
       }
       if (u.attackAge >= u.attackDuration) { u.attackAge -= u.attackDuration; u.struck = false; }
     }
-    for (const { u, target, damage, base } of strikes) {
+    for (const { u, target, damage, rolledDamage, critical, base } of strikes) {
       target.health = Math.max(0, target.health - damage);
       if (base) target.hitAt = time; else target.hitAge = 0;
-      events.push({ type: base ? 'base-hit' : 'hit', attacker: u.id, target: base ? target.side : target.id, damage, health: target.health, time });
+      events.push({ type: base ? 'base-hit' : 'hit', attacker: u.id, target: base ? target.side : target.id, damage, rolledDamage, critical, health: target.health, time });
     }
     for (const u of alive) if (u.health === 0) {
       setAction(u, 'dying'); events.push({ type: 'death', id: u.id, time });
@@ -114,7 +119,7 @@ export function createBattleSimulation({ spawnDistances = [13, 13], seed = 0x5ee
       events.push({ type: 'base-destroyed', side: base.side, time });
     }
   }
-  spawnWave();
+  spawnWave(true);
   return {
     units, reinforce,
     advance(delta) { accumulator += Math.min(Math.max(delta, 0), .25); while (accumulator + 1e-9 >= step) { tick(); accumulator -= step; } },

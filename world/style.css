@@ -105,3 +105,6 @@
 @keyframes game-banner-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:720px){.battle-base-health{gap:9px;max-width:220px}.battle-base-health small{font-size:calc(6px * var(--font-scale))}.watching-battle .world-tools{top:305px}.game-over-dialog{padding:30px 24px 24px}.game-over-dialog h2{font-size:calc(27px * var(--font-scale))}.game-over-crest{width:68px;height:68px;margin-bottom:20px}.game-over-dialog p{font-size:calc(12px * var(--font-scale))}}
 @media(max-width:359px){.game-over-dialog{padding:27px 18px 20px}.game-over-dialog h2{font-size:calc(23px * var(--font-scale))}.game-over-email{font-size:calc(13px * var(--font-scale))}.restart-world{font-size:calc(11px * var(--font-scale))}}
+.panel-sound{position:absolute;top:16px;right:62px;width:35px;height:35px;z-index:2}
+.game-over-sound{position:absolute;top:15px;left:15px}
+@media(max-width:720px){.content-dialog>.panel-sound{position:sticky;top:0;margin:-10px 37px -30px auto;right:auto;width:40px;height:40px;background:#1c2c2b}.content-dialog>.panel-sound:focus-visible{outline:2px solid var(--gold)}.content-dialog .eyebrow{max-width:calc(100% - 85px)}}

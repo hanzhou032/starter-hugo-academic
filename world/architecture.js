@@ -221,7 +221,8 @@ export function buildOxfordBase(parent, effects) {
   bake(stonework);
   effects.ring(parent, 0, .49, 0, 4.65, effects.teal, .028);
   effects.flag(parent, -3.8, .5, .25, false, 1, 'oxford');
-  effects.flag(parent, 3.8, .5, .25, false, 1, 'oxford');
+  // Keep the entire waving cloth clear of the lane-exit arch on this flank.
+  effects.flag(parent, 3.05, .5, 2.75, false, 1, 'oxford');
   const heart = effects.mesh(new THREE.OctahedronGeometry(.22), effects.teal, parent);
   heart.position.set(.25, 8.0, .45);
   effects.animations.push(t => { heart.rotation.y = t * .4; heart.position.y = 8.0 + Math.sin(t) * .1; });
