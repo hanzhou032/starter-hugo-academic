@@ -9,11 +9,12 @@ import { buildOxfordBase, buildCambridgeBase } from './architecture.js';
 import { buildGoogle, buildMistral, bakeStatic } from './landmarks.js';
 import { BRIDGE, createLane } from './lane.js';
 import { createMeepoBattle } from './meepo.js';
+import { createBaseDestruction } from './base-destruction.js';
 import { createRiver } from './water.js';
 import { createIslandRock, createCloudSea } from './sky-island.js';
 import { createWaterfalls } from './waterfall.js';
 
-export function createWorld(onVisit) {
+export function createWorld(onVisit, { onBaseDestroyed = () => {}, onGameOver = () => {} } = {}) {
   let resolveReady;
   const ready = new Promise(resolve => { resolveReady = resolve; });
   const mobile = matchMedia('(max-width: 720px)').matches;
@@ -267,14 +268,15 @@ export function createWorld(onVisit) {
   [[-4,-1.5],[3,1.4],[-8,5],[5,-6],[-13,7],[10,-6],[-14,-7],[14,7]].forEach(([x,z])=>{const p=besideLane(x,z,.45);const g=torch(...p);g.name='roadside-brazier';g.userData.footprint=.45;});
 
   const architectureEffects={mesh,ring,flag,point,animations,teal,orange};
-  buildOxfordBase(groupAt(-11.7,10.5),architectureEffects);
+  const oxfordBase=buildOxfordBase(groupAt(-11.7,10.5),architectureEffects);
 
   buildGoogle(groupAt(-11,-7),architectureEffects);
-  buildCambridgeBase(groupAt(11.6,-9.3),architectureEffects);
+  const cambridgeBase=buildCambridgeBase(groupAt(11.6,-9.3),architectureEffects);
   buildMistral(groupAt(13.4,9.6),architectureEffects);
 
   // Real open archways connect the courtyards to the lane. The formation narrows
   // at these exits, then spreads out well before reaching the bridge.
+  const baseExits=[];
   for(const side of [0,1]){
     const d=side?midRoute.max:midRoute.min,p=midRoute.sample(d),gate=new THREE.Group();
     gate.name=side?'cambridge-lane-exit':'oxford-lane-exit';
@@ -286,6 +288,7 @@ export function createWorld(onVisit) {
     for(const x of [-1.47,1.47]){box(gate,x,.12,0,.48,.25,.8,trim);cone(gate,x,3.68,0,0,.2,.55,trim,4);}
     const gem=mesh(crystalGeo,side?orange:teal,gate);gem.position.set(0,3.12,.38);gem.scale.set(.13,.16,.06);
     bakeStatic(gate);
+    baseExits.push(gate);
   }
 
   // Lane defense towers and small outposts add familiar silhouettes to the map.
@@ -310,7 +313,15 @@ export function createWorld(onVisit) {
   const pm=new THREE.PointsMaterial({size:.16,map:fogTexture,vertexColors:true,transparent:true,opacity:.9,blending:THREE.AdditiveBlending,depthWrite:false});scene.add(new THREE.Points(pg,pm));
   animations.push(t=>{particleData.forEach((p,i)=>{pp[i*3]=p.x+Math.sin(t*p.s*.4+p.p)*.7;pp[i*3+1]=p.y+Math.sin(t*p.s+p.p)*.45;pp[i*3+2]=p.z+Math.cos(t*p.s*.3+p.p)*.6;});pg.attributes.position.needsUpdate=true;});
 
-  const meepoBattle=createMeepoBattle(scene,midRoute,camera,reduced);
+  const baseDestruction=createBaseDestruction(scene,[oxfordBase,cambridgeBase],baseExits,camera,fogTexture,reduced);
+  const meepoBattle=createMeepoBattle(scene,midRoute,camera,reduced,(event,state)=>{
+    if(event.type==='base-destroyed'){
+      onBaseDestroyed(event,state);
+      const p=(event.side?cambridgeBase:oxfordBase).position;
+      fly(p.clone().add(new THREE.Vector3(16,12,21)),p.clone().add(new THREE.Vector3(0,2,0)),850);
+    }
+    if(event.type==='game-over')onGameOver(event,state);
+  });
   // A hawk circles above the river.
   const birds=[];for(let i=0;i<3;i++){const bird=new THREE.Group();const bm=mat('bird',0x292e27);const left=box(bird,-.3,0,0,.6,.035,.15,bm),right=box(bird,.3,0,0,.6,.035,.15,bm);scene.add(bird);birds.push({bird,left,right,p:i*2.1});}
   animations.push(t=>birds.forEach(({bird,left,right,p})=>{const a=t*.13+p;bird.position.set(Math.cos(a)*8,11+Math.sin(a)*1.2,Math.sin(a)*8);bird.rotation.y=-a;left.rotation.z=Math.sin(t*3+p)*.2;right.rotation.z=-Math.sin(t*3+p)*.2;}));
@@ -336,7 +347,8 @@ export function createWorld(onVisit) {
   const markerNames={bio:'Bio',experience:'Experience',research:'Research',publications:'Publications'};
   Object.entries(landmarks).forEach(([id,pos],i)=>{
     const button=document.createElement('button');button.className='landmark';button.dataset.destination=id;button.setAttribute('aria-label',`Explore ${markerNames[id].toLowerCase()}`);
-    button.innerHTML=`<span class="marker-gem"><b>${i+1}</b></span><span class="marker-name">${markerNames[id]}</span><span class="marker-line"></span>`;
+    const side=id==='bio'?0:id==='experience'?1:null;
+    button.innerHTML=`<span class="marker-gem"><b>${i+1}</b></span><span class="marker-name">${markerNames[id]}</span>${side===null?'':`<span class="base-health-meter" data-base-health="${side}" role="meter" aria-label="${side?'Cambridge':'Oxford'} base health" aria-valuemin="0" aria-valuemax="600" aria-valuenow="600"><i></i><span>600 / 600</span></span>`}<span class="marker-line"></span>`;
     labels.append(button);button.addEventListener('click',()=>onVisit(id));markers.push({id,button,pos:pos.clone().add(new THREE.Vector3(0,id==='bio'?9.1:id==='experience'?8.8:id==='publications'?6.3:5.6,0))});
   });
   const duskBackground=new THREE.Color(0x1b3034),nightBackground=new THREE.Color(0x0a121e);
@@ -389,7 +401,7 @@ export function createWorld(onVisit) {
     scene.background.lerpColors(duskBackground,nightBackground,nightMix);scene.fog.color.copy(scene.background);
     bloom.strength=.34+nightMix*.2;waterUniforms.time.value=t;waterUniforms.night.value=nightMix;
     for(const fn of animations)fn(t);
-    meepoBattle.update(reduced?0:delta);
+    baseDestruction.update(meepoBattle.update(delta));
     for(const {m,phase} of flames){m.scale.y=.44+Math.sin(t*7+phase)*.07;m.scale.x=.17+Math.sin(t*9+phase)*.025;}
     flags.forEach(({mesh:m,base,phase})=>{const arr=m.geometry.attributes.position.array;for(let i=0;i<arr.length;i+=3){const u=base[i];arr[i+2]=Math.sin(u*4+t*2.4+phase)*.12*u+Math.sin(base[i+1]*3+t*1.8)*.055*u;}m.geometry.attributes.position.needsUpdate=true;});
     for(const marker of markers){temp.copy(marker.pos).project(camera);const x=(temp.x*.5+.5)*innerWidth,y=(-temp.y*.5+.5)*innerHeight;const visible=temp.z<1&&x>15&&x<innerWidth-15&&y>120&&y<innerHeight-155;marker.button.style.left=x+'px';marker.button.style.top=y+'px';marker.button.style.opacity=visible?'1':'0';marker.button.style.visibility=visible?'visible':'hidden';}
@@ -398,5 +410,5 @@ export function createWorld(onVisit) {
     if(frame%60===0){document.body.dataset.drawCalls=renderer.info.render.calls;}
   }
   requestAnimationFrame(tick);
-  return {focus,reset,watchBattle,get battle(){return meepoBattle.snapshot();},get lane(){return midRoute;},toggleNight(){night=!night;return night;},get ready(){return ready;},get renderer(){return renderer;},get camera(){return camera;},get scene(){return scene;}};
+  return {focus,reset,watchBattle,reinforce:side=>meepoBattle.reinforce(side),get battle(){return meepoBattle.snapshot();},get lane(){return midRoute;},toggleNight(){night=!night;return night;},get ready(){return ready;},get renderer(){return renderer;},get camera(){return camera;},get scene(){return scene;}};
 }

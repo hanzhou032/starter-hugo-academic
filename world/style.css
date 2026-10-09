@@ -68,3 +68,40 @@
 @keyframes terminal-region-in{from{opacity:0}to{opacity:1}}
 @keyframes terminal-logo-in{from{opacity:0;transform:translateY(7px) scale(.84);filter:blur(5px)}to{opacity:1;transform:translateY(0) scale(1)}}
 @keyframes terminal-box-in{from{opacity:0;transform:translateY(5px);clip-path:inset(0 100% 0 0);box-shadow:0 0 10px #c8ad7d35}to{opacity:1;transform:translateY(0);clip-path:inset(0)}}
+
+/* Base health stays attached to its landmark, with a compact battle readout. */
+.base-health-meter{--health:100%;display:block;position:relative;min-width:86px;height:19px;border:1px solid #c8ad7d66;background:#102222ef;overflow:hidden;text-align:center}
+.base-health-meter i{position:absolute;inset:0 auto 0 0;width:var(--health);background:#387b5f;transition:width .2s ease-out}
+.base-health-meter[data-base-health="1"] i{background:#944b40}
+.base-health-meter>span{position:relative;display:block;font:500 calc(8px * var(--font-scale))/17px var(--sans);color:#fff2d8;letter-spacing:.6px;text-shadow:0 1px 3px #000}
+.landmark .base-health-meter{margin:5px auto 0;width:100%}
+.battle-base-health{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:3px}
+.battle-base-health small{display:block;margin-bottom:6px;font-size:calc(7px * var(--font-scale));letter-spacing:1.6px}
+.battle-help{font-size:calc(11px * var(--font-scale));line-height:1.8;color:#b7c6b9}
+.base-collapsing .ui,.base-collapsing .world-labels{pointer-events:none;opacity:0}
+.base-collapsing .world-labels *{pointer-events:none}
+
+.game-over-dialog{position:fixed;inset:0;margin:auto;width:530px;max-width:calc(100vw - 28px);max-height:calc(100dvh - 32px);box-sizing:border-box;overflow:auto;padding:40px 44px 28px;color:var(--ink);text-align:center;border:1px solid #c8ad7d99;background:radial-gradient(ellipse at 50% 0,#37544785,transparent 55%),#152725;box-shadow:0 30px 120px #020a0adb,0 0 0 5px #c8ad7d0c;animation:game-banner-in .5s ease-out;overscroll-behavior:contain}
+.game-over-dialog::backdrop{background:#071615a6;backdrop-filter:blur(5px)}
+.game-over-close{position:absolute;top:12px;right:12px;width:40px;height:40px;color:var(--gold);border:1px solid transparent;background:transparent;font-size:calc(17px * var(--font-scale))}
+.game-over-close:hover{border-color:var(--edge);background:#c8ad7d10}
+.game-over-crest{width:80px;height:80px;display:grid;place-items:center;margin:0 auto 24px;border:1px solid #c8ad7d66;border-radius:50%;background:#a3ba8510;box-shadow:0 0 35px #9bbe7920}
+.game-over-crest img{object-fit:contain}
+.game-over-dialog .eyebrow{font-size:calc(8px * var(--font-scale));letter-spacing:2.3px;line-height:1.7;color:#c8ad7d;text-transform:uppercase}
+.game-over-dialog h2{font:400 calc(31px * var(--font-scale))/1.16 var(--serif);margin:17px 0;color:#f0e6cb;letter-spacing:-.6px}
+.game-over-dialog p{font-size:calc(13px * var(--font-scale));line-height:1.8;color:#bfcbbd;margin:0}
+.game-over-contact{border-top:1px solid var(--edge);border-bottom:1px solid var(--edge);padding:21px 0;margin:24px 0}
+.game-over-contact h3{margin:0 0 12px;font:400 calc(17px * var(--font-scale)) var(--serif);color:#d9d4bb}
+.game-over-email{display:inline-block;font-size:calc(15px * var(--font-scale));color:#d4c193;overflow-wrap:anywhere}
+.game-over-email span{margin-left:5px;color:#8baa94}
+.game-over-links{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin-top:16px}
+.game-over-links a{padding:8px 15px;border:1px solid #c8ad7d45;background:#c8ad7d08;font-size:calc(11px * var(--font-scale));color:#bdd2bf}
+.game-over-links a:hover{background:#c8ad7d1c;color:#f3dfb4}
+.restart-world{display:flex;justify-content:center;align-items:center;gap:10px;width:100%;padding:14px 12px;color:#efdfb9;background:linear-gradient(135deg,#59644966,#384b3866);border:1px solid #c8ad7d88;font:500 calc(12px * var(--font-scale)) var(--sans)}
+.restart-world:hover{background:#73805a55;border-color:#dfc48c}
+.restart-world>span{font-size:calc(21px * var(--font-scale))}
+.game-over-dialog .restart-note{font-size:calc(9px * var(--font-scale));color:#96ad9e;margin-top:12px}
+.game-over-dialog :focus-visible{outline:2px solid #e4c998;outline-offset:4px}
+@keyframes game-banner-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:720px){.battle-base-health{gap:9px;max-width:220px}.battle-base-health small{font-size:calc(6px * var(--font-scale))}.watching-battle .world-tools{top:305px}.game-over-dialog{padding:30px 24px 24px}.game-over-dialog h2{font-size:calc(27px * var(--font-scale))}.game-over-crest{width:68px;height:68px;margin-bottom:20px}.game-over-dialog p{font-size:calc(12px * var(--font-scale))}}
+@media(max-width:359px){.game-over-dialog{padding:27px 18px 20px}.game-over-dialog h2{font-size:calc(23px * var(--font-scale))}.game-over-email{font-size:calc(13px * var(--font-scale))}.restart-world{font-size:calc(11px * var(--font-scale))}}

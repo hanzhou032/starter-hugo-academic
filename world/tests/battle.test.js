@@ -24,43 +24,110 @@ test('bridge formation, heading and feet share the deck centerline', () => {
   }
 });
 
-test('waves meet at mid, exchange real damage, die, and return without passing opponents', () => {
-  const sim = createBattleSimulation();
-  const events = [];
-  let previous = sim.snapshot();
-  for (let i = 0; i < 60 * 120; i++) {
-    sim.advance(1 / 60);
-    const now = sim.snapshot();
-    for (const u of now.units) {
-      assert.ok(u.health >= 0 && u.health <= u.maxHealth);
-      assert.ok(u.side === 0 ? u.distance <= -.76 : u.distance >= .76, 'sides never walk through one another');
-      if (u.state === 'fighting') {
-        const enemy = now.units[(1 - u.side) * 3 + u.lane];
-        assert.equal(enemy.state, 'fighting');
-        assert.ok(Math.abs(u.distance - enemy.distance) <= 1.521, 'enemy is in shovel range');
-      }
-      if (u.state === 'dying' || u.state === 'dead') assert.equal(u.health, 0);
+const route = createLane();
+const makeBattle = options => createBattleSimulation({ spawnDistances: [-route.min, route.max], ...options });
+
+// Use the actual exit distances, not an imaginary symmetric straight lane.
+test('every strike draws from its attacker’s range and resolves real health loss', () => {
+  const sim = makeBattle({ seed: 2 }), events = [], attackers = new Map(), health = new Map();
+  const bases = [600, 600];
+  for (let frame = 0; frame < 60 * 90; frame++) {
+    for (const unit of sim.snapshot().units) {
+      attackers.set(unit.id, unit);
+      if (!health.has(unit.id)) health.set(unit.id, unit.health);
     }
+    sim.advance(1 / 60);
     for (const event of sim.drainEvents()) {
-      if (event.type === 'hit') {
-        assert.equal(previous.units[event.attacker].state, 'fighting', 'only living fighters attack');
-        assert.ok(event.health < previous.units[event.target].health, 'a strike removes health');
+      if (event.type === 'hit' || event.type === 'base-hit') {
+        const attacker = attackers.get(event.attacker);
+        assert.ok(attacker.health > 0, 'dead units never start an attack');
+        assert.ok(Number.isInteger(event.damage));
+        assert.ok(event.damage >= attacker.damageMin && event.damage <= attacker.damageMax);
+        const previous = event.type === 'hit' ? health.get(event.target) : bases[event.target];
+        assert.equal(event.health, Math.max(0, previous - event.damage));
+        if (event.type === 'hit') health.set(event.target, event.health); else bases[event.target] = event.health;
       }
       events.push(event);
     }
-    previous = now;
+    const state = sim.snapshot();
+    for (const unit of state.units) {
+      assert.ok(unit.distance >= route.min && unit.distance <= route.max);
+      assert.ok(unit.health >= 0 && unit.health <= unit.maxHealth);
+      if (unit.state === 'dying') assert.equal(unit.health, 0);
+      if (unit.state === 'fighting') {
+        const target = state.units.find(u => u.id === unit.target);
+        assert.ok(target && target.side !== unit.side);
+        assert.ok(Math.abs(target.distance - unit.distance) <= 1.602);
+      }
+    }
+    if (state.phase === 'ended') break;
   }
-  assert.ok(events.filter(e => e.type === 'wave').length >= 5);
-  for (let id = 0; id < 6; id++) assert.ok(events.filter(e => e.type === 'death' && e.id === id).length >= 4, 'every Meepo has a complete lifecycle');
-  const firstWaveEnd = events.findIndex(e => e.type === 'wave' && e.wave === 2);
-  assert.equal(events.slice(0, firstWaveEnd).filter(e => e.type === 'death').length, 6);
+  const strikes = events.filter(e => e.type === 'hit' || e.type === 'base-hit');
+  assert.ok(new Set(strikes.map(e => e.damage)).size >= 8, 'damage varies between attacks');
+  assert.ok(events.some(e => e.type === 'despawn'), 'fallen characters are removed');
+  assert.ok(events.some(e => e.type === 'base-hit'), 'survivors attack the opposing base');
+  const deathIds = events.filter(e => e.type === 'death').map(e => e.id);
+  assert.equal(deathIds.length, new Set(deathIds).size, 'death only happens once per unit');
+});
+
+test('rapid reinforcements are retained and leave a clear, bounded exit queue', () => {
+  const sim = makeBattle({ seed: 23, baseHealth: 100000 }), recruited = [35, 29], spawned = [0, 0];
+  for (const side of [0, 1]) for (let n = 0; n < recruited[side]; n++) assert.equal(sim.reinforce(side), true);
+  assert.equal(sim.reinforce(2), false);
+  for (let frame = 0; frame < 60 * 85; frame++) {
+    sim.advance(1 / 60);
+    for (const event of sim.drainEvents()) if (event.type === 'spawn') spawned[event.side]++;
+    const state = sim.snapshot();
+    assert.deepEqual(state.reinforced, recruited);
+    for (const side of [0, 1]) {
+      assert.equal(spawned[side] - 3 + state.pending[side], recruited[side], 'every click is either spawned or queued');
+      const living = state.units.filter(u => u.side === side && u.health > 0);
+      assert.ok(living.length <= 18);
+      const home = side ? route.max : route.min;
+      assert.ok(living.filter(u => Math.abs(u.distance - home) < 1.49).length <= 1, 'one recruit at a time clears the exit');
+      for (const u of living) for (const v of living) if (u.id < v.id && u.lane === v.lane) {
+        assert.ok(Math.abs(u.distance - v.distance) >= 1.499, 'allies do not overlap in the same lane');
+      }
+    }
+    if (!state.pending.some(Boolean)) break;
+  }
+  assert.deepEqual(sim.snapshot().pending, [0, 0]);
+});
+
+test('simultaneous lethal hits resolve together and an empty battlefield respawns', () => {
+  const sim = makeBattle({ seed: 1 });
+  for (const unit of sim.units) unit.health = 1;
+  const events = [];
+  for (let frame = 0; frame < 60 * 30; frame++) { sim.advance(1 / 60); events.push(...sim.drainEvents()); if (sim.snapshot().wave === 2) break; }
+  const deaths = events.filter(e => e.type === 'death');
+  assert.equal(deaths.length, 6);
+  assert.ok(deaths.some(a => deaths.some(b => a.id !== b.id && a.time === b.time)), 'opponents can die in the same impact step');
+  assert.equal(sim.snapshot().wave, 2);
+  assert.equal(new Set(events.filter(e => e.type === 'spawn').map(e => e.id)).size, 12, 'respawns have fresh IDs');
+});
+
+test('base collapse is clamped, completes once, and ends combat across different seeds', () => {
+  for (const seed of [1, 2, 3, 100, 999]) {
+    const sim = makeBattle({ seed }), events = [];
+    for (let frame = 0; frame < 60 * 180; frame++) { sim.advance(1 / 60); events.push(...sim.drainEvents()); if (sim.snapshot().phase === 'ended') break; }
+    const state = sim.snapshot(), destruction = events.filter(e => e.type === 'base-destroyed'), endings = events.filter(e => e.type === 'game-over');
+    assert.equal(state.phase, 'ended');
+    assert.equal(destruction.length, 1); assert.equal(endings.length, 1);
+    assert.ok(endings[0].time - destruction[0].time >= 3.6 - 1e-8, 'banner waits for collapse');
+    assert.equal(state.bases[destruction[0].side].health, 0);
+    assert.equal(sim.reinforce(0), false); assert.equal(sim.reinforce(1), false);
+    for (let i = 0; i < 600; i++) sim.advance(1 / 60);
+    assert.deepEqual(sim.snapshot().units, state.units); assert.deepEqual(sim.snapshot().bases, state.bases);
+    assert.deepEqual(sim.drainEvents(), []);
+  }
 });
 
 test('simulation is independent of display refresh rate', () => {
-  const a = createBattleSimulation(), b = createBattleSimulation(), c = createBattleSimulation();
-  for (let i = 0; i < 60 * 40; i++) a.advance(1 / 60);
-  for (let i = 0; i < 30 * 40; i++) b.advance(1 / 30);
-  for (let i = 0; i < 144 * 40; i++) c.advance(1 / 144);
-  assert.deepEqual(a.snapshot(), b.snapshot());
-  assert.deepEqual(a.snapshot(), c.snapshot());
+  const a = makeBattle({ seed: 14 }), b = makeBattle({ seed: 14 }), c = makeBattle({ seed: 14 });
+  for (const sim of [a, b, c]) { sim.reinforce(0); sim.reinforce(1); sim.reinforce(0); }
+  for (let i = 0; i < 60 * 90; i++) a.advance(1 / 60);
+  for (let i = 0; i < 30 * 90; i++) b.advance(1 / 30);
+  for (let i = 0; i < 144 * 90; i++) c.advance(1 / 144);
+  assert.deepEqual(a.snapshot(), b.snapshot()); assert.deepEqual(a.snapshot(), c.snapshot());
+  const events = a.drainEvents(); assert.deepEqual(events, b.drainEvents()); assert.deepEqual(events, c.drainEvents());
 });

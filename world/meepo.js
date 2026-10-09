@@ -100,53 +100,89 @@ function createMeepo(side, index) {
   return { root, body, head, arms, legs, health, bar, ring };
 }
 
-export function createMeepoBattle(scene, route, camera, reduced) {
-  const simulation = createBattleSimulation({ spawnDistances: [-route.min, route.max] }), actors = [], bursts = [];
+export function createMeepoBattle(scene, route, camera, reduced, onEvent = () => {}) {
+  const seed = crypto.getRandomValues(new Uint32Array(1))[0];
+  const simulation = createBattleSimulation({ spawnDistances: [-route.min, route.max], seed, collapseDuration: reduced ? .25 : 3.6 });
+  const actors = new Map(), templates = [createMeepo(0, 0), createMeepo(1, 0)], bursts = [], numbers = [];
   const battle = new THREE.Group(); battle.name = 'meepo-battle'; scene.add(battle);
-  for (let side = 0; side < 2; side++) for (let i = 0; i < 3; i++) { const actor = createMeepo(side, i); battle.add(actor.root); actors.push(actor); }
+  function actorFor(u) {
+    if (actors.has(u.id)) return actors.get(u.id);
+    const template = templates[u.side], root = template.root.clone(true), originals = [], copies = [];
+    template.root.traverse(o => originals.push(o)); root.traverse(o => copies.push(o));
+    const clone = o => copies[originals.indexOf(o)];
+    const actor = { root, body: clone(template.body), head: clone(template.head), health: clone(template.health), bar: clone(template.bar), ring: clone(template.ring), arms: template.arms.map(clone), legs: template.legs.map(clone) };
+    root.name = `${u.side ? 'dire' : 'radiant'}-meepo-${u.id + 1}`;
+    root.userData.unitId = u.id; root.userData.damageRange = [u.damageMin, u.damageMax];
+    battle.add(root); actors.set(u.id, actor); return actor;
+  }
   const sparkMaterial = new THREE.MeshBasicMaterial({ color: 0xffd68d, transparent: true, depthWrite: false });
   const sparkGeometry = new THREE.IcosahedronGeometry(.035, 0);
-  for (let i = 0; i < 8; i++) {
+  for (let i = 0; i < 12; i++) {
     const g = new THREE.Group(); battle.add(g); g.visible = false;
     for (let j = 0; j < 7; j++) g.add(new THREE.Mesh(sparkGeometry, sparkMaterial));
     bursts.push({ g, age: 10 });
+    const canvas = document.createElement('canvas'); canvas.width = 128; canvas.height = 64;
+    const texture = new THREE.CanvasTexture(canvas); texture.colorSpace = THREE.SRGBColorSpace;
+    const material = new THREE.SpriteMaterial({ map: texture, transparent: true, depthTest: false, depthWrite: false, toneMapped: false });
+    const sprite = new THREE.Sprite(material); sprite.scale.set(1.35, .675, 1); sprite.visible = false; sprite.renderOrder = 8; battle.add(sprite);
+    numbers.push({ sprite, canvas, texture, age: 10, y: 0 });
   }
   let burstIndex = 0;
   const label = document.querySelector('#battle-status');
   let oldLabel = '';
-  if (reduced) { for (let i = 0; i < 570; i++) simulation.advance(1 / 60); simulation.drainEvents(); }
   function update(delta) {
-    if (!reduced) simulation.advance(delta);
-    const state = simulation.snapshot();
-    for (const event of simulation.drainEvents()) if (event.type === 'hit') {
-      const u = state.units[event.target], burst = bursts[burstIndex++ % bursts.length], p = route.sample(u.distance, u.lateral);
-      burst.g.position.set(p.x, route.surface(u.distance, u.lateral) + 1, p.z); burst.g.visible = true; burst.age = 0;
+    simulation.advance(delta);
+    const state = simulation.snapshot(), byId = new Map(state.units.map(u => [u.id, u]));
+    for (const [id, actor] of actors) if (!byId.has(id)) { battle.remove(actor.root); actors.delete(id); }
+    for (const event of simulation.drainEvents()) {
+      if (event.type === 'hit' || event.type === 'base-hit') {
+        const target = byId.get(event.target);
+        const distance = event.type === 'base-hit' ? event.target ? route.max : route.min : target?.distance;
+        if (distance !== undefined) {
+          const lateral = event.type === 'hit' ? route.formationLateral(distance, target.lateral) : 0;
+          const p = route.sample(distance, lateral), slot = burstIndex++ % bursts.length, burst = bursts[slot], number = numbers[slot];
+          burst.g.position.set(p.x, route.surface(distance, lateral) + 1, p.z); burst.g.visible = !reduced; burst.age = 0;
+          const ctx = number.canvas.getContext('2d'); ctx.clearRect(0, 0, 128, 64); ctx.font = 'bold 42px monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+          ctx.strokeStyle = '#152322'; ctx.lineWidth = 7; ctx.strokeText(`−${event.damage}`, 64, 33); ctx.fillStyle = event.type === 'base-hit' ? '#ffe0a0' : '#e7dec5'; ctx.fillText(`−${event.damage}`, 64, 33); number.texture.needsUpdate = true;
+          number.sprite.position.set(p.x, route.surface(distance, lateral) + 2.35, p.z); number.y = number.sprite.position.y; number.age = 0;
+        }
+      }
+      onEvent(event, state);
     }
     for (const burst of bursts) {
-      burst.age += delta; burst.g.visible = burst.age < .34;
+      burst.age += delta; burst.g.visible = !reduced && burst.age < .34;
       if (!burst.g.visible) continue;
       burst.g.children.forEach((p, i) => { const a = i * Math.PI * 2 / 7; p.position.set(Math.cos(a) * burst.age * 1.8, Math.sin(a * 3) * burst.age + .13 - burst.age * burst.age * 3, Math.sin(a) * burst.age * 1.8); p.scale.setScalar(1 - burst.age / .34); });
     }
+    for (const n of numbers) { n.age += delta; n.sprite.visible = n.age < .85; n.sprite.position.y = n.y + (reduced ? 0 : n.age * .8); n.sprite.material.opacity = Math.max(0, 1 - n.age / .85); }
     for (const u of state.units) {
       const lateral = route.formationLateral(u.distance, u.lateral);
-      const a = actors[u.id], p = route.sample(u.distance, lateral), dead = u.state === 'dying' || u.state === 'dead';
-      a.root.visible = u.state !== 'dead'; a.root.scale.setScalar(1);
+      const a = actorFor(u), p = route.sample(u.distance, lateral), dead = u.state === 'dying';
+      a.root.visible = true; a.root.scale.setScalar(1);
       a.root.position.set(p.x, route.surface(u.distance, lateral) + .035, p.z);
       const before = route.sample(u.distance - .02, route.formationLateral(u.distance - .02, u.lateral));
       const after = route.sample(u.distance + .02, route.formationLateral(u.distance + .02, u.lateral));
       a.root.rotation.y = Math.atan2(after.x - before.x, after.z - before.z) + (u.side ? Math.PI : 0);
+      if (u.state === 'fighting' && byId.has(u.target)) {
+        const enemy = byId.get(u.target), target = route.sample(enemy.distance, route.formationLateral(enemy.distance, enemy.lateral));
+        a.root.rotation.y = Math.atan2(target.x - p.x, target.z - p.z);
+      }
       a.body.rotation.set(0, 0, 0); a.body.position.set(0, 0, 0); a.head.rotation.set(0, 0, 0);
       a.legs[0].rotation.x = a.legs[1].rotation.x = 0;
       a.arms[0].rotation.set(.18, 0, -.13); a.arms[1].rotation.set(.22, 0, .1);
       a.health.visible = !dead; a.ring.visible = !dead;
       a.health.quaternion.copy(a.root.quaternion).invert().multiply(camera.quaternion);
-      a.bar.scale.x = u.health / 100; a.bar.position.x = -(1 - u.health / 100) * .395;
-      if (u.state === 'marching') {
+      a.bar.scale.x = u.health / u.maxHealth; a.bar.position.x = -(1 - u.health / u.maxHealth) * .395;
+      if (dead) {
+        const fall = reduced ? 1 : THREE.MathUtils.smoothstep(u.age, 0, .68);
+        a.body.rotation.x = -fall * Math.PI * .49; a.body.position.y = .53 * fall; a.body.position.z = -.15 * fall; a.arms[1].rotation.x = 1.8 * fall;
+        if (u.age > 1.85) a.root.scale.setScalar(Math.max(.01, 1 - (u.age - 1.85) / .75));
+      } else if (!reduced && u.state === 'marching') {
         const gait = Math.sin(state.time * 10 + u.lane);
         a.legs[0].rotation.x = gait * .5; a.legs[1].rotation.x = -gait * .5;
         a.arms[0].rotation.x = -gait * .3; a.arms[1].rotation.x += gait * .16;
         a.body.position.y = Math.abs(gait) * .055; a.body.rotation.z = gait * .055;
-      } else if (u.state === 'fighting') {
+      } else if (!reduced && (u.state === 'fighting' || u.state === 'sieging')) {
         const t = u.attackAge;
         let swing;
         if (t < .42) swing = .22 - t / .42 * 1.12;
@@ -157,19 +193,14 @@ export function createMeepoBattle(scene, route, camera, reduced) {
         a.body.position.z = lunge; a.body.rotation.x = lunge * .5;
         a.legs[0].rotation.x = -.16; a.legs[1].rotation.x = .18;
         if (u.hitAge < .22) { a.head.rotation.x = -.28 * Math.sin(u.hitAge / .22 * Math.PI); a.body.position.z -= .1; }
-      } else if (dead) {
-        const fall = THREE.MathUtils.smoothstep(u.age, 0, .68);
-        a.body.rotation.x = -fall * Math.PI * .49;
-        a.body.position.y = .53 * fall; a.body.position.z = -.15 * fall;
-        a.arms[1].rotation.x = 1.8 * fall;
-        if (u.age > 1.85) a.root.scale.setScalar(Math.max(.01, 1 - (u.age - 1.85) / .75));
       }
     }
     const alive = side => state.units.filter(u => u.side === side && u.health > 0).length;
-    const phase = state.units.some(u => u.state === 'fighting') ? 'Shovels clash' : state.units.every(u => u.state === 'dead') ? 'Reinforcements incoming' : state.units.some(u => u.state === 'dying') ? 'The dust settles' : 'Marching to mid';
-    const text = `WAVE ${state.wave} · ${phase} · ${alive(0)} : ${alive(1)}`;
+    const phase = state.phase !== 'playing' ? 'A base has fallen' : state.units.some(u => u.state === 'sieging') ? 'The bases are under attack' : state.units.some(u => u.state === 'fighting') ? 'Shovels clash' : 'Marching to battle';
+    const text = `${phase} · ${alive(0)} : ${alive(1)}${state.pending.some(Boolean) ? ` · ${state.pending.reduce((a, b) => a + b, 0)} incoming` : ''}`;
     if (label && text !== oldLabel) { label.textContent = text; oldLabel = text; }
+    return state;
   }
   update(0);
-  return { update, snapshot: () => simulation.snapshot() };
+  return { update, reinforce: side => simulation.reinforce(side), snapshot: () => simulation.snapshot() };
 }

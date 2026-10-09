@@ -7,6 +7,8 @@ const panelTypewriter = createPanelTypewriter($('#panel-content'), dialog);
 const visited = new Set();
 let world, sound, toastTimer, lastFocus, currentDestination;
 let navigation=0;
+let gameEnding=false,restarting=false;
+const gameOverDialog=$('#game-over-dialog');
 const destinationOrder=['bio','experience','research','publications'];
 const normalizeRoute=id=>({about:'bio',journey:'experience'}[id]||id);
 let papers=[];
@@ -39,6 +41,7 @@ function mountPapers() {
 }
 
 async function visit(id,{opening=false}={}) {
+  if(gameEnding)return;
   document.body.classList.remove('watching-battle');
   id=normalizeRoute(id);
   if(!sections[id])return;
@@ -83,11 +86,18 @@ function closePanel(reset=true){
   if(reset)world?.reset($('#intro').classList.contains('explored'));
   history.replaceState(null,'',location.pathname+'#world');if(lastFocus?.isConnected)lastFocus.focus({preventScroll:true});
 }
-document.querySelectorAll('[data-destination]').forEach(b=>b.addEventListener('click',()=>visit(b.dataset.destination)));
+function selectDestination(id){
+  if(gameEnding)return;
+  id=normalizeRoute(id);
+  const side=id==='bio'?0:id==='experience'?1:null;
+  if(side!==null&&world?.reinforce(side))toast(`+1 ${side?'Cambridge':'Oxford'} Meepo · ${side?'red':'green'} team. Leaving as soon as the exit is clear.`);
+  visit(id);
+}
+document.querySelectorAll('[data-destination]').forEach(b=>b.addEventListener('click',()=>selectDestination(b.dataset.destination)));
 $('.close-panel').addEventListener('click',()=>closePanel());dialog.addEventListener('cancel',()=>closePanel());
-function watchBattle(){closePanel(false);$('#intro').classList.add('explored');document.body.classList.add('watching-battle');history.replaceState(null,'','#battle');world?.watchBattle();}
+function watchBattle(){if(gameEnding)return;closePanel(false);$('#intro').classList.add('explored');document.body.classList.add('watching-battle');history.replaceState(null,'','#battle');world?.watchBattle();}
 $('#watch-battle').addEventListener('click',watchBattle);
-function home(){closePanel(false);$('#intro').classList.remove('explored');document.body.dataset.entry='overview';world?.reset();}
+function home(){if(gameEnding)return;closePanel(false);$('#intro').classList.remove('explored');document.body.dataset.entry='overview';world?.reset();}
 addEventListener('hashchange',()=>{
   const route=normalizeRoute(location.hash.slice(1));
   if(route==='world'){home();return;}
@@ -95,8 +105,8 @@ addEventListener('hashchange',()=>{
   if(sections[route]||!route)visit(route||'bio',{opening:!route});
 });
 document.querySelectorAll('[data-home],.identity').forEach(b=>b.addEventListener('click',e=>{e.preventDefault();home();}));
-$('#explore').addEventListener('click',()=>{navigation++;$('#intro').classList.add('explored');world?.reset(true);toast('Choose a glowing landmark to discover the world behind my work.');});
-$('#reset-camera').addEventListener('click',()=>{closePanel(false);world?.reset($('#intro').classList.contains('explored'));toast('Returned to the realm overview.');});
+$('#explore').addEventListener('click',()=>{if(gameEnding)return;navigation++;$('#intro').classList.add('explored');world?.reset(true);toast('Choose a glowing landmark to discover the world behind my work.');});
+$('#reset-camera').addEventListener('click',()=>{if(gameEnding)return;closePanel(false);world?.reset($('#intro').classList.contains('explored'));toast('Returned to the realm overview.');});
 $('#time-toggle').addEventListener('click',()=>{if(!world)return;const night=world.toggleNight();$('#realm-time').textContent=night?'NIGHT IN THE REALM':'DUSK IN THE REALM';$('#time-toggle').setAttribute('aria-label',night?'Switch to dusk':'Switch to night');$('#time-toggle').innerHTML=night?'<svg viewBox="0 0 24 24"><path d="M20 14a8 8 0 0 1-10-10 8 8 0 1 0 10 10z"/></svg>':'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l2 2m10 10 2 2M5 19l2-2M17 7l2-2"/></svg>';});
 
 // A quiet synthesized forest ambience. Audio starts only after a user gesture.
@@ -112,17 +122,38 @@ function createAmbient(){
 $('#sound-toggle').addEventListener('click',async()=>{try{sound ||= createAmbient();const enabled=await sound.toggle();$('#sound-toggle').setAttribute('aria-pressed',String(enabled));$('#sound-toggle').setAttribute('aria-label',enabled?'Disable ambient sound':'Enable ambient sound');$('#sound-toggle').innerHTML=enabled?'<svg viewBox="0 0 24 24"><path d="M11 4L5 9H2v6h3l6 5zM15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/></svg>':'<svg viewBox="0 0 24 24"><path d="M11 4L5 9H2v6h3l6 5zM16 9l6 6m0-6-6 6"/></svg>';toast(enabled?'Forest ambience on.':'Ambient sound off.');}catch{toast('Ambient audio is unavailable in this browser.');}});
 $('#fullscreen').addEventListener('click',async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else if(document.documentElement.requestFullscreen)await document.documentElement.requestFullscreen();else toast('Use your browser’s fullscreen command to expand the realm.');}catch{toast('Use your browser’s fullscreen command to expand the realm.');}});
 document.addEventListener('fullscreenchange',()=>$('#fullscreen').setAttribute('aria-label',document.fullscreenElement?'Exit fullscreen':'Enter fullscreen'));
-$('#help').addEventListener('click',()=>$('#help-dialog').showModal());$('.close-help').addEventListener('click',()=>$('#help-dialog').close());
+$('#help').addEventListener('click',()=>{if(!gameEnding)$('#help-dialog').showModal();});$('.close-help').addEventListener('click',()=>$('#help-dialog').close());
 $('#help-dialog').addEventListener('click',e=>{if(e.target===$('#help-dialog')){const r=e.target.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)e.target.close();}});
 $('#restore-ui').addEventListener('click',()=>document.body.classList.remove('cinematic'));
 document.addEventListener('keydown',e=>{
+  if(gameEnding||gameOverDialog.open)return;
   if(e.target.matches('input,textarea')||e.metaKey||e.ctrlKey||e.altKey)return;
   if(e.key==='Escape'){document.body.classList.remove('cinematic');if(dialog.open||document.body.classList.contains('arriving'))closePanel();return;}
   if($('#help-dialog').open)return;
-  if(['1','2','3','4'].includes(e.key))visit(destinationOrder[+e.key-1]);
+  if(['1','2','3','4'].includes(e.key)&&!e.repeat)selectDestination(destinationOrder[+e.key-1]);
   if(e.key.toLowerCase()==='b')watchBattle();
   if(e.key.toLowerCase()==='r')$('#reset-camera').click();if(e.key.toLowerCase()==='m')$('#sound-toggle').click();
   if(e.key.toLowerCase()==='h'){if(dialog.open)closePanel(false);document.body.classList.toggle('cinematic');}
+});
+
+function baseDestroyed(event){
+  gameEnding=true;
+  closePanel(false);$('#help-dialog').close();
+  document.body.classList.remove('cinematic');document.body.classList.add('base-collapsing');
+  clearTimeout(toastTimer);$('#toast').classList.remove('visible');
+  $('#intro').classList.add('explored');
+  $('#game-outcome').textContent=`${event.side?'Cambridge':'Oxford'} has fallen`;
+}
+function gameOver(event){
+  if(event.fallen.length===2)$('#game-outcome').textContent='Both bases have fallen';
+  if(!gameOverDialog.open)gameOverDialog.showModal();
+}
+gameOverDialog.querySelectorAll('[data-restart-world]').forEach(button=>button.addEventListener('click',()=>gameOverDialog.close()));
+gameOverDialog.addEventListener('close',()=>{
+  if(restarting)return;
+  restarting=true;
+  // A fresh document resets the simulation, GPU scene, camera and panel reveals.
+  location.replace(location.pathname+location.search);
 });
 
 async function enterInitialDestination(){
@@ -136,7 +167,7 @@ async function enterInitialDestination(){
   document.body.dataset.entry='complete';
 }
 try {
-  world=createWorld(visit);
+  world=createWorld(selectDestination,{onBaseDestroyed:baseDestroyed,onGameOver:gameOver});
   window.realm={visit,watchBattle,get battle(){return world.battle;},get lane(){return world.lane;},reset:()=>world.reset(),get scene(){return world.scene;},get renderer(){return world.renderer;},get camera(){return world.camera;}};
   enterInitialDestination();
 }catch(error){
