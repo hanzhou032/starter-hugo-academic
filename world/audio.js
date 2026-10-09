@@ -1,7 +1,4 @@
-// TI8 menu recording streamed from composer Chance Thomas's public player.
-// "Welcome to the Arena" is the menu cue on the DOTA 2 TI8 soundtrack.
-// The recording remains on its source host; hit effects are generated locally.
-const MENU_THEME = 'https://chancethomas.com/player/3720614/tracks/4617170.mp3';
+import { createMenuMedley } from './menu-medley.js';
 
 export function createWorldAudio({ onMusicState = () => {} } = {}) {
   const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -12,28 +9,8 @@ export function createWorldAudio({ onMusicState = () => {} } = {}) {
   effects.gain.value = .65; master.gain.value = 0;
   effects.connect(master); master.connect(limiter); limiter.connect(context.destination);
 
-  // A native media element supports the composer's cross-origin stream without
-  // copying it into the build or requiring CORS access to its audio samples.
-  const music = new Audio();
-  music.id = 'ti8-menu-theme'; music.preload = 'none'; music.loop = true; music.volume = .32;
-  music.src = MENU_THEME; document.body.append(music);
+  const music = createMenuMedley({ onState: onMusicState });
   let enabled = false, disposed = false, lastImpact = -10, simultaneousHits = 0;
-  const musicState = state => { if (!disposed) onMusicState(state); };
-  music.addEventListener('playing', () => {
-    if (!enabled || document.hidden || disposed) music.pause();
-    else musicState('playing');
-  });
-  music.addEventListener('error', () => musicState('unavailable'));
-  music.addEventListener('waiting', () => { if (enabled) musicState('loading'); });
-  function playMusic() {
-    if (!enabled || document.hidden || disposed) return;
-    if (music.error) music.load();
-    musicState('loading');
-    // Call play during the gesture, before awaiting AudioContext.resume (iOS).
-    music.play().catch(error => {
-      if (enabled && !document.hidden && error.name !== 'AbortError') musicState('unavailable');
-    });
-  }
 
   let noiseSeed = 47329;
   const random = () => { noiseSeed = (1664525 * noiseSeed + 1013904223) >>> 0; return noiseSeed / 4294967296; };
@@ -57,11 +34,11 @@ export function createWorldAudio({ onMusicState = () => {} } = {}) {
     if (disposed) return false;
     enabled = value;
     if (enabled && !document.hidden) {
-      playMusic();
+      music.setEnabled(true);
       await context.resume();
       if (disposed) return false;
     } else {
-      music.pause(); musicState('paused');
+      music.setEnabled(false);
     }
     master.gain.cancelScheduledValues(context.currentTime);
     master.gain.setTargetAtTime(enabled ? .68 : 0, context.currentTime, enabled ? .12 : .045);
@@ -86,16 +63,16 @@ export function createWorldAudio({ onMusicState = () => {} } = {}) {
   function visibility() {
     if (disposed) return;
     if (document.hidden) {
-      music.pause(); musicState('paused'); context.suspend().catch(() => {});
+      music.setEnabled(false); context.suspend().catch(() => {});
     } else if (enabled) {
-      playMusic(); context.resume().catch(() => {});
+      music.setEnabled(true); context.resume().catch(() => {});
     }
   }
   document.addEventListener('visibilitychange', visibility);
   function dispose() {
     if (disposed) return; disposed = true; enabled = false;
     document.removeEventListener('visibilitychange', visibility);
-    music.pause(); music.removeAttribute('src'); music.load(); music.remove();
+    music.dispose();
     context.close().catch(() => {});
   }
   return { setEnabled, toggle: () => setEnabled(!enabled), hit, dispose, get enabled() { return enabled; } };

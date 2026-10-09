@@ -129,9 +129,9 @@ function updateSoundControls(enabled){
     button.innerHTML=enabled?'<svg viewBox="0 0 24 24"><path d="M11 4L5 9H2v6h3l6 5zM15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/></svg>':'<svg viewBox="0 0 24 24"><path d="M11 4L5 9H2v6h3l6 5zM16 9l6 6m0-6-6 6"/></svg>';
   });
 }
-function updateMusicStatus(state){
+function updateMusicStatus(state,{track,partial}={}){
   const status=$('#music-status');
-  status.textContent={playing:'Playing',loading:'Loading…',paused:'Paused',unavailable:'Music could not play. Toggle sound to retry; battle sounds remain available.'}[state];
+  status.textContent={playing:`Playing ${track}${partial?' · One source is unavailable.':''}`,loading:'Loading the menu medley…',paused:'Paused',unavailable:'Music could not play. Toggle sound to retry; battle sounds remain available.'}[state];
 }
 async function startAudio(event){
   if(audioStarted||event.target.closest('#sound-toggle,[data-sound-toggle]')||event.metaKey||event.ctrlKey||event.altKey||event.repeat||(event.type==='keydown'&&event.key.toLowerCase()==='m'))return;

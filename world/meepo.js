@@ -101,9 +101,9 @@ function createMeepo(side, index) {
 }
 
 export function createMeepoBattle(scene, route, camera, reduced, onEvent = () => {}) {
-  // Canvas text does not load web fonts by itself. Warm the local display faces
-  // before the first clash, with a compact sans-serif fallback if needed.
-  Promise.allSettled([document.fonts.load('600 78px "Battle Numbers"', '0123456789'), document.fonts.load('italic 900 88px "Battle Numbers"', '0123456789')]);
+  // Read the site's body font so combat typography follows the same design.
+  const damageFont = getComputedStyle(document.body).fontFamily;
+  Promise.allSettled([document.fonts.load(`500 72px ${damageFont}`, '0123456789'), document.fonts.load(`700 76px ${damageFont}`, '0123456789')]);
   const seed = crypto.getRandomValues(new Uint32Array(1))[0];
   const simulation = createBattleSimulation({ spawnDistances: [-route.min, route.max], seed, collapseDuration: reduced ? .25 : 3.6 });
   const actors = new Map(), templates = [createMeepo(0, 0), createMeepo(1, 0)], bursts = [], numbers = [];
@@ -146,14 +146,13 @@ export function createMeepoBattle(scene, route, camera, reduced, onEvent = () =>
           const p = route.sample(distance, lateral), slot = burstIndex++ % bursts.length, burst = bursts[slot], number = numbers[slot];
           burst.g.position.set(p.x, route.surface(distance, lateral) + 1, p.z); burst.g.visible = !reduced; burst.age = 0;
           const critical = event.critical, ctx = number.canvas.getContext('2d'), text = String(event.damage);
-          ctx.clearRect(0, 0, 256, 128); ctx.font = `${critical ? 'italic 900 88' : '600 78'}px "Battle Numbers", "Arial Narrow", sans-serif`;
+          ctx.clearRect(0, 0, 256, 128); ctx.font = `${critical ? '700 76' : '500 72'}px ${damageFont}`;
           ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.lineJoin = 'round';
-          ctx.shadowColor = critical ? '#ee611b' : '#071c17'; ctx.shadowBlur = critical ? 14 : 6; ctx.shadowOffsetY = 3;
-          ctx.strokeStyle = critical ? '#542318' : '#18382d'; ctx.lineWidth = critical ? 6 : 5; ctx.strokeText(text, 128, 67);
-          const color = ctx.createLinearGradient(0, 30, 0, 105);
-          color.addColorStop(0, critical ? '#fff4bb' : '#fff9e4'); color.addColorStop(.5, critical ? '#ffc262' : '#f3dfac'); color.addColorStop(1, critical ? '#f47935' : '#d7b977');
-          ctx.shadowBlur = 0; ctx.shadowOffsetY = 0; ctx.fillStyle = color; ctx.fillText(text, 128, 67); number.texture.needsUpdate = true;
-          number.critical = critical; number.duration = critical ? 1.3 : 1;
+          ctx.shadowColor = '#081a19'; ctx.shadowBlur = 4; ctx.shadowOffsetY = 2;
+          ctx.strokeStyle = '#102522'; ctx.lineWidth = 3; ctx.strokeText(text, 128, 67);
+          ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
+          ctx.fillStyle = critical ? '#e4c48b' : '#ece8dd'; ctx.fillText(text, 128, 67); number.texture.needsUpdate = true;
+          number.critical = critical; number.duration = critical ? 1.15 : 1;
           number.sprite.userData = { damage: event.damage, critical };
           number.sprite.position.set(p.x, route.surface(distance, lateral) + 2.35, p.z); number.y = number.sprite.position.y; number.age = 0;
         }
@@ -167,9 +166,8 @@ export function createMeepoBattle(scene, route, camera, reduced, onEvent = () =>
     }
     for (const n of numbers) {
       n.age += delta; n.sprite.visible = n.age < n.duration;
-      n.sprite.position.y = n.y + (reduced ? 0 : n.age * (n.critical ? .95 : .7));
-      const pop = reduced ? 1 : 1 + (n.critical ? .22 : .06) * Math.exp(-n.age * 10);
-      const size = (n.critical ? 1.95 : 1.48) * pop; n.sprite.scale.set(size, size / 2, 1);
+      n.sprite.position.y = n.y + (reduced ? 0 : n.age * .65);
+      const size = n.critical ? 1.58 : 1.48; n.sprite.scale.set(size, size / 2, 1);
       n.sprite.material.opacity = Math.max(0, 1 - Math.max(0, n.age - .3) / (n.duration - .3));
     }
     for (const u of state.units) {
