@@ -4,7 +4,6 @@ import { mergeGeometries } from 'three/addons/BufferGeometryUtils.js';
 const cube = new THREE.BoxGeometry(1, 1, 1);
 const material = (color, extra = {}) => new THREE.MeshStandardMaterial({ color, roughness: .48, ...extra });
 const ivory = material(0xc1c2b0), basalt = material(0x303d46), brass = material(0xbda879, { metalness: .7 });
-const cyan = material(0x90d7ff, { emissive: 0x409dff, emissiveIntensity: 1.8 });
 function mesh(g, geometry, m, x = 0, y = 0, z = 0) {
   const object = new THREE.Mesh(geometry, m); object.position.set(x, y, z);
   object.castShadow = object.receiveShadow = true; g.add(object); return object;
@@ -43,70 +42,44 @@ function googleShape(path) {
   return shape;
 }
 export function buildGoogle(g, { animations, point }) {
-  g.name = 'google-publications'; g.userData.logoSource = 'assets/google.svg';
-  const library = new THREE.Group(); library.rotation.y = .58; g.add(library);
-  const stone = material(0xb5b395, { roughness: .95 });
-  const pale = material(0xd6c8a2, { roughness: .85 });
-  const shadow = material(0x152f32, { roughness: .9 });
-  const copper = material(0x456e6a, { roughness: .7, metalness: .45 });
-  const moss = material(0x4d6b49, { roughness: 1 });
-  const jewel = googlePaths.map(({ color }) => material(color, { roughness: .4, metalness: .2, emissive: color, emissiveIntensity: .2 }));
-  const makeCylinder = (x,y,z,top,bottom,h,m,n=8) => {const o=mesh(library,new THREE.CylinderGeometry(top,bottom,h,n),m,x,y,z);return o;};
-  cylinder(library, .16, 3.05, .32, basalt, 3.2);
-  cylinder(library, .37, 2.84, .14, pale);
-  cylinder(library, .54, 2.63, .2, stone);
-  makeCylinder(0,2.08,0,2.17,2.3,3.02,stone);
-  makeCylinder(0,.85,0,2.37,2.4,.18,pale);
-  makeCylinder(0,3.55,0,2.4,2.3,.22,pale);
-  makeCylinder(0,3.7,0,2.48,2.43,.11,brass);
-  // Buttresses, jewel windows and pointed pinnacles tie the library to the Radiant architecture.
-  for(let i=0;i<8;i++){
-    const a=i*Math.PI/4,x=Math.sin(a)*2.24,z=Math.cos(a)*2.24;
-    const pier=box(library,x,2.1,z,.3,2.88,.4,pale);pier.rotation.y=a;
-    makeCylinder(x,.77,z,.27,.34,.2,pale);
-    makeCylinder(x,3.77,z,.26,.3,.28,pale);
-    makeCylinder(x,4.1,z,0,.24,.48,stone,4);
-    if(i===0)continue;
-    const a2=a+Math.PI/8,frame=new THREE.Group();frame.position.set(Math.sin(a2)*2.14,1.23,Math.cos(a2)*2.14);frame.rotation.y=a2;library.add(frame);
-    const window=new THREE.Shape();window.moveTo(-.3,0);window.lineTo(.3,0);window.lineTo(.3,1.15);window.quadraticCurveTo(.23,1.4,0,1.63);window.quadraticCurveTo(-.23,1.4,-.3,1.15);window.closePath();
-    mesh(frame,new THREE.ExtrudeGeometry(window,{depth:.08,bevelEnabled:false}),shadow);
-    const pane=mesh(frame,new THREE.ShapeGeometry(window),jewel[i%4],0,.04,.09);pane.scale.set(.72,.9,1);
-    box(frame,0,.75,.12,.04,1.42,.04,pale);box(frame,0,.73,.12,.58,.04,.04,pale);
-    box(frame,0,-.07,.04,.78,.12,.27,pale);
+  g.name = 'google-publications';
+  g.userData.logoSource = 'assets/google.svg';
+  const pedestal = new THREE.Group(); g.add(pedestal);
+  cylinder(pedestal, .16, 3.05, .32, basalt, 3.2);
+  cylinder(pedestal, .38, 2.8, .14, brass);
+  cylinder(pedestal, .55, 2.62, .24, ivory);
+  cylinder(pedestal, .7, 2.18, .08, basalt);
+  const colors = googlePaths.map(({ color }) => material(color, { roughness: .56, metalness: .12, emissive: color, emissiveIntensity: .1 }));
+  for (let i = 0; i < 24; i++) {
+    const a = i * Math.PI / 12;
+    const bar = box(pedestal, Math.cos(a) * 2.46, .69, Math.sin(a) * 2.46, .07, .035, .22, colors[Math.floor(i / 6)]); bar.rotation.y = -a;
   }
-  makeCylinder(0,4.51,0,.17,2.69,1.52,copper);
-  for(let i=0;i<8;i++){
-    const a=i*Math.PI/4;
-    const from=new THREE.Vector3(Math.sin(a)*2.66,3.76,Math.cos(a)*2.66),to=new THREE.Vector3(Math.sin(a)*.17,5.27,Math.cos(a)*.17);
-    const delta=to.clone().sub(from),seam=mesh(library,new THREE.CylinderGeometry(.024,.034,delta.length(),5),brass);
-    seam.position.copy(from).add(to).multiplyScalar(.5);seam.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),delta.normalize());
-  }
-  makeCylinder(0,5.37,0,.24,.32,.2,pale);
-  // The G is a raised enamel medallion in the gatehouse, not a freestanding sign.
-  box(library,0,2.82,2.26,2.78,2.55,.38,stone);
-  const pediment=new THREE.Shape();pediment.moveTo(-1.57,0);pediment.lineTo(1.57,0);pediment.lineTo(0,.67);pediment.closePath();
-  mesh(library,new THREE.ExtrudeGeometry(pediment,{depth:.46,bevelEnabled:false}),copper,0,4.08,2.07);
-  mesh(library,new THREE.TorusGeometry(1.23,.085,8,64),brass,0,2.88,2.53);
-  mesh(library,new THREE.CircleGeometry(1.21,64),shadow,0,2.88,2.47);
-  googlePaths.forEach(({path},i)=>{
-    const symbol=mesh(library,new THREE.ExtrudeGeometry(googleShape(path),{depth:.22,bevelEnabled:false,curveSegments:32}),jewel[i],0,2.88,2.5+i*.003);
-    symbol.scale.setScalar(.5);
+  const monument = new THREE.Group(); monument.name = 'google-g-monument';
+  monument.position.y = 3.48; monument.rotation.set(-.08, .58, 0); pedestal.add(monument);
+  googlePaths.forEach(({ path }, i) => {
+    // The source SVG deliberately overlaps its color panels. Preserve its paint
+    // order with a tiny depth offset so their faces never flicker against each other.
+    mesh(monument, new THREE.ExtrudeGeometry(googleShape(path), {
+      depth: .72, bevelEnabled: false, curveSegments: 32,
+    }), colors[i], 0, 0, -.36 + i * .004);
   });
-  const doorway=new THREE.Shape();doorway.moveTo(-.46,0);doorway.lineTo(.46,0);doorway.lineTo(.46,.8);doorway.quadraticCurveTo(.38,1.18,0,1.45);doorway.quadraticCurveTo(-.38,1.18,-.46,.8);doorway.closePath();
-  mesh(library,new THREE.ExtrudeGeometry(doorway,{depth:.045,bevelEnabled:false}),shadow,0,.59,2.52);
-  for(const x of [-.6,.6]){box(library,x,1.2,2.5,.16,1.28,.3,pale);box(library,x,1.89,2.5,.25,.13,.34,brass);}
-  for(let i=0;i<5;i++)box(library,0,.11+i*.1,3.72-i*.23,1.86,.2,.52,stone);
-  for(let i=0;i<6;i++){
-    const a=i*.77+.7,x=Math.sin(a)*2.75,z=Math.cos(a)*2.75;
-    const patch=mesh(library,new THREE.IcosahedronGeometry(.18,0),moss,x,.58,z);patch.scale.set(1.6,.35,1);
+  for (const x of [-1.45, 1.45]) {
+    const support = box(pedestal, x * .84, 1.32, -.18, .23, 1.25, .6, ivory); support.rotation.z = x > 0 ? -.25 : .25;
+    box(pedestal, x * .76, .84, -.18, .7, .2, .92, brass);
   }
-  for(const x of [-2.35,2.35])for(let i=0;i<3;i++)box(library,x,.76+i*.13,1.08,.61,.1,.43,i===1?copper:pale);
-  bakeStatic(library);
-  // Keep the small luminous inlays clear of shadow-map self-shadowing artifacts.
-  for (const part of library.children) if (part.isMesh && jewel.includes(part.material)) part.receiveShadow = false;
-  const rune=mesh(g,new THREE.OctahedronGeometry(.23),cyan,0,5.75,0);
-  animations.push(t=>{rune.rotation.y=t*.25;rune.position.y=5.75+Math.sin(t*.9)*.07;});
-  point(g,0,2.2,2.2,0xbde3cc,6,7);
+  // Small stacks of journals surround the publication monument.
+  for (const side of [-1, 1]) for (let i = 0; i < 3; i++) {
+    const book = box(pedestal, side * 1.78, .81 + i * .14, 1.03, .84, .11, .57, i === 1 ? colors[side < 0 ? 0 : 1] : ivory);
+    book.rotation.y = side * .13 * (i - 1);
+  }
+  bakeStatic(pedestal);
+  const orbit = new THREE.Group(); g.add(orbit);
+  for (let i = 0; i < 4; i++) {
+    const a = i * Math.PI / 2;
+    mesh(orbit, new THREE.IcosahedronGeometry(.065, 0), colors[i], Math.cos(a) * 2.88, .58, Math.sin(a) * 2.88);
+  }
+  animations.push(t => { orbit.rotation.y = t * .1; });
+  point(g, 0, 2.8, 1.4, 0xd1e3ff, 4, 8);
 }
 
 export function buildMistral(g, { animations, point }) {

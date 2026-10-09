@@ -14,7 +14,6 @@ const files = [
   'lane.js',
   'battle-simulation.js',
   'meepo.js',
-  'cosmos.js',
   'water.js',
   'assets',
   'vendor',

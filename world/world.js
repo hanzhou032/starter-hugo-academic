@@ -9,7 +9,6 @@ import { buildOxfordBase, buildCambridgeBase } from './architecture.js';
 import { buildGoogle, buildMistral, bakeStatic } from './landmarks.js';
 import { BRIDGE, createLane } from './lane.js';
 import { createMeepoBattle } from './meepo.js';
-import { createCosmos } from './cosmos.js';
 import { createRiver } from './water.js';
 
 export function createWorld(onVisit) {
@@ -18,7 +17,7 @@ export function createWorld(onVisit) {
   const mobile = matchMedia('(max-width: 720px)').matches;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const scene = new THREE.Scene();
-  scene.background = null;
+  scene.background = new THREE.Color(0x17272c);
   scene.fog = new THREE.FogExp2(0x17272c, .0065);
   const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
   renderer.setPixelRatio(Math.min(devicePixelRatio, mobile ? 1.5 : 1.7));
@@ -47,9 +46,7 @@ export function createWorld(onVisit) {
   controls.target.copy(mobile ? mobileTarget : desktopTarget);
   controls.update();
   const composer = new EffectComposer(renderer);
-  const cosmos=createCosmos(camera,renderer);
-  composer.addPass(new RenderPass(cosmos.scene,camera));
-  const islandPass=new RenderPass(scene,camera);islandPass.clear=false;islandPass.clearDepth=true;composer.addPass(islandPass);
+  composer.addPass(new RenderPass(scene, camera));
   const bloom = new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), .34, .55, 1.05);
   composer.addPass(bloom); composer.addPass(new OutputPass());
 
@@ -304,7 +301,7 @@ export function createWorld(onVisit) {
   const pm=new THREE.PointsMaterial({size:.16,map:fogTexture,vertexColors:true,transparent:true,opacity:.9,blending:THREE.AdditiveBlending,depthWrite:false});scene.add(new THREE.Points(pg,pm));
   animations.push(t=>{particleData.forEach((p,i)=>{pp[i*3]=p.x+Math.sin(t*p.s*.4+p.p)*.7;pp[i*3+1]=p.y+Math.sin(t*p.s+p.p)*.45;pp[i*3+2]=p.z+Math.cos(t*p.s*.3+p.p)*.6;});pg.attributes.position.needsUpdate=true;});
 
-  const meepoBattle=createMeepoBattle(scene,midRoute,camera,reduced,universityFlag);
+  const meepoBattle=createMeepoBattle(scene,midRoute,camera,reduced);
   // A hawk circles above the river.
   const birds=[];for(let i=0;i<3;i++){const bird=new THREE.Group();const bm=mat('bird',0x292e27);const left=box(bird,-.3,0,0,.6,.035,.15,bm),right=box(bird,.3,0,0,.6,.035,.15,bm);scene.add(bird);birds.push({bird,left,right,p:i*2.1});}
   animations.push(t=>birds.forEach(({bird,left,right,p})=>{const a=t*.13+p;bird.position.set(Math.cos(a)*8,11+Math.sin(a)*1.2,Math.sin(a)*8);bird.rotation.y=-a;left.rotation.z=Math.sin(t*3+p)*.2;right.rotation.z=-Math.sin(t*3+p)*.2;}));
@@ -331,7 +328,7 @@ export function createWorld(onVisit) {
   Object.entries(landmarks).forEach(([id,pos],i)=>{
     const button=document.createElement('button');button.className='landmark';button.dataset.destination=id;button.setAttribute('aria-label',`Explore ${markerNames[id].toLowerCase()}`);
     button.innerHTML=`<span class="marker-gem"><b>${i+1}</b></span><span class="marker-name">${markerNames[id]}</span><span class="marker-line"></span>`;
-    labels.append(button);button.addEventListener('click',()=>onVisit(id));markers.push({id,button,pos:pos.clone().add(new THREE.Vector3(0,id==='bio'?9.1:id==='experience'?8.8:id==='publications'?6.8:5.6,0))});
+    labels.append(button);button.addEventListener('click',()=>onVisit(id));markers.push({id,button,pos:pos.clone().add(new THREE.Vector3(0,id==='bio'?9.1:id==='experience'?8.8:id==='publications'?6.3:5.6,0))});
   });
   const duskBackground=new THREE.Color(0x1b3034),nightBackground=new THREE.Color(0x0a121e);
   let flight=null,night=false,nightMix=0,userInteracting=false,frame=0,last=performance.now(),elapsed=0,paused=false;
@@ -380,8 +377,7 @@ export function createWorld(onVisit) {
     nightMix=THREE.MathUtils.lerp(nightMix,night?1:0,.025);
     ambient.intensity=1.5-nightMix*.75;sun.intensity=3.1-nightMix*2.55;rim.intensity=1.8+nightMix*.3;
     sun.color.setHex(night?0xa2b8e5:0xffe1a6);renderer.toneMappingExposure=1.15-nightMix*.06;
-    scene.fog.color.lerpColors(duskBackground,nightBackground,nightMix);
-    cosmos.update(t,nightMix);
+    scene.background.lerpColors(duskBackground,nightBackground,nightMix);scene.fog.color.copy(scene.background);
     bloom.strength=.34+nightMix*.2;waterUniforms.time.value=t;waterUniforms.night.value=nightMix;
     for(const fn of animations)fn(t);
     meepoBattle.update(reduced?0:delta);
@@ -393,5 +389,5 @@ export function createWorld(onVisit) {
     if(frame%60===0){document.body.dataset.drawCalls=renderer.info.render.calls;}
   }
   requestAnimationFrame(tick);
-  return {focus,reset,watchBattle,get cosmos(){return cosmos.scene;},get battle(){return meepoBattle.snapshot();},get lane(){return midRoute;},toggleNight(){night=!night;return night;},get ready(){return ready;},get renderer(){return renderer;},get camera(){return camera;},get scene(){return scene;}};
+  return {focus,reset,watchBattle,get battle(){return meepoBattle.snapshot();},get lane(){return midRoute;},toggleNight(){night=!night;return night;},get ready(){return ready;},get renderer(){return renderer;},get camera(){return camera;},get scene(){return scene;}};
 }
