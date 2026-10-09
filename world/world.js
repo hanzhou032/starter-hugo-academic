@@ -6,7 +6,7 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { mergeGeometries } from 'three/addons/BufferGeometryUtils.js';
 import { buildOxfordBase, buildCambridgeBase } from './architecture.js';
-import { buildDeepMind, buildMistral, bakeStatic } from './landmarks.js';
+import { buildGoogle, buildMistral, bakeStatic } from './landmarks.js';
 import { BRIDGE, createLane } from './lane.js';
 import { createMeepoBattle } from './meepo.js';
 import { createCosmos } from './cosmos.js';
@@ -276,7 +276,7 @@ export function createWorld(onVisit) {
   const architectureEffects={mesh,ring,flag,point,animations,teal,orange};
   buildOxfordBase(groupAt(-11.7,10.5),architectureEffects);
 
-  buildDeepMind(groupAt(-11,-7),architectureEffects);
+  buildGoogle(groupAt(-11,-7),architectureEffects);
   buildCambridgeBase(groupAt(11.6,-9.3),architectureEffects);
   buildMistral(groupAt(13.4,9.6),architectureEffects);
 

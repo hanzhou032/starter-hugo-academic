@@ -53,7 +53,7 @@ async function visit(id,{opening=false}={}) {
   document.body.classList.remove('arriving');
   currentDestination=id;
   document.body.dataset.activeDestination=id;
-  $('#base-caption').innerHTML=id==='bio'?'<small>OXFORD · THE RADIANT</small>Radcliffe Camera & Tom Tower':id==='experience'?'<small>CAMBRIDGE · THE DIRE</small>King’s College Chapel & Trinity Gate':id==='research'?'<small>RESEARCH · MISTRAL</small>The pixel laboratory':'<small>PUBLICATIONS · DEEPMIND</small>The spiral archive';
+  $('#base-caption').innerHTML=id==='bio'?'<small>OXFORD · THE RADIANT</small>Radcliffe Camera & Tom Tower':id==='experience'?'<small>CAMBRIDGE · THE DIRE</small>King’s College Chapel & Trinity Gate':id==='research'?'<small>RESEARCH · MISTRAL</small>The pixel laboratory':'<small>PUBLICATIONS · GOOGLE</small>The arcane library';
   const isNew=!visited.has(id);visited.add(id);$('#visited-count').textContent=visited.size;
   if(isNew&&visited.size===4)toast('The realm is yours. All four landmarks discovered.');
   document.querySelectorAll('.progress-pips i').forEach((p,i)=>p.classList.toggle('visited',i<visited.size));
