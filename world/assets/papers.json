@@ -1,0 +1,174 @@
+[
+  {
+    "abbr": "arXiv",
+    "title": "Reasoning Arena: Trace Tournaments When Verifiable Rewards Fall Short",
+    "author": "Zhou, Han and Yang, Adam X and Aitchison, Laurence and Korhonen, Anna and Jiang, Albert Q",
+    "year": "2026",
+    "arxiv": "2606.09380",
+    "id": "reasoning_arena"
+  },
+  {
+    "abbr": "arXiv",
+    "title": "Thinking in Frames: How Visual Context and Test-Time Scaling Empower Video Reasoning",
+    "author": "Li, Chengzu and Wang, Zanyi and Li, Jiaang and Xu, Yi and Zhou, Han and Zhang, Huanyu and An, Ruichuan and Jiang, Dengyang and An, Zhaochong and Vuli{\\'c}, Ivan and Belongie, Serge and Korhonen, Anna",
+    "year": "2026",
+    "arxiv": "2601.21037",
+    "website": "https://thinking-in-frames.github.io",
+    "id": "thinking_in_frames"
+  },
+  {
+    "abbr": "ICLR",
+    "title": "Multi-Agent Design: Optimizing Agents with Better Prompts and Topologies",
+    "author": "Zhou, Han and Wan, Xingchen and Sun, Ruoxi and Palangi, Hamid and Iqbal, Shariq and Vuli{\\'c}, Ivan and Korhonen, Anna and Ar{\\i}k, Sercan {\\\"O}",
+    "year": "2026",
+    "html": "https://openreview.net/forum?id=I05H9RUzHB",
+    "arxiv": "2502.02533",
+    "preview": "mass.png",
+    "selected": "true",
+    "id": "mass"
+  },
+  {
+    "abbr": "ICLR Oral",
+    "title": "Visual Planning: Let's Think Only with Images",
+    "author": "Xu*, Yi and Li*, Chengzu and Zhou*, Han and Wan, Xingchen and Zhang, Caiqi and Korhonen, Anna and Vuli{\\'c}, Ivan",
+    "year": "2026",
+    "html": "https://openreview.net/forum?id=wsnse46kRO",
+    "arxiv": "2505.11409",
+    "code": "https://github.com/yix8/VisualPlanning",
+    "preview": "vprl.png",
+    "selected": "true",
+    "id": "vprl"
+  },
+  {
+    "abbr": "arXiv",
+    "title": "Agentic Policy Optimization via Instruction-Policy Co-Evolution",
+    "author": "Zhou, Han and Wan, Xingchen and Vuli{\\'c}, Ivan and Korhonen, Anna",
+    "year": "2025",
+    "arxiv": "2512.01945",
+    "id": "inspo"
+  },
+  {
+    "abbr": "arXiv",
+    "title": "Maestro: Self-Improving Text-to-Image Generation via Agent Orchestration",
+    "author": "Wan, Xingchen and Zhou, Han and Sun, Ruoxi and Nakhost, Hootan and Jiang, Ke and Sinha, Rajarishi and Ar{\\i}k, Sercan {\\\"O}",
+    "year": "2025",
+    "arxiv": "2509.10704",
+    "preview": "maestro.png",
+    "id": "maestro"
+  },
+  {
+    "abbr": "ICLR",
+    "title": "From Few to Many: Self-Improving Many-Shot Reasoners Through Iterative Optimization and Generation",
+    "author": "Wan, Xingchen and Zhou, Han and Sun, Ruoxi and Arik, Sercan O",
+    "year": "2025",
+    "html": "https://openreview.net/forum?id=JBXO05r4AV",
+    "arxiv": "2502.00330",
+    "preview": "bridge.png",
+    "selected": "true",
+    "id": "bridge"
+  },
+  {
+    "abbr": "ACL Findings",
+    "title": "Large Language Models are Miscalibrated In-Context Learners",
+    "author": "Li, Chengzu and Zhou, Han and Glava{\\v{s}}, Goran and Korhonen, Anna and Vuli{\\'c}, Ivan",
+    "year": "2025",
+    "html": "https://aclanthology.org/2025.findings-acl.603/",
+    "arxiv": "2312.13772",
+    "code": "https://github.com/cambridgeltl/ensembled-sicl",
+    "id": "ensembled_sicl"
+  },
+  {
+    "abbr": "EMNLP",
+    "title": "Fairer Preferences Elicit Improved Human-Aligned Large Language Model Judgments",
+    "author": "Zhou, Han and Wan, Xingchen and Liu, Yinhong and Collier, Nigel and Vuli{\\'c}, Ivan and Korhonen, Anna",
+    "year": "2024",
+    "html": "https://aclanthology.org/2024.emnlp-main.72/",
+    "arxiv": "2406.11370",
+    "code": "https://github.com/cambridgeltl/zepo",
+    "id": "zepo"
+  },
+  {
+    "abbr": "EMNLP",
+    "title": "TopViewRS: Vision-Language Models as Top-View Spatial Reasoners",
+    "author": "Li, Chengzu and Zhang, Caiqi and Zhou, Han and Collier, Nigel and Korhonen, Anna and Vuli{\\'c}, Ivan",
+    "year": "2024",
+    "html": "https://aclanthology.org/2024.emnlp-main.106/",
+    "arxiv": "2406.02537",
+    "code": "https://github.com/cambridgeltl/topviewrs",
+    "website": "https://topviewrs.github.io/",
+    "id": "topviewrs"
+  },
+  {
+    "abbr": "COLM",
+    "title": "Aligning with Human Judgement: The Role of Pairwise Preference in Large Language Model Evaluators",
+    "author": "Liu*, Yinhong and Zhou*, Han and Guo, Zhijiang and Shareghi, Ehsan and Vuli{\\'c}, Ivan and Korhonen, Anna and Collier, Nigel",
+    "year": "2024",
+    "html": "https://openreview.net/forum?id=9gdZI7c6yr",
+    "arxiv": "2403.16950",
+    "code": "https://github.com/cambridgeltl/pairs",
+    "id": "pairs"
+  },
+  {
+    "abbr": "TACL",
+    "title": "AutoPEFT: Automatic Configuration Search for Parameter-Efficient Fine-Tuning",
+    "author": "Zhou*, Han and Wan*, Xingchen and Vuli{\\'c}, Ivan and Korhonen, Anna",
+    "year": "2024",
+    "html": "https://direct.mit.edu/tacl/article/doi/10.1162/tacl_a_00662/120914",
+    "arxiv": "2301.12132",
+    "code": "https://github.com/cambridgeltl/autopeft",
+    "preview": "autopeft.png",
+    "id": "autopeft"
+  },
+  {
+    "abbr": "ICLR",
+    "title": "Batch Calibration: Rethinking Calibration for In-Context Learning and Prompt Engineering",
+    "author": "Zhou, Han and Wan, Xingchen and Proleev, Lev and Mincu, Diana and Chen, Jilin and Heller, Katherine A and Roy, Subhrajit",
+    "year": "2024",
+    "html": "https://openreview.net/forum?id=L3FHMoKZcS",
+    "arxiv": "2309.17249",
+    "preview": "bc.png",
+    "selected": "true",
+    "id": "bc"
+  },
+  {
+    "abbr": "EMNLP Findings",
+    "title": "Survival of the Most Influential Prompts: Efficient Black-Box Prompt Search via Clustering and Pruning",
+    "author": "Zhou*, Han and Wan*, Xingchen and Vuli{\\'c}, Ivan and Korhonen, Anna",
+    "year": "2023",
+    "html": "https://aclanthology.org/2023.findings-emnlp.870/",
+    "arxiv": "2310.12774",
+    "code": "https://github.com/cambridgeltl/ClaPS",
+    "preview": "claps.png",
+    "id": "claps"
+  },
+  {
+    "abbr": "EMNLP",
+    "title": "A Systematic Study of Performance Disparities in Multilingual Task-Oriented Dialogue Systems",
+    "author": "Hu, Songbo and Zhou, Han and Yuan, Moy and Gritta, Milan and Zhang, Guchun and Iacobacci, Ignacio and Korhonen, Anna and Vuli{\\'c}, Ivan",
+    "year": "2023",
+    "html": "https://aclanthology.org/2023.emnlp-main.422/",
+    "arxiv": "2310.12892",
+    "code": "https://github.com/cambridgeltl/multi3woz/tree/analysis",
+    "id": "m3wa"
+  },
+  {
+    "abbr": "TACL",
+    "title": "Multi3WOZ: A Multilingual, Multi-Domain, Multi-Parallel Dataset for Training and Evaluating Culturally Adapted Task-Oriented Dialog Systems",
+    "author": "Hu*, Songbo and Zhou*, Han and Hergul, Mete and Gritta, Milan and Zhang, Guchun and Iacobacci, Ignacio and Vuli{\\'c}, Ivan and Korhonen, Anna",
+    "year": "2023",
+    "arxiv": "2307.14031",
+    "code": "https://github.com/cambridgeltl/multi3woz",
+    "id": "multi3woz"
+  },
+  {
+    "abbr": "EACL Findings",
+    "title": "XQA-DST: Multi-Domain and Multi-Lingual Dialogue State Tracking",
+    "author": "Zhou, Han and Iacobacci, Ignacio and Minervini, Pasquale",
+    "year": "2023",
+    "html": "https://aclanthology.org/2023.findings-eacl.73/",
+    "arxiv": "2204.05895",
+    "code": "https://github.com/hanzhou032/xqa-dst",
+    "preview": "xqa_dst.png",
+    "id": "xqa_dst"
+  }
+]

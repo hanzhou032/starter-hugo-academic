@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111b1c">
+  <meta name="description" content="Explore Han Zhou's research, publications, and journey in a Dota-inspired interactive 3D world.">
+  <title>Han Zhou — The Ancient of Ideas</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath fill='%23c6a66d' d='M4 2L38 5 35 38 2 34z'/%3E%3Cpath fill='%23121d1e' d='M8 7L31 31 26 33 6 12zM24 8l8 2-1 10zM8 22l10 9-10-1z'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="vendor/fonts.css">
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">{"imports":{"three":"./vendor/three.module.js","three/addons/":"./vendor/addons/"}}</script>
+</head>
+<body>
+  <div id="world" aria-label="Interactive 3D island with Radiant and Dire landscapes"></div>
+  <div class="vignette" aria-hidden="true"></div>
+  <div id="world-labels" class="world-labels"></div>
+  <div id="loading" role="status"><span class="loading-rune">✦</span><span>AWAKENING THE ANCIENTS</span><i></i></div>
+
+  <header class="topbar ui">
+    <a class="identity" href="#world" aria-label="Han Zhou, return to world">
+      <svg class="sigil" viewBox="0 0 40 40" aria-hidden="true"><path fill="currentColor" d="M4 2L38 5 35 38 2 34z"/><path fill="#152021" d="M8 7L31 31 26 33 6 12zM24 8l8 2-1 10zM8 22l10 9-10-1z"/></svg>
+      <span>HAN ZHOU<small>A RESEARCHER'S REALM</small></span>
+    </a>
+    <nav aria-label="Main navigation">
+      <button class="nav-link active" data-home>World</button>
+      <button class="nav-link" data-destination="about">About</button>
+      <button class="nav-link" data-destination="research">Research</button>
+      <button class="nav-link" data-destination="publications">Publications</button>
+      <button class="nav-link" data-destination="journey">Journey</button>
+    </nav>
+    <a class="contact-link" href="mailto:hz416@cam.ac.uk">Let's connect <span>↗</span></a>
+  </header>
+
+  <main class="intro ui" id="intro">
+    <div class="eyebrow"><span></span> WELCOME TO MY WORLD</div>
+    <h1>The Ancient<br>of <em>Ideas.</em></h1>
+    <div class="ornament" aria-hidden="true"><i></i>◇<i></i></div>
+    <p>Building agents that learn,<br>reason, and improve.</p>
+    <p class="intro-detail">I'm Han, a research scientist at Mistral AI.<br>Explore the world behind my work.</p>
+    <button class="explore-button" id="explore">Enter the realm <span>⟶</span></button>
+    <span class="intro-caption">FOUR LANDMARKS. ONE CURIOUS MIND.</span>
+  </main>
+
+  <aside class="world-tools ui" aria-label="World controls">
+    <div class="realm-status"><span class="live-dot"></span><span id="realm-time">DUSK IN THE REALM</span></div>
+    <div class="tool-buttons">
+      <button id="time-toggle" class="icon-button" aria-label="Switch to night" title="Day / night"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l2 2m10 10 2 2M5 19l2-2M17 7l2-2"/></svg></button>
+      <button id="sound-toggle" class="icon-button" aria-label="Enable ambient sound" aria-pressed="false" title="Ambient sound · M"><svg viewBox="0 0 24 24"><path d="M11 4L5 9H2v6h3l6 5zM16 9l6 6m0-6-6 6"/></svg></button>
+      <button id="fullscreen" class="icon-button" aria-label="Enter fullscreen" title="Fullscreen"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button>
+    </div>
+  </aside>
+
+  <div class="region-name radiant-name ui">THE RADIANT <span>WHERE IDEAS TAKE ROOT</span></div>
+  <div class="region-name dire-name ui">THE DIRE <span>WHERE LIMITS ARE TESTED</span></div>
+
+  <div class="exploration ui" id="exploration"><span class="small-diamond">◇</span><span>YOUR EXPLORATION<small><b id="visited-count">0</b> / 4 landmarks discovered</small></span><div class="progress-pips" aria-hidden="true"><i></i><i></i><i></i><i></i></div></div>
+
+  <footer class="bottom-ui ui">
+    <div class="destination-dock" aria-label="Explore destinations">
+      <button data-destination="about"><span class="dock-icon">♜</span><span><small>01 · THE ANCIENT</small>Meet the researcher</span><span class="dock-arrow">↗</span></button>
+      <button data-destination="research"><span class="dock-icon">✧</span><span><small>02 · THE SANCTUARY</small>Explore the research</span><span class="dock-arrow">↗</span></button>
+      <button data-destination="publications"><span class="dock-icon">▤</span><span><small>03 · THE ARCHIVE</small>Read the publications</span><span class="dock-arrow">↗</span></button>
+      <button data-destination="journey"><span class="dock-icon">⚑</span><span><small>04 · THE WATCHTOWER</small>Follow the journey</span><span class="dock-arrow">↗</span></button>
+    </div>
+    <div class="footer-line"><span class="controls-hint"><span class="mouse-icon"></span> Drag to orbit <i>·</i> Scroll to zoom <i>·</i> Click a landmark to explore</span><span class="fan-note">A DOTA 2–INSPIRED PERSONAL WORLD</span><button class="help-button" id="help" aria-label="Open controls and credits">? <span>Controls</span></button></div>
+  </footer>
+
+  <aside class="minimap ui" aria-label="Interactive world map"><div class="minimap-heading"><span>REALM MAP</span><button id="reset-camera" aria-label="Reset camera" title="Reset camera · R">↺</button></div><svg viewBox="0 0 160 140" role="img" aria-label="Map of the four landmarks"><defs><clipPath id="map-clip"><path d="M80 5 127 19 153 66 134 111 81 135 28 121 6 75 22 28z"/></clipPath></defs><g clip-path="url(#map-clip)"><path fill="#344b3d" d="M0 0h160v140H0z"/><path fill="#4a3832" d="M90 0h70v140H65L81 102 72 75 97 41z"/><path fill="none" stroke="#7aa7a0" stroke-opacity=".65" stroke-width="7" d="M90-10L97 32 77 68 83 96 60 150"/><path fill="none" stroke="#a59c71" stroke-opacity=".45" d="M38 108 31 39 117 35 120 102zM38 108L117 35"/><path fill="none" stroke="#b6a277" stroke-opacity=".15" d="M0 35h160M0 70h160M0 105h160M40 0v140M80 0v140M120 0v140"/></g><path d="M80 5 127 19 153 66 134 111 81 135 28 121 6 75 22 28z" fill="none" stroke="#b6a277" stroke-opacity=".4"/><circle id="map-camera" cx="80" cy="73" r="22" fill="none" stroke="#dfcfaa" stroke-dasharray="2 4" opacity=".4"/></svg><button class="map-point about" data-destination="about" aria-label="Visit the Ancient">1</button><button class="map-point research" data-destination="research" aria-label="Visit the Sanctuary">2</button><button class="map-point publications" data-destination="publications" aria-label="Visit the Archive">3</button><button class="map-point journey" data-destination="journey" aria-label="Visit the Watchtower">4</button><span class="map-north">N</span></aside>
+
+  <dialog id="content-dialog" class="content-dialog" aria-labelledby="panel-title"><button class="close-panel" aria-label="Close panel">✕</button><div id="panel-content"></div></dialog>
+  <dialog id="help-dialog" class="help-dialog" aria-labelledby="help-title"><button class="close-help close-panel" aria-label="Close controls">✕</button><div class="eyebrow">THE REALM IS YOURS</div><h2 id="help-title">A little guidance.</h2><p>Explore a living map of my work. Select a glowing landmark, a destination below, or a point on the realm map.</p><dl><dt>Drag / one-finger swipe</dt><dd>Orbit the island</dd><dt>Scroll / pinch</dt><dd>Zoom in and out</dd><dt>Right-drag / two fingers</dt><dd>Pan the view</dd><dt>1 — 4</dt><dd>Visit a landmark</dd><dt>R</dt><dd>Return to the overview</dd><dt>M</dt><dd>Toggle ambient sound</dd><dt>H</dt><dd>Hide / show the interface</dd><dt>Escape</dt><dd>Close a panel / show interface</dd></dl><p class="credits">An original, procedurally built world inspired by Dota 2. A personal fan project; not affiliated with Valve. Academic content adapted from Han Zhou's original website.</p></dialog>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <button id="restore-ui" aria-label="Show interface">Show interface <kbd>H</kbd></button>
+  <noscript><div class="no-webgl">This world needs JavaScript. You can also visit <a href="https://scholar.google.com/citations?user=7pXfJVgAAAAJ">Han Zhou on Google Scholar</a>.</div></noscript>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

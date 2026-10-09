@@ -1,0 +1,14 @@
+{
+  "name": "han-zhou-ancient-of-ideas",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "start": "node server.mjs",
+    "check": "node --check app.js && node --check world.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
