@@ -24,6 +24,8 @@ Bio is at the Oxford-inspired Radiant base, featuring the Radcliffe Camera, Tom 
 
 Opening the homepage animates the camera from the island overview into Bio, then displays the biography. Explicit `#world`, `#bio`, `#experience`, `#research`, and `#publications` links remain available; old `#about` and `#journey` links still work. Navigation can interrupt the entrance, and reduced-motion settings skip the camera animation. The architectural meshes are generated in `architecture.js` and batched by material.
 
+On the first opening of each panel per page load, `panel-typewriter.js` starts with blank text and a gold block cursor, then reveals headings, paragraphs, and link labels in reading order. CSS Highlight ranges hide untyped characters without changing the real text, accessible headings, or final wrapping. Images fade in alongside their text. The initial viewport gets a readable pace; the rest finishes within a few seconds. Reopening a visited panel is instant. Scrolling, clicking, keyboard focus, or navigation completes/cancels the reveal immediately so reading, selection, search, and filters remain responsive. Reduced-motion preferences and browsers without CSS Highlights show everything immediately. Publication data mounts before its first reveal, with navigation guards against late responses.
+
 ## Meepo battle
 
 Three original procedural Meepo models per faction follow the paved middle lane, meet on the bridge, strike with shovels, lose health, fall, and return in fresh waves. Select **Watch the battle**, press **B**, or open `#battle` for the close camera. The default homepage still flies into Bio.

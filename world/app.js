@@ -1,7 +1,9 @@
 import { createWorld } from './world.js';
+import { createPanelTypewriter } from './panel-typewriter.js';
 
 const $ = selector => document.querySelector(selector);
 const dialog = $('#content-dialog');
+const panelTypewriter = createPanelTypewriter($('#panel-content'), dialog);
 const visited = new Set();
 let world, sound, toastTimer, lastFocus, currentDestination;
 let navigation=0;
@@ -22,10 +24,11 @@ const sections = {
 };
 
 function cleanAuthor(author){return author.replace(/\\'c/g,'ć').replace(/\\v\{s\}/g,'š').replace(/\\"O/g,'Ö').replace(/\\i\b/g,'ı').replace(/[{}]/g,'').replace(/ and /g,' · ');}
-async function mountPapers() {
-  await papersReady;if(currentDestination!=='publications')return;
+function mountPapers() {
+  if(currentDestination!=='publications')return;
   let filter='all';const input=$('#paper-search');if(!input)return;
   function render(){
+    panelTypewriter.finish();
     const q=input.value.toLowerCase().trim();
     const matching=papers.filter(p=>((filter==='all')||(filter==='selected'&&p.selected==='true')||(filter==='earlier'&&+p.year<2024)||p.year===filter)&&`${p.title} ${p.author} ${p.abbr} ${p.year}`.toLowerCase().includes(q));
     $('#paper-count').textContent=`${matching.length} ${matching.length===1?'paper':'papers'}${q?' matching your search':''}`;
@@ -40,6 +43,7 @@ async function visit(id,{opening=false}={}) {
   id=normalizeRoute(id);
   if(!sections[id])return;
   const request=++navigation;
+  panelTypewriter.finish();
   lastFocus=document.activeElement;
   $('#intro').classList.add('explored');
   const arrival=world?.focus(id,{opening});
@@ -49,6 +53,10 @@ async function visit(id,{opening=false}={}) {
     if(request!==navigation)return;
     document.body.classList.remove('arriving');
     if(!arrived)return;
+  }
+  if(id==='publications'){
+    await papersReady;
+    if(request!==navigation)return;
   }
   document.body.classList.remove('arriving');
   currentDestination=id;
@@ -60,12 +68,14 @@ async function visit(id,{opening=false}={}) {
   document.querySelectorAll('[data-destination]').forEach(b=>{b.classList.toggle('selected',b.dataset.destination===id);if(b.classList.contains('landmark'))b.classList.toggle('visited',visited.has(b.dataset.destination));});
   document.querySelectorAll('.nav-link').forEach(b=>b.classList.toggle('active',b.dataset.destination===id));
   $('#panel-content').innerHTML=sections[id]();$('#panel-content h2').id='panel-title';$('#panel-title').tabIndex=-1;
+  if(id==='publications')mountPapers();
   if(!dialog.open)dialog.show();dialog.scrollTop=0;document.body.classList.add('panel-open');
   (opening?$('#panel-title'):$('.close-panel')).focus({preventScroll:true});
   history.replaceState(null,'','#'+id);
-  if(id==='publications')mountPapers();
+  panelTypewriter.start(isNew);
 }
 function closePanel(reset=true){
+  panelTypewriter.finish();
   navigation++;document.body.classList.remove('arriving','watching-battle');delete document.body.dataset.activeDestination;$('#base-caption').textContent='';
   if(dialog.open)dialog.close();document.body.classList.remove('panel-open');currentDestination=null;
   document.querySelectorAll('.nav-link').forEach(b=>b.classList.toggle('active',b.hasAttribute('data-home')));

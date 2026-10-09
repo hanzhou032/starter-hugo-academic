@@ -8,6 +8,7 @@ const files = [
   'index.html',
   'style.css',
   'app.js',
+  'panel-typewriter.js',
   'world.js',
   'architecture.js',
   'landmarks.js',

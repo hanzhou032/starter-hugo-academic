@@ -52,3 +52,11 @@
   .topbar{align-items:flex-start;padding-top:18px}
   .topbar nav{position:absolute;top:69px;left:3.2%;right:3.2%;height:36px;justify-content:space-between;border-top:1px solid var(--edge)}
 }
+
+/* First-open terminal reveal preserves the final line wrapping and semantic text. */
+#panel-content{position:relative}
+::highlight(panel-untyped){color:transparent;text-shadow:none;background-color:transparent}
+.terminal-caret{position:absolute;left:0;top:0;width:7px;height:14px;background:var(--gold);box-shadow:0 0 9px #c8ad7d45;pointer-events:none;animation:terminal-blink .72s steps(1,end) infinite}
+.panel-typing img{opacity:0;transition:opacity .25s ease-out}
+.panel-typing img.terminal-image-ready{opacity:1}
+@keyframes terminal-blink{0%,65%{visibility:visible}66%,100%{visibility:hidden}}
