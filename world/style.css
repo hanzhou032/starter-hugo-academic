@@ -58,3 +58,10 @@
 ::highlight(panel-untyped){color:transparent;text-shadow:none;background-color:transparent}
 .terminal-caret{position:absolute;left:0;top:0;width:7px;height:14px;background:var(--gold);box-shadow:0 0 9px #c8ad7d45;pointer-events:none;animation:terminal-blink .72s steps(1,end) infinite}
 @keyframes terminal-blink{0%,65%{visibility:visible}66%,100%{visibility:hidden}}
+.panel-typing [data-terminal-state="waiting"]{opacity:0;pointer-events:none}
+.panel-typing [data-terminal-effect="region"][data-terminal-state="revealed"]{animation:terminal-region-in .2s ease-out}
+.panel-typing [data-terminal-effect="logo"][data-terminal-state="revealed"]{animation:terminal-logo-in .52s cubic-bezier(.16,1,.3,1)}
+.panel-typing [data-terminal-effect="box"][data-terminal-state="revealed"]{animation:terminal-box-in .44s cubic-bezier(.2,.75,.25,1)}
+@keyframes terminal-region-in{from{opacity:0}to{opacity:1}}
+@keyframes terminal-logo-in{from{opacity:0;transform:translateY(7px) scale(.84);filter:blur(5px)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes terminal-box-in{from{opacity:0;transform:translateY(5px);clip-path:inset(0 100% 0 0);box-shadow:0 0 10px #c8ad7d35}to{opacity:1;transform:translateY(0);clip-path:inset(0)}}
