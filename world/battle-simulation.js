@@ -1,5 +1,5 @@
 // Deterministic, fixed-step melee simulation. Rendering never decides damage.
-export function createBattleSimulation() {
+export function createBattleSimulation({ spawnDistances = [13, 13] } = {}) {
   let time = 0, accumulator = 0, wave = 0, nextWave = 0;
   const units = [], events = [];
   const step = 1 / 60;
@@ -9,7 +9,7 @@ export function createBattleSimulation() {
     for (let side = 0; side < 2; side++) for (let lane = 0; lane < 3; lane++) {
       const sign = side === 0 ? -1 : 1;
       units.push({ id: side * 3 + lane, side, lane, lateral: (lane - 1) * 1.15,
-        distance: sign * (11.1 + [1.05, 0, 1.9][lane]), destination: sign * .76,
+        distance: sign * (spawnDistances[side] - [1.25, 2.5, 0][lane]), destination: sign * .76,
         state: 'marching', health: 100, maxHealth: 100, age: 0,
         attackAge: 0, attackDuration: 1.35 + lane * .12, struck: false, hitAge: 10, deaths: 0 });
     }

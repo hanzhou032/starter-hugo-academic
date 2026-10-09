@@ -1,5 +1,5 @@
 // Reveal the original semantic DOM in reading order, without rebuilding links
-// or changing line wrapping. Only the main panel title starts visible.
+// or changing line wrapping. The title and everything above it stay visible.
 export function createPanelTypewriter(content, dialog) {
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
   const segmenter = typeof Intl.Segmenter === 'function' ? new Intl.Segmenter(undefined, { granularity: 'grapheme' }) : null;
@@ -27,11 +27,17 @@ export function createPanelTypewriter(content, dialog) {
     content.dataset.typing = 'complete';
     if (!animate || motion.matches || !globalThis.CSS?.highlights || !globalThis.Highlight) return;
 
+    const title = content.querySelector('#panel-title');
+    function shouldAnimate(node) {
+      const element = node.nodeType === Node.TEXT_NODE ? node.parentElement : node;
+      return !element.closest(excluded) && (!title || Boolean(title.compareDocumentPosition(node) & Node.DOCUMENT_POSITION_FOLLOWING));
+    }
+
     // Gates hide the element itself, including borders, backgrounds, and pseudo
     // elements. Nested gates keep later cards/buttons hidden when a group opens.
     const gates = new Map();
     function addGate(element, effect) {
-      if (!element.closest(excluded)) gates.set(element, { element, effect, shown: false });
+      if (shouldAnimate(element)) gates.set(element, { element, effect, shown: false });
     }
     for (const element of content.children) addGate(element, 'region');
     for (const element of content.querySelectorAll('.interest,.timeline-item,.news-item,.paper')) addGate(element, 'region');
@@ -44,7 +50,7 @@ export function createPanelTypewriter(content, dialog) {
     let node;
     while ((node = walker.nextNode())) {
       const element = node.nodeType === Node.TEXT_NODE ? node.parentElement : node;
-      if (element.closest(excluded)) continue;
+      if (!shouldAnimate(node)) continue;
       let item;
       if (node.nodeType === Node.TEXT_NODE && node.data.trim()) {
         const range = document.createRange();
@@ -81,6 +87,7 @@ export function createPanelTypewriter(content, dialog) {
     }
     const caret = document.createElement('span');
     caret.className = 'terminal-caret';
+    caret.style.opacity = '0';
     caret.setAttribute('aria-hidden', 'true');
     content.append(caret);
     content.classList.add('panel-typing');

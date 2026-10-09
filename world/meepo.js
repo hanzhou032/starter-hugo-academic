@@ -101,7 +101,7 @@ function createMeepo(side, index) {
 }
 
 export function createMeepoBattle(scene, route, camera, reduced) {
-  const simulation = createBattleSimulation(), actors = [], bursts = [];
+  const simulation = createBattleSimulation({ spawnDistances: [-route.min, route.max] }), actors = [], bursts = [];
   const battle = new THREE.Group(); battle.name = 'meepo-battle'; scene.add(battle);
   for (let side = 0; side < 2; side++) for (let i = 0; i < 3; i++) { const actor = createMeepo(side, i); battle.add(actor.root); actors.push(actor); }
   const sparkMaterial = new THREE.MeshBasicMaterial({ color: 0xffd68d, transparent: true, depthWrite: false });
@@ -128,10 +128,13 @@ export function createMeepoBattle(scene, route, camera, reduced) {
       burst.g.children.forEach((p, i) => { const a = i * Math.PI * 2 / 7; p.position.set(Math.cos(a) * burst.age * 1.8, Math.sin(a * 3) * burst.age + .13 - burst.age * burst.age * 3, Math.sin(a) * burst.age * 1.8); p.scale.setScalar(1 - burst.age / .34); });
     }
     for (const u of state.units) {
-      const a = actors[u.id], p = route.sample(u.distance, u.lateral), dead = u.state === 'dying' || u.state === 'dead';
+      const lateral = route.formationLateral(u.distance, u.lateral);
+      const a = actors[u.id], p = route.sample(u.distance, lateral), dead = u.state === 'dying' || u.state === 'dead';
       a.root.visible = u.state !== 'dead'; a.root.scale.setScalar(1);
-      a.root.position.set(p.x, route.surface(u.distance, u.lateral) + .035, p.z);
-      a.root.rotation.y = Math.atan2(p.dx, p.dz) + (u.side ? Math.PI : 0);
+      a.root.position.set(p.x, route.surface(u.distance, lateral) + .035, p.z);
+      const before = route.sample(u.distance - .02, route.formationLateral(u.distance - .02, u.lateral));
+      const after = route.sample(u.distance + .02, route.formationLateral(u.distance + .02, u.lateral));
+      a.root.rotation.y = Math.atan2(after.x - before.x, after.z - before.z) + (u.side ? Math.PI : 0);
       a.body.rotation.set(0, 0, 0); a.body.position.set(0, 0, 0); a.head.rotation.set(0, 0, 0);
       a.legs[0].rotation.x = a.legs[1].rotation.x = 0;
       a.arms[0].rotation.set(.18, 0, -.13); a.arms[1].rotation.set(.22, 0, .1);

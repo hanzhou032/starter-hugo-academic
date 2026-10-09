@@ -16,6 +16,8 @@ const files = [
   'battle-simulation.js',
   'meepo.js',
   'water.js',
+  'waterfall.js',
+  'sky-island.js',
   'assets',
   'vendor',
   'SOURCE-LICENSE.md',

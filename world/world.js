@@ -10,6 +10,8 @@ import { buildGoogle, buildMistral, bakeStatic } from './landmarks.js';
 import { BRIDGE, createLane } from './lane.js';
 import { createMeepoBattle } from './meepo.js';
 import { createRiver } from './water.js';
+import { createIslandRock, createCloudSea } from './sky-island.js';
+import { createWaterfalls } from './waterfall.js';
 
 export function createWorld(onVisit) {
   let resolveReady;
@@ -34,14 +36,14 @@ export function createWorld(onVisit) {
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true; controls.dampingFactor = .05;
   controls.minDistance = 9; controls.maxDistance = mobile ? 190 : 110;
-  controls.minPolarAngle = .25; controls.maxPolarAngle = 1.25;
+  controls.minPolarAngle = .25; controls.maxPolarAngle = 1.75;
   controls.maxTargetRadius = 36;
   controls.autoRotate = false; controls.autoRotateSpeed = .13;
   controls.enablePan = true;
-  const desktopPosition = new THREE.Vector3(36, 46, 53);
-  const desktopTarget = new THREE.Vector3(-5.2, -.6, 1.8);
-  const mobilePosition = new THREE.Vector3(65, 82, 97);
-  const mobileTarget = new THREE.Vector3(-1, 8, 0);
+  const desktopPosition = new THREE.Vector3(42, 42, 67);
+  const desktopTarget = new THREE.Vector3(-6.2, -4, 1.8);
+  const mobilePosition = new THREE.Vector3(82, 80, 122);
+  const mobileTarget = new THREE.Vector3(-1, 5, 0);
   camera.position.copy(mobile ? mobilePosition : desktopPosition);
   controls.target.copy(mobile ? mobileTarget : desktopTarget);
   controls.update();
@@ -56,6 +58,7 @@ export function createWorld(onVisit) {
   Object.assign(sun.shadow.camera, { left: -31, right: 31, top: 31, bottom: -31, near: 1, far: 100 });
   sun.shadow.normalBias = .08; sun.shadow.bias = -.0003; scene.add(sun);
   const rim = new THREE.DirectionalLight(0x6ba6bc, 2.1); rim.position.set(18, 20, -23); scene.add(rim);
+  const skyBounce = new THREE.DirectionalLight(0x8aafad, 1.15); skyBounce.position.set(-5, -24, 28); scene.add(skyBounce);
   const warm = new THREE.PointLight(0xf77541, 32, 30, 2); warm.position.set(12, 7, -8); scene.add(warm);
 
   let seed = 7628;
@@ -76,6 +79,7 @@ export function createWorld(onVisit) {
     }
     return y;
   }
+  const midRoute=createLane(height);
   const mats = {};
   function mat(key,color,props={}) { return mats[key] || (mats[key]=new THREE.MeshStandardMaterial({color,roughness:.95,flatShading:true,...props})); }
   const stone = mat('stone',0x7c8271), trim = mat('trim',0xbab18a), darkStone = mat('darkStone',0x454442);
@@ -118,29 +122,12 @@ export function createWorld(onVisit) {
     triangle([x,z],[x,z+step],[x+step,z]);triangle([x+step,z],[x,z+step],[x+step,z+step]);
   }
   const tg=new THREE.BufferGeometry();tg.setAttribute('position',new THREE.Float32BufferAttribute(terrainPositions,3));tg.setAttribute('color',new THREE.Float32BufferAttribute(terrainColors,3));tg.computeVertexNormals();
-  mesh(tg,new THREE.MeshStandardMaterial({vertexColors:true,roughness:1,flatShading:true}));
-  const sides=[], sideColors=[];const sideN=92;
-  const rings=[[],[],[],[]];
-  for(let i=0;i<=sideN;i++){
-    const a=i/sideN*Math.PI*2;const rough=Math.sin(a*11)*.5+Math.sin(a*23)*.25;
-    for(let j=0;j<4;j++){
-      const r=[22.48,22.1+rough,19.5+rough*1.4,13.5+rough*1.8][j];
-      const x=Math.cos(a)*r,z=Math.sin(a)*r;
-      rings[j].push([x,j===0?height(x,z)-.02:[0,-1.7,-5.3,-8][j]+Math.sin(a*13)*.7,z]);
-    }
-  }
-  for(let j=0;j<3;j++)for(let i=0;i<sideN;i++){
-    for(const verts of [[rings[j][i],rings[j+1][i],rings[j][i+1]],[rings[j][i+1],rings[j+1][i],rings[j+1][i+1]]]){
-      const c=new THREE.Color(j===0?0x5f6353:0x3e4541).multiplyScalar(range(.64,1.1));
-      for(const v of verts){sides.push(...v);sideColors.push(c.r,c.g,c.b);}
-    }
-  }
-  const sg=new THREE.BufferGeometry();sg.setAttribute('position',new THREE.Float32BufferAttribute(sides,3));sg.setAttribute('color',new THREE.Float32BufferAttribute(sideColors,3));sg.computeVertexNormals();mesh(sg,new THREE.MeshStandardMaterial({vertexColors:true,roughness:1,flatShading:true}));
-  for(let i=0;i<66;i++) { const a=rand()*Math.PI*2,r=range(20,22);const m=mesh(rockGeo,mat('cliff',0x535950));m.position.set(Math.cos(a)*r,-range(1.5,5),Math.sin(a)*r);m.scale.set(range(1,2.8),range(1.8,4),range(1,2.8));m.rotation.set(rand(),rand(),rand()); }
+  const ground=mesh(tg,new THREE.MeshStandardMaterial({vertexColors:true,roughness:1,flatShading:true}));ground.name='sky-island-terrain';
+  scene.add(createIslandRock(tg));
 
   // Terrain-aware water follows the channel and reflects the surrounding world.
   const water=createRiver(riverX,waterUniforms,{height,reduced});water.castShadow=false;scene.add(water);
-  for(let i=0;i<95;i++){const z=range(-21,21);const x=riverX(z)+(rand()>.5?1:-1)*range(2,3.0);randomRock(x,z,range(.15,.55),mat('riverRock',0x8c9380));}
+  for(let i=0;i<95;i++){const z=range(-21,21);const x=riverX(z)+(rand()>.5?1:-1)*range(2,3.0),s=range(.15,.55);if(!midRoute.intersectsCorridor(x,z,s*1.7))randomRock(x,z,s,mat('riverRock',0x8c9380));}
 
   // Three routes through the world, laid by hand from irregular stone slabs.
   const laneCurves=[];
@@ -152,18 +139,18 @@ export function createWorld(onVisit) {
       for(let j=-1;j<=1;j++) { const x=p.x+tan.z*j*width*.32+range(-.1,.1),z=p.z-tan.x*j*width*.32+range(-.1,.1);const m=box(scene,x,height(x,z)+.045,z,width*.3,range(.07,.13),range(.49,.67),mat('paving'+Math.floor(rand()*4),[0x9c9981,0x888974,0xaba58a,0x777e6c][Math.floor(rand()*4)]));m.rotation.y=Math.atan2(tan.x,tan.z)+range(-.13,.13); }
     }return curve;
   }
-  const midRoute=createLane(height);
   const mid={getPoint(t){const p=midRoute.sample(midRoute.min+t*midRoute.length);return new THREE.Vector3(p.x,0,p.z);}};
   laneCurves.push(mid);
   for(let d=midRoute.min;d<=midRoute.max;d+=.48){
     if(Math.abs(d)<BRIDGE.halfLength)continue;
-    for(let lateral=-1.55;lateral<=1.56;lateral+=.62){const p=midRoute.sample(d,lateral);const m=box(scene,p.x,height(p.x,p.z)+.055,p.z,.59,.12,.47,stone);m.rotation.y=Math.atan2(p.dx,p.dz);}
+    for(let lateral=-1.55;lateral<=1.56;lateral+=.62){const p=midRoute.sample(d,lateral),top=midRoute.surface(d),depth=Math.max(.12,top-height(p.x,p.z)+.04);const m=box(scene,p.x,top-depth/2,p.z,.59,depth,.47,stone);m.rotation.y=Math.atan2(p.dx,p.dz);}
   }
   lane([[-12,11],[-16,7],[-17,-2],[-13,-12],[-5,-15],[6,-14],[12,-10]]);
   lane([[-12,11],[-7,16],[3,16],[13,12],[17,5],[17,-3],[12,-10]]);
   const landmarks={bio:new THREE.Vector3(-11.7,0,10.5),experience:new THREE.Vector3(11.6,0,-9.3),research:new THREE.Vector3(13.4,0,9.6),publications:new THREE.Vector3(-11,0,-7)};
   for(const p of Object.values(landmarks))p.y=height(p.x,p.z);
-  const clearOfPaths=(x,z)=>{
+  const clearOfPaths=(x,z,footprint=1.6)=>{
+    if(midRoute.intersectsCorridor(x,z,footprint))return false;
     if(Math.hypot(x,z)<8.1)return false;
     for(const [id,p] of Object.entries(landmarks)){
       const dx=x-p.x,dz=z-p.z,d=Math.hypot(dx,dz);
@@ -225,7 +212,7 @@ export function createWorld(onVisit) {
   instanced(sphereGeo,new THREE.MeshStandardMaterial({color:0xffffff,roughness:1,flatShading:true}),leafTransforms,leafColors);
   // Small plants, wildflowers, mossy boulders and Dire crystal outcrops.
   for(let i=0;i<2200;i++) {
-    const x=range(-22,22),z=range(-22,22);if(radius(x,z)>21.3||Math.abs(x-riverX(z))<2.5)continue;
+    const x=range(-22,22),z=range(-22,22);if(radius(x,z)>21.3||Math.abs(x-riverX(z))<2.5||midRoute.intersectsCorridor(x,z,.15))continue;
     dummy.position.set(x,height(x,z)+.12,z);dummy.rotation.set(range(-.2,.2),rand()*6,range(-.15,.15));dummy.scale.set(range(.045,.11),range(.16,.4),range(.045,.11));dummy.updateMatrix();grassTransforms.push(dummy.matrix.clone());grassColors.push(new THREE.Color(isDire(x,z)?0x8b7e62:rand()>.94?0xc8c791:0x91a668));
   }
   instanced(new THREE.ConeGeometry(1,1,3),new THREE.MeshStandardMaterial({color:0xffffff,roughness:1}),grassTransforms,grassColors);
@@ -263,12 +250,21 @@ export function createWorld(onVisit) {
     cone(g,0,3.4,0,0,.14,.35,gold,4);return g;
   }
   const flames=[];
+  function besideLane(x,z,footprint){
+    if(!midRoute.intersectsCorridor(x,z,footprint))return [x,z];
+    let nearest,nearestDistance=Infinity;
+    for(let d=midRoute.min;d<=midRoute.max;d+=.08){const p=midRoute.sample(d),distance=Math.hypot(x-p.x,z-p.z);if(distance<nearestDistance){nearestDistance=distance;nearest={d,p};}}
+    const {d,p}=nearest,side=Math.sign((x-p.x)*-p.dz+(z-p.z)*p.dx)||1;
+    let lateral=2.5+footprint,position;
+    do{position=midRoute.sample(d,side*lateral);lateral+=.2;}while(midRoute.intersectsCorridor(position.x,position.z,footprint));
+    return [position.x,position.z];
+  }
   function torch(x,z,parent=scene,y=height(x,z),color=0xff973e) {
     const g=new THREE.Group();g.position.set(x,y,z);parent.add(g);cone(g,0,.65,0,.12,.2,1.3,darkStone);cone(g,0,1.37,0,.32,.15,.3,gold);
     const flame=mesh(sphereGeo,orange,g);flame.position.y=1.73;flame.scale.set(.17,.5,.17);flames.push({m:flame,phase:rand()*6});
     point(g,0,1.9,0,color,12,6);return g;
   }
-  [[-4,-1.5],[3,1.4],[-8,5],[5,-6],[-13,7],[10,-6],[-14,-7],[14,7]].forEach(([x,z])=>torch(x,z));
+  [[-4,-1.5],[3,1.4],[-8,5],[5,-6],[-13,7],[10,-6],[-14,-7],[14,7]].forEach(([x,z])=>{const p=besideLane(x,z,.45);const g=torch(...p);g.name='roadside-brazier';g.userData.footprint=.45;});
 
   const architectureEffects={mesh,ring,flag,point,animations,teal,orange};
   buildOxfordBase(groupAt(-11.7,10.5),architectureEffects);
@@ -277,9 +273,24 @@ export function createWorld(onVisit) {
   buildCambridgeBase(groupAt(11.6,-9.3),architectureEffects);
   buildMistral(groupAt(13.4,9.6),architectureEffects);
 
+  // Real open archways connect the courtyards to the lane. The formation narrows
+  // at these exits, then spreads out well before reaching the bridge.
+  for(const side of [0,1]){
+    const d=side?midRoute.max:midRoute.min,p=midRoute.sample(d),gate=new THREE.Group();
+    gate.name=side?'cambridge-lane-exit':'oxford-lane-exit';
+    gate.position.set(p.x,midRoute.surface(d),p.z);gate.rotation.y=Math.atan2(p.dx,p.dz)+(side?Math.PI:0);scene.add(gate);
+    const shape=new THREE.Shape();shape.moveTo(-1.65,-.12);shape.lineTo(1.65,-.12);shape.lineTo(1.65,3.25);shape.lineTo(-1.65,3.25);shape.closePath();
+    const opening=new THREE.Path();opening.moveTo(-1.25,-.1);opening.lineTo(-1.25,1.55);opening.absarc(0,1.55,1.25,Math.PI,0,true);opening.lineTo(1.25,-.1);opening.closePath();shape.holes.push(opening);
+    const arch=mesh(new THREE.ExtrudeGeometry(shape,{depth:.58,bevelEnabled:false,curveSegments:16}),side?trim:stone,gate);arch.position.z=-.29;
+    box(gate,0,3.27,0,3.55,.18,.8,trim);
+    for(const x of [-1.47,1.47]){box(gate,x,.12,0,.48,.25,.8,trim);cone(gate,x,3.68,0,0,.2,.55,trim,4);}
+    const gem=mesh(crystalGeo,side?orange:teal,gate);gem.position.set(0,3.12,.38);gem.scale.set(.13,.16,.06);
+    bakeStatic(gate);
+  }
+
   // Lane defense towers and small outposts add familiar silhouettes to the map.
   function defense(x,z,dire=false) {const g=groupAt(x,z);cone(g,0,.13,0,.95,1.1,.26,stone);cone(g,0,1.0,0,.42,.68,1.65,dire?darkStone:stone,6);cone(g,0,1.85,0,.8,.55,.3,trim,6);const head=mesh(crystalGeo,dire?orange:teal,g);head.position.y=2.35;head.scale.set(.31,.65,.31);for(let i=0;i<3;i++){const a=i*Math.PI*2/3;segment(g,new THREE.Vector3(Math.cos(a)*.55,1.8,Math.sin(a)*.55),new THREE.Vector3(Math.cos(a)*.46,2.85,Math.sin(a)*.46),.12,.02,dire?darkStone:stone);}return g;}
-  [[-6,5,false],[6,-4,true],[-16,1,false],[-6,-14,false],[7,-14,true],[-4,15,false],[15,1,true],[10,14,true]].forEach(v=>defense(...v));
+  [[-6,5,false],[6,-4,true],[-16,1,false],[-6,-14,false],[7,-14,true],[-4,15,false],[15,1,true],[10,14,true]].forEach(([x,z,dire])=>{const p=besideLane(x,z,1.15),g=defense(...p,dire);g.name='roadside-defense-tower';g.userData.footprint=1.15;});
   function hut(x,z) {const g=groupAt(x,z);box(g,0,.62,0,1.6,1.25,1.3,stone);const roof=cone(g,0,1.75,0,0,1.5,1.45,mat('roof',0x76664b),4);roof.rotation.y=Math.PI/4;box(g,0,.55,.66,.42,.9,.04,darkStone);box(g,.5,.8,.67,.26,.3,.05,orange);flag(g,-1.2,0,.1,false,.6);}
   hut(-17,3);hut(-6,-10);
 
@@ -288,12 +299,10 @@ export function createWorld(onVisit) {
   const crackMat=new THREE.LineBasicMaterial({color:0xec6a30,transparent:true,opacity:.5});
   for(let i=0;i<18;i++) {const x=range(7,19),z=range(-16,7);if(radius(x,z)>20)continue;const pts=[];for(let j=0;j<6;j++){const xx=x+j*.4,zz=z+Math.sin(j*1.6+i)*.23;pts.push(new THREE.Vector3(xx,height(xx,zz)+.025,zz));}const crack=new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),crackMat);scene.add(crack);}
 
-  // Waterfall strands carry the river over the edge of the floating island.
-  const fallMat=new THREE.MeshBasicMaterial({color:0x93cabf,transparent:true,opacity:.2,side:THREE.DoubleSide,depthWrite:false});
-  for(const z of [-21.8,21.8])for(let i=0;i<14;i++){const x=riverX(z)+range(-1.0,1.0);const m=mesh(new THREE.PlaneGeometry(range(.045,.17),range(5,10)),fallMat);m.position.set(x,-3.2,z);m.rotation.y=range(-.2,.2);m.castShadow=false;animations.push(t=>{m.material.opacity=.17+Math.sin(t*1.5)*.035;});}
-
   // Soft volumetric wisps, fireflies and drifting embers.
   const texCanvas=document.createElement('canvas');texCanvas.width=texCanvas.height=128;const ctx=texCanvas.getContext('2d');const gradient=ctx.createRadialGradient(64,64,0,64,64,64);gradient.addColorStop(0,'rgba(220,241,227,.65)');gradient.addColorStop(.25,'rgba(195,224,209,.23)');gradient.addColorStop(1,'rgba(160,204,203,0)');ctx.fillStyle=gradient;ctx.fillRect(0,0,128,128);const fogTexture=new THREE.CanvasTexture(texCanvas);
+  scene.add(createCloudSea(animations,waterUniforms));
+  scene.add(createWaterfalls(riverX,waterUniforms,mobile,fogTexture,animations));
   for(let i=0;i<35;i++) {const a=rand()*Math.PI*2,r=range(19,28);const sprite=new THREE.Sprite(new THREE.SpriteMaterial({map:fogTexture,color:0x9ebcba,opacity:range(.05,.16),depthWrite:false,blending:THREE.NormalBlending}));sprite.position.set(Math.cos(a)*r,range(-6,-2),Math.sin(a)*r);sprite.scale.set(range(10,20),range(3,6),1);scene.add(sprite);const bx=sprite.position.x;animations.push(t=>sprite.position.x=bx+Math.sin(t*.1+a)*1.2);}
   const particleCount=230,pp=new Float32Array(particleCount*3),pc=new Float32Array(particleCount*3),particleData=[];
   for(let i=0;i<particleCount;i++){const x=range(-22,22),z=range(-21,21),y=height(x,z)+range(.6,5);particleData.push({x,y,z,p:rand()*6,s:range(.2,.8)});const c=new THREE.Color(isDire(x,z)?0xffa46a:0xcbeaa0);pc.set([c.r,c.g,c.b],i*3);}
@@ -375,7 +384,7 @@ export function createWorld(onVisit) {
     }
     controls.update();
     nightMix=THREE.MathUtils.lerp(nightMix,night?1:0,.025);
-    ambient.intensity=1.5-nightMix*.75;sun.intensity=3.1-nightMix*2.55;rim.intensity=1.8+nightMix*.3;
+    skyBounce.intensity=1.15-nightMix*.62;ambient.intensity=1.5-nightMix*.75;sun.intensity=3.1-nightMix*2.55;rim.intensity=1.8+nightMix*.3;
     sun.color.setHex(night?0xa2b8e5:0xffe1a6);renderer.toneMappingExposure=1.15-nightMix*.06;
     scene.background.lerpColors(duskBackground,nightBackground,nightMix);scene.fog.color.copy(scene.background);
     bloom.strength=.34+nightMix*.2;waterUniforms.time.value=t;waterUniforms.night.value=nightMix;
