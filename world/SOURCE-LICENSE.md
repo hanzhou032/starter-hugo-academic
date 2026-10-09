@@ -19,3 +19,15 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+Additional assets
+
+Battle Numbers uses a digit subset of Barlow Condensed (600 regular and 900
+italic), licensed under the SIL Open Font License. See vendor/BarlowCondensed-OFL.txt.
+
+Music: "Welcome to the Arena" (TI8 main menu), composed by Chance Thomas,
+from the DOTA 2 TI8 soundtrack. Streamed directly from the composer's public
+player at https://chancethomas.com/track/4617170/welcome-to-the-arena.
+The recording is not included in this repository or covered by the MIT license.
+Dota 2 and its soundtrack belong to their respective rights holders.
+Battle sound effects are synthesized by this project's audio.js.

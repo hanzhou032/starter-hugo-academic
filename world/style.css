@@ -107,4 +107,9 @@
 @media(max-width:359px){.game-over-dialog{padding:27px 18px 20px}.game-over-dialog h2{font-size:calc(23px * var(--font-scale))}.game-over-email{font-size:calc(13px * var(--font-scale))}.restart-world{font-size:calc(11px * var(--font-scale))}}
 .panel-sound{position:absolute;top:16px;right:62px;width:35px;height:35px;z-index:2}
 .game-over-sound{position:absolute;top:15px;left:15px}
+@media(max-width:720px){
+  #toast{top:118px;bottom:auto;padding:8px 16px;line-height:18px;max-width:calc(100% - 32px);transform:translate(-50%,-5px)}
+  #toast.visible{transform:translate(-50%,0)}
+  .panel-open:has(#toast:not(:empty)) .content-dialog{top:calc(128px + var(--toast-height,36px))}
+}
 @media(max-width:720px){.content-dialog>.panel-sound{position:sticky;top:0;margin:-10px 37px -30px auto;right:auto;width:40px;height:40px;background:#1c2c2b}.content-dialog>.panel-sound:focus-visible{outline:2px solid var(--gold)}.content-dialog .eyebrow{max-width:calc(100% - 85px)}}

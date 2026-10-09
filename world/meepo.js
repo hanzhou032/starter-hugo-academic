@@ -102,8 +102,8 @@ function createMeepo(side, index) {
 
 export function createMeepoBattle(scene, route, camera, reduced, onEvent = () => {}) {
   // Canvas text does not load web fonts by itself. Warm the local display faces
-  // before the first clash, with a readable serif fallback if a font is missing.
-  Promise.allSettled([document.fonts.load('500 72px Cinzel'), document.fonts.load('700 80px Cinzel')]);
+  // before the first clash, with a compact sans-serif fallback if needed.
+  Promise.allSettled([document.fonts.load('600 78px "Battle Numbers"', '0123456789'), document.fonts.load('italic 900 88px "Battle Numbers"', '0123456789')]);
   const seed = crypto.getRandomValues(new Uint32Array(1))[0];
   const simulation = createBattleSimulation({ spawnDistances: [-route.min, route.max], seed, collapseDuration: reduced ? .25 : 3.6 });
   const actors = new Map(), templates = [createMeepo(0, 0), createMeepo(1, 0)], bursts = [], numbers = [];
@@ -146,7 +146,7 @@ export function createMeepoBattle(scene, route, camera, reduced, onEvent = () =>
           const p = route.sample(distance, lateral), slot = burstIndex++ % bursts.length, burst = bursts[slot], number = numbers[slot];
           burst.g.position.set(p.x, route.surface(distance, lateral) + 1, p.z); burst.g.visible = !reduced; burst.age = 0;
           const critical = event.critical, ctx = number.canvas.getContext('2d'), text = String(event.damage);
-          ctx.clearRect(0, 0, 256, 128); ctx.font = `${critical ? '700 80' : '500 72'}px Cinzel, Georgia, serif`;
+          ctx.clearRect(0, 0, 256, 128); ctx.font = `${critical ? 'italic 900 88' : '600 78'}px "Battle Numbers", "Arial Narrow", sans-serif`;
           ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.lineJoin = 'round';
           ctx.shadowColor = critical ? '#ee611b' : '#071c17'; ctx.shadowBlur = critical ? 14 : 6; ctx.shadowOffsetY = 3;
           ctx.strokeStyle = critical ? '#542318' : '#18382d'; ctx.lineWidth = critical ? 6 : 5; ctx.strokeText(text, 128, 67);

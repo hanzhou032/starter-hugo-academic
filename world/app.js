@@ -17,7 +17,17 @@ const escape = value => String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&
 const external = (url,text) => `<a href="${escape(url)}" target="_blank" rel="noopener noreferrer">${text} ↗</a>`;
 const papersReady=fetch('./assets/papers.json').then(r=>{if(!r.ok)throw Error('Cannot load publications');return r.json();}).then(data=>papers=data).catch(()=>{toast('The archive could not load. Please refresh to try again.');return [];});
 
-function toast(message) {clearTimeout(toastTimer);$('#toast').textContent=message;$('#toast').classList.add('visible');toastTimer=setTimeout(()=>$('#toast').classList.remove('visible'),4200);}
+function toast(message) {
+  clearTimeout(toastTimer);
+  const notice=$('#toast');notice.textContent=message;notice.classList.add('visible');
+  toastTimer=setTimeout(()=>{
+    notice.classList.remove('visible');
+    // Keep mobile panel space until the notification finishes fading out.
+    toastTimer=setTimeout(()=>notice.textContent='',320);
+  },4200);
+}
+// Reserve the notification's actual height above mobile reading panels.
+new ResizeObserver(()=>document.documentElement.style.setProperty('--toast-height',`${$('#toast').offsetHeight}px`)).observe($('#toast'));
 
 const sections = {
   bio: () => `<div class="eyebrow">01 · OXFORD · RADIANT</div><h2>Bio</h2><div class="panel-tag">HAN ZHOU · RESEARCH SCIENTIST</div><div style="margin-top:24px"><img class="profile" src="assets/profile.jpg" alt="Han Zhou"><p>I am a Research Scientist at <strong>Mistral AI</strong>, where I work on <strong>coding agents</strong> and <strong>LLM post-training</strong>.</p><p>Previously, I was a Student Researcher at <strong>Google DeepMind</strong>, working on self-improving agents.</p><p>I hold an MEng in Engineering Science from the <strong>University of Oxford</strong> and am a PhD candidate in NLP at the <strong>University of Cambridge</strong>.</p></div><div class="panel-links">${external('https://scholar.google.com/citations?user=7pXfJVgAAAAJ','Google Scholar')}${external('https://github.com/hanzhou032','GitHub')}${external('https://www.linkedin.com/in/hanzhou032','LinkedIn')}<a href="mailto:hz416@cam.ac.uk">Email ↗</a></div><h3>In service of discovery</h3><p>Reviewer and program committee member for ACL (2023–24), EMNLP (2022–24), ICML (2024–26), NeurIPS (2023–26), and ICLR (2025–26).</p>`,
@@ -91,8 +101,8 @@ function selectDestination(id){
   if(gameEnding)return;
   id=normalizeRoute(id);
   const side=id==='bio'?0:id==='experience'?1:null;
-  if(side!==null&&world?.reinforce(side))toast(`+1 ${side?'Cambridge':'Oxford'} Meepo · ${side?'red':'green'} team. Leaving as soon as the exit is clear.`);
   visit(id);
+  if(side!==null&&world?.reinforce(side))toast(`+1 ${side?'Cambridge':'Oxford'} Meepo`);
 }
 document.querySelectorAll('[data-destination]').forEach(b=>b.addEventListener('click',()=>selectDestination(b.dataset.destination)));
 $('.close-panel').addEventListener('click',()=>closePanel());dialog.addEventListener('cancel',()=>closePanel());
@@ -119,17 +129,21 @@ function updateSoundControls(enabled){
     button.innerHTML=enabled?'<svg viewBox="0 0 24 24"><path d="M11 4L5 9H2v6h3l6 5zM15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/></svg>':'<svg viewBox="0 0 24 24"><path d="M11 4L5 9H2v6h3l6 5zM16 9l6 6m0-6-6 6"/></svg>';
   });
 }
+function updateMusicStatus(state){
+  const status=$('#music-status');
+  status.textContent={playing:'Playing',loading:'Loading…',paused:'Paused',unavailable:'Music could not play. Toggle sound to retry; battle sounds remain available.'}[state];
+}
 async function startAudio(event){
   if(audioStarted||event.target.closest('#sound-toggle,[data-sound-toggle]')||event.metaKey||event.ctrlKey||event.altKey||event.repeat||(event.type==='keydown'&&event.key.toLowerCase()==='m'))return;
   audioStarted=true;
   try{if(sessionStorage.getItem('world-sound-muted')==='1')return;}catch{}
-  try{sound ||= createWorldAudio();updateSoundControls(await sound.setEnabled(true));}catch{updateSoundControls(false);}
+  try{sound ||= createWorldAudio({onMusicState:updateMusicStatus});updateSoundControls(await sound.setEnabled(true));}catch{updateSoundControls(false);}
 }
 document.addEventListener('pointerdown',startAudio,{passive:true});document.addEventListener('keydown',startAudio);
 document.querySelectorAll('#sound-toggle,[data-sound-toggle]').forEach(button=>button.addEventListener('click',async()=>{
   audioStarted=true;
   try{
-    sound ||= createWorldAudio();const enabled=await sound.toggle();updateSoundControls(enabled);
+    sound ||= createWorldAudio({onMusicState:updateMusicStatus});const enabled=await sound.toggle();updateSoundControls(enabled);
     try{sessionStorage.setItem('world-sound-muted',enabled?'0':'1');}catch{}
     toast(enabled?'Music and battle sounds on.':'Music and battle sounds muted.');
   }catch{toast('Audio is unavailable in this browser.');}
@@ -161,7 +175,7 @@ function baseDestroyed(event){
   gameEnding=true;
   closePanel(false);$('#help-dialog').close();
   document.body.classList.remove('cinematic');document.body.classList.add('base-collapsing');
-  clearTimeout(toastTimer);$('#toast').classList.remove('visible');
+  clearTimeout(toastTimer);$('#toast').classList.remove('visible');$('#toast').textContent='';
   $('#intro').classList.add('explored');
   $('#game-outcome').textContent=`${event.side?'Cambridge':'Oxford'} has fallen`;
 }

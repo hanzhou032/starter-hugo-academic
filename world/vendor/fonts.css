@@ -1,3 +1,19 @@
+/* Damage numerals, subset to digits. Barlow Condensed is licensed under OFL-1.1;
+   see BarlowCondensed-OFL.txt in this directory. */
+@font-face {
+  font-family: 'Battle Numbers';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(damage-barlow-semibold.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Battle Numbers';
+  font-style: italic;
+  font-weight: 900;
+  font-display: swap;
+  src: url(damage-barlow-black-italic.ttf) format('truetype');
+}
 @font-face {
   font-family: 'Cinzel';
   font-style: normal;
