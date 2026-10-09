@@ -36,6 +36,7 @@ async function mountPapers() {
 }
 
 async function visit(id,{opening=false}={}) {
+  document.body.classList.remove('watching-battle');
   id=normalizeRoute(id);
   if(!sections[id])return;
   const request=++navigation;
@@ -52,7 +53,7 @@ async function visit(id,{opening=false}={}) {
   document.body.classList.remove('arriving');
   currentDestination=id;
   document.body.dataset.activeDestination=id;
-  $('#base-caption').innerHTML=id==='bio'?'<small>OXFORD · THE RADIANT</small>Radcliffe Camera & Tom Tower':id==='experience'?'<small>CAMBRIDGE · THE DIRE</small>King’s College Chapel & Trinity Gate':'';
+  $('#base-caption').innerHTML=id==='bio'?'<small>OXFORD · THE RADIANT</small>Radcliffe Camera & Tom Tower':id==='experience'?'<small>CAMBRIDGE · THE DIRE</small>King’s College Chapel & Trinity Gate':id==='research'?'<small>RESEARCH · GOOGLE DEEPMIND–INSPIRED</small>The spiral of discovery':'<small>PUBLICATIONS · MISTRAL–INSPIRED</small>The pixel archive';
   const isNew=!visited.has(id);visited.add(id);$('#visited-count').textContent=visited.size;
   if(isNew&&visited.size===4)toast('The realm is yours. All four landmarks discovered.');
   document.querySelectorAll('.progress-pips i').forEach((p,i)=>p.classList.toggle('visited',i<visited.size));
@@ -65,7 +66,7 @@ async function visit(id,{opening=false}={}) {
   if(id==='publications')mountPapers();
 }
 function closePanel(reset=true){
-  navigation++;document.body.classList.remove('arriving');delete document.body.dataset.activeDestination;$('#base-caption').textContent='';
+  navigation++;document.body.classList.remove('arriving','watching-battle');delete document.body.dataset.activeDestination;$('#base-caption').textContent='';
   if(dialog.open)dialog.close();document.body.classList.remove('panel-open');currentDestination=null;
   document.querySelectorAll('.nav-link').forEach(b=>b.classList.toggle('active',b.hasAttribute('data-home')));
   document.querySelectorAll('.destination-dock button').forEach(b=>b.classList.remove('selected'));
@@ -74,10 +75,13 @@ function closePanel(reset=true){
 }
 document.querySelectorAll('[data-destination]').forEach(b=>b.addEventListener('click',()=>visit(b.dataset.destination)));
 $('.close-panel').addEventListener('click',()=>closePanel());dialog.addEventListener('cancel',()=>closePanel());
+function watchBattle(){closePanel(false);$('#intro').classList.add('explored');document.body.classList.add('watching-battle');history.replaceState(null,'','#battle');world?.watchBattle();}
+$('#watch-battle').addEventListener('click',watchBattle);
 function home(){closePanel(false);$('#intro').classList.remove('explored');document.body.dataset.entry='overview';world?.reset();}
 addEventListener('hashchange',()=>{
   const route=normalizeRoute(location.hash.slice(1));
   if(route==='world'){home();return;}
+  if(route==='battle'){watchBattle();return;}
   if(sections[route]||!route)visit(route||'bio',{opening:!route});
 });
 document.querySelectorAll('[data-home],.identity').forEach(b=>b.addEventListener('click',e=>{e.preventDefault();home();}));
@@ -106,6 +110,7 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){document.body.classList.remove('cinematic');if(dialog.open||document.body.classList.contains('arriving'))closePanel();return;}
   if($('#help-dialog').open)return;
   if(['1','2','3','4'].includes(e.key))visit(destinationOrder[+e.key-1]);
+  if(e.key.toLowerCase()==='b')watchBattle();
   if(e.key.toLowerCase()==='r')$('#reset-camera').click();if(e.key.toLowerCase()==='m')$('#sound-toggle').click();
   if(e.key.toLowerCase()==='h'){if(dialog.open)closePanel(false);document.body.classList.toggle('cinematic');}
 });
@@ -116,15 +121,17 @@ async function enterInitialDestination(){
   if(navigation!==0)return;
   const route=normalizeRoute(location.hash.slice(1));
   if(route==='world'){document.body.dataset.entry='overview';return;}
+  if(route==='battle'){watchBattle();document.body.dataset.entry='battle';return;}
   await visit(sections[route]?route:'bio',{opening:true});
   document.body.dataset.entry='complete';
 }
 try {
   world=createWorld(visit);
-  window.realm={visit,reset:()=>world.reset(),get scene(){return world.scene;},get renderer(){return world.renderer;},get camera(){return world.camera;}};
+  window.realm={visit,watchBattle,get battle(){return world.battle;},get lane(){return world.lane;},reset:()=>world.reset(),get scene(){return world.scene;},get renderer(){return world.renderer;},get camera(){return world.camera;}};
   enterInitialDestination();
 }catch(error){
   console.error('World initialization failed',error);
+  $('#watch-battle').disabled=true;
   document.body.classList.add('fallback');$('#loading').classList.add('loaded');
   toast('3D is unavailable in this browser. Bio, experience, research, and publications are available below.');
   const route=normalizeRoute(location.hash.slice(1));

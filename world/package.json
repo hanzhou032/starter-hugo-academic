@@ -6,7 +6,8 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "start": "node server.mjs",
-    "check": "node --check app.js && node --check world.js && node --check architecture.js"
+    "test": "node --test tests/*.test.js",
+    "check": "node --check app.js && node --check world.js && node --check architecture.js && node --check landmarks.js && node --check lane.js && node --check battle-simulation.js && node --check meepo.js"
   },
   "engines": {
     "node": ">=20"

@@ -6,6 +6,9 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { mergeGeometries } from 'three/addons/BufferGeometryUtils.js';
 import { buildOxfordBase, buildCambridgeBase } from './architecture.js';
+import { buildDeepMind, buildMistral, bakeStatic } from './landmarks.js';
+import { BRIDGE, createLane } from './lane.js';
+import { createMeepoBattle } from './meepo.js';
 
 export function createWorld(onVisit) {
   let resolveReady;
@@ -29,7 +32,7 @@ export function createWorld(onVisit) {
   const camera = new THREE.PerspectiveCamera(40, innerWidth / innerHeight, .5, 250);
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true; controls.dampingFactor = .05;
-  controls.minDistance = 20; controls.maxDistance = mobile ? 190 : 110;
+  controls.minDistance = 9; controls.maxDistance = mobile ? 190 : 110;
   controls.minPolarAngle = .25; controls.maxPolarAngle = 1.25;
   controls.maxTargetRadius = 36;
   controls.autoRotate = false; controls.autoRotateSpeed = .13;
@@ -155,25 +158,51 @@ export function createWorld(onVisit) {
       for(let j=-1;j<=1;j++) { const x=p.x+tan.z*j*width*.32+range(-.1,.1),z=p.z-tan.x*j*width*.32+range(-.1,.1);const m=box(scene,x,height(x,z)+.045,z,width*.3,range(.07,.13),range(.49,.67),mat('paving'+Math.floor(rand()*4),[0x9c9981,0x888974,0xaba58a,0x777e6c][Math.floor(rand()*4)]));m.rotation.y=Math.atan2(tan.x,tan.z)+range(-.13,.13); }
     }return curve;
   }
-  const mid=lane([[-12,11],[-8,7],[-4,3],[0,0],[5,-5],[12,-10]],2.1);
+  const midRoute=createLane(height);
+  const mid={getPoint(t){const p=midRoute.sample(midRoute.min+t*midRoute.length);return new THREE.Vector3(p.x,0,p.z);}};
+  laneCurves.push(mid);
+  for(let d=midRoute.min;d<=midRoute.max;d+=.48){
+    if(Math.abs(d)<BRIDGE.halfLength)continue;
+    for(let lateral=-1.55;lateral<=1.56;lateral+=.62){const p=midRoute.sample(d,lateral);const m=box(scene,p.x,height(p.x,p.z)+.055,p.z,.59,.12,.47,stone);m.rotation.y=Math.atan2(p.dx,p.dz);}
+  }
   lane([[-12,11],[-16,7],[-17,-2],[-13,-12],[-5,-15],[6,-14],[12,-10]]);
   lane([[-12,11],[-7,16],[3,16],[13,12],[17,5],[17,-3],[12,-10]]);
   const landmarks={bio:new THREE.Vector3(-11.7,0,10.5),experience:new THREE.Vector3(11.6,0,-9.3),research:new THREE.Vector3(-11,0,-7),publications:new THREE.Vector3(13.4,0,9.6)};
   for(const p of Object.values(landmarks))p.y=height(p.x,p.z);
   const clearOfPaths=(x,z)=>{
+    if(Math.hypot(x,z)<8.1)return false;
     for(const [id,p] of Object.entries(landmarks)){
       const dx=x-p.x,dz=z-p.z,d=Math.hypot(dx,dz);
-      const clearance=id==='bio'?6.2:id==='experience'?6.8:4.4;
-      if(d<clearance||(d<clearance+2.3&&dx+dz>0&&Math.abs(dx-dz)<3.3))return false;
+      const clearance=id==='bio'?6.7:id==='experience'?6.8:4.4;
+      if(d<clearance||(d<clearance+4.5&&dx+dz>0&&Math.abs(dx-dz)<7))return false;
     }
-    for(const c of laneCurves)for(let t=0;t<=1;t+=.025){const p=c.getPoint(t);if(Math.hypot(x-p.x,z-p.z)<1.25)return false;}
+    for(const c of laneCurves)for(let t=0;t<=1;t+=.025){const p=c.getPoint(t);if(Math.hypot(x-p.x,z-p.z)<(c===mid?3.5:1.5))return false;}
     return true;
   };
 
   // Stone bridge, parapets, and four burning braziers.
-  const bridge=new THREE.Group();bridge.rotation.y=-.29;scene.add(bridge);
-  for(let i=0;i<14;i++){const x=-3.5+i*.54;const y=1.16+Math.sin(i/13*Math.PI)*.46;box(bridge,x,y,0,.53,.36,2.15,stone);for(const z of [-1.08,1.08]){box(bridge,x,y+.26,z,.5,.5,.25,trim);}}
-  for(const x of [-3.65,3.65])for(const z of [-1.13,1.13]){cone(bridge,x,1.5,z,.24,.34,1.9,stone);cone(bridge,x,2.55,z,.37,.26,.28,gold);}
+  const bridge=new THREE.Group();bridge.name='midlane-bridge';bridge.rotation.y=BRIDGE.angle;scene.add(bridge);
+  const slabs=30,slabLength=BRIDGE.halfLength*2/slabs;
+  for(let i=0;i<slabs;i++){
+    const x=-BRIDGE.halfLength+(i+.5)*slabLength,y=midRoute.bridgeY(x);
+    const deck=box(bridge,x,y-.16,0,slabLength-.007,.32,BRIDGE.width,stone);
+    deck.rotation.z=Math.atan2(midRoute.bridgeY(x+.01)-midRoute.bridgeY(x-.01),.02);
+    for(const z of [-BRIDGE.width/2,BRIDGE.width/2]){
+      box(bridge,x,y+.18,z,slabLength-.009,.35,.2,trim);
+      if(i%3===0)box(bridge,x,y+.35,z,.25,.68,.29,stone);
+    }
+  }
+  for(const z of [-BRIDGE.width/2+.1,BRIDGE.width/2-.1]){
+    const shape=new THREE.Shape();shape.moveTo(-BRIDGE.halfLength,.55);shape.lineTo(BRIDGE.halfLength,.55);
+    for(let i=30;i>=0;i--){const x=-BRIDGE.halfLength+i*BRIDGE.halfLength*2/30;shape.lineTo(x,midRoute.bridgeY(x)-.18);}shape.closePath();
+    for(const center of [-3.5,0,3.5]){const hole=new THREE.Path();hole.moveTo(center-1.15,.58);hole.lineTo(center-1.15,1.06);hole.absarc(center,1.06,1.15,Math.PI,0,true);hole.lineTo(center+1.15,.58);hole.closePath();shape.holes.push(hole);}
+    const wall=mesh(new THREE.ExtrudeGeometry(shape,{depth:.21,bevelEnabled:false,curveSegments:18}),darkStone,bridge);wall.position.z=z-.1;
+  }
+  for(const x of [-BRIDGE.halfLength,BRIDGE.halfLength])for(const z of [-2.18,2.18]){
+    const y=midRoute.bridgeY(x);cone(bridge,x,y+.55,z,.18,.29,1.1,stone);cone(bridge,x,y+1.13,z,.32,.22,.2,gold);
+  }
+  for(const x of [-.32,.32]){const tile=box(bridge,x,midRoute.bridgeY(x)+.009,0,.29,.025,.29,x<0?teal:orange);tile.rotation.y=Math.PI/4;}
+  bakeStatic(bridge);
 
   // Instanced grove: layered leaf clusters and branching trunks.
   const trunkTransforms=[],leafTransforms=[],leafColors=[],grassTransforms=[],grassColors=[],deadTransforms=[];
@@ -217,13 +246,26 @@ export function createWorld(onVisit) {
     for(let i=0;i<12;i++){const a=i*Math.PI/6;const tile=box(g,Math.cos(a)*r*.91,.19,Math.sin(a)*r*.91,.09,.015,.2,colorMat);tile.rotation.y=-a;}
   }
   const flags=[];
-  function flag(parent,x,y,z,dire=false,scale=1) {
+  const flagMaterials={};
+  function universityFlag(emblem){
+    if(flagMaterials[emblem])return flagMaterials[emblem];
+    const canvas=document.createElement('canvas');canvas.width=512;canvas.height=768;const c=canvas.getContext('2d');
+    c.fillStyle=emblem==='oxford'?'#002147':'#8c242a';c.fillRect(0,0,512,768);
+    c.strokeStyle='#c8ad7d';c.lineWidth=12;c.strokeRect(19,19,474,730);
+    const texture=new THREE.CanvasTexture(canvas);texture.colorSpace=THREE.SRGBColorSpace;texture.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
+    const material=new THREE.MeshStandardMaterial({map:texture,side:THREE.DoubleSide,roughness:.9});
+    const logo=new Image();logo.onload=()=>{const w=386,h=w*logo.height/logo.width;c.drawImage(logo,(512-w)/2,(768-h)/2,w,h);texture.needsUpdate=true;material.userData.crestLoaded=true;};logo.src=`assets/${emblem}.png`;
+    return flagMaterials[emblem]=material;
+  }
+  function flag(parent,x,y,z,dire=false,scale=1,emblem=null) {
     const g=new THREE.Group();g.position.set(x,y,z);g.scale.setScalar(scale);parent.add(g);
-    cone(g,0,1.65,0,.04,.055,3.3,gold,6);segment(g,new THREE.Vector3(-.02,3.14,0),new THREE.Vector3(1.07,3.14,0),.035,.035,gold);
-    const fg=new THREE.PlaneGeometry(1.03,1.5,8,10);fg.translate(.53,2.4,0);
-    const fm=new THREE.MeshStandardMaterial({color:dire?0x8d392b:0x427569,side:THREE.DoubleSide,roughness:1});
-    const f=mesh(fg,fm,g);flags.push({mesh:f,base:fg.attributes.position.array.slice(),phase:rand()*6});
-    const symbol=mesh(crystalGeo,trim,g);symbol.scale.set(.13,.27,.025);symbol.position.set(.52,2.5,.045);
+    const w=emblem?1.35:1.03,h=emblem?1.85:1.5;
+    if(emblem){g.name=`${emblem}-flag`;g.rotation.y=.58;}
+    cone(g,0,1.65,0,.04,.055,3.3,gold,6);segment(g,new THREE.Vector3(-.02,3.14,0),new THREE.Vector3(w+.04,3.14,0),.035,.035,gold);
+    const fg=new THREE.PlaneGeometry(w,h,12,16);fg.translate(w/2+.015,3.14-h/2,0);
+    const fm=emblem?universityFlag(emblem):new THREE.MeshStandardMaterial({color:dire?0x8d392b:0x427569,side:THREE.DoubleSide,roughness:1});
+    const f=mesh(fg,fm,g);f.name=emblem?`${emblem}-flag-cloth`:'realm-flag-cloth';flags.push({mesh:f,base:fg.attributes.position.array.slice(),phase:rand()*6});
+    if(!emblem){const symbol=mesh(crystalGeo,trim,g);symbol.scale.set(.13,.27,.025);symbol.position.set(.52,2.5,.045);}
     cone(g,0,3.4,0,0,.14,.35,gold,4);return g;
   }
   const flames=[];
@@ -237,29 +279,9 @@ export function createWorld(onVisit) {
   const architectureEffects={mesh,ring,flag,point,animations,teal,orange};
   buildOxfordBase(groupAt(-11.7,10.5),architectureEffects);
 
-  // The Sanctuary: a circular stone pavilion with an orbiting armillary.
-  const sanctuary=groupAt(-11,-7);cone(sanctuary,0,.18,0,2.65,2.85,.36,stone,14);cone(sanctuary,0,.44,0,2.2,2.45,.24,trim,14);runeCircle(sanctuary,2.35,teal);
-  for(let i=0;i<6;i++) {
-    const a=i*Math.PI/3,x=Math.cos(a)*1.87,z=Math.sin(a)*1.87;
-    cone(sanctuary,x,1.6,z,.16,.22,2.4,stone,8);cone(sanctuary,x,.62,z,.33,.36,.23,trim,8);cone(sanctuary,x,2.8,z,.35,.25,.22,trim,8);
-    const next=(i+1)*Math.PI/3;segment(sanctuary,new THREE.Vector3(x,2.98,z),new THREE.Vector3(Math.cos(next)*1.87,2.98,Math.sin(next)*1.87),.13,.13,trim);
-  }
-  cone(sanctuary,0,.85,0,.65,.9,.6,stone);cone(sanctuary,0,1.35,0,.5,.65,.45,gold);
-  const armillary=new THREE.Group();armillary.position.y=2.5;sanctuary.add(armillary);
-  for(let i=0;i<3;i++){const r=mesh(new THREE.TorusGeometry(1.05+i*.09,.035,6,64),gold,armillary);r.rotation.set(i*.9,.5+i,0);}
-  const orb=mesh(sphereGeo,teal,armillary);orb.scale.setScalar(.43);animations.push(t=>{armillary.rotation.y=t*.17;armillary.rotation.z=Math.sin(t*.24)*.13;});point(sanctuary,0,2.5,0,0x76e9c7,35,9);flag(sanctuary,-2.8,0,.9);
-
+  buildDeepMind(groupAt(-11,-7),architectureEffects);
   buildCambridgeBase(groupAt(11.6,-9.3),architectureEffects);
-
-  // The Watchtower: masonry, copper roofs, crenellations, and a blue beacon.
-  const tower=groupAt(13.4,9.6);cone(tower,0,.15,0,2.4,2.7,.3,darkStone,8);cone(tower,0,.4,0,1.9,2.1,.25,trim,8);
-  for(let level=0;level<8;level++)for(let j=0;j<8;j++) {
-    const a=j*Math.PI/4+(level%2)*Math.PI/8;const b=box(tower,Math.cos(a)*.92,.7+level*.43,Math.sin(a)*.92,.79,.4,.38,level%3?stone:darkStone);b.rotation.y=-a+Math.PI/2;
-  }
-  cone(tower,0,4.03,0,1.47,1.1,.45,trim,8);cone(tower,0,4.35,0,1.47,1.47,.2,darkStone,8);
-  for(let i=0;i<8;i++){const a=i*Math.PI/4;const b=box(tower,Math.cos(a)*1.28,4.75,Math.sin(a)*1.28,.55,.66,.36,stone);b.rotation.y=-a+Math.PI/2;}
-  const beacon=mesh(crystalGeo,blue,tower);beacon.position.y=5;beacon.scale.set(.34,.75,.34);point(tower,0,5,0,0x8bcfff,35,10);animations.push(t=>beacon.rotation.y=t*.28);flag(tower,1.5,.4,1.8,true,.85);
-  for(let i=0;i<7;i++)box(tower,0,.12+i*.12,2.7-i*.17,1.4,.18,.45,stone);
+  buildMistral(groupAt(13.4,9.6),architectureEffects);
 
   // Lane defense towers and small outposts add familiar silhouettes to the map.
   function defense(x,z,dire=false) {const g=groupAt(x,z);cone(g,0,.13,0,.95,1.1,.26,stone);cone(g,0,1.0,0,.42,.68,1.65,dire?darkStone:stone,6);cone(g,0,1.85,0,.8,.55,.3,trim,6);const head=mesh(crystalGeo,dire?orange:teal,g);head.position.y=2.35;head.scale.set(.31,.65,.31);for(let i=0;i<3;i++){const a=i*Math.PI*2/3;segment(g,new THREE.Vector3(Math.cos(a)*.55,1.8,Math.sin(a)*.55),new THREE.Vector3(Math.cos(a)*.46,2.85,Math.sin(a)*.46),.12,.02,dire?darkStone:stone);}return g;}
@@ -285,15 +307,7 @@ export function createWorld(onVisit) {
   const pm=new THREE.PointsMaterial({size:.16,map:fogTexture,vertexColors:true,transparent:true,opacity:.9,blending:THREE.AdditiveBlending,depthWrite:false});scene.add(new THREE.Points(pg,pm));
   animations.push(t=>{particleData.forEach((p,i)=>{pp[i*3]=p.x+Math.sin(t*p.s*.4+p.p)*.7;pp[i*3+1]=p.y+Math.sin(t*p.s+p.p)*.45;pp[i*3+2]=p.z+Math.cos(t*p.s*.3+p.p)*.6;});pg.attributes.position.needsUpdate=true;});
 
-  // Tiny patrols travel the middle lane in opposing directions.
-  const patrols=[];
-  for(let side=0;side<2;side++)for(let i=0;i<3;i++) {
-    const g=new THREE.Group();scene.add(g);const armor=side?mat('redArmor',0x905445):mat('greenArmor',0x759e7b);
-    cone(g,0,.43,0,.19,.24,.48,armor,6);const head=mesh(sphereGeo,trim,g);head.scale.setScalar(.13);head.position.y=.82;
-    const shield=box(g,-.25,.5,.07,.08,.37,.3,gold);segment(g,new THREE.Vector3(.22,.25,0),new THREE.Vector3(.22,1.12,0),.025,.025,stone);
-    const tip=mesh(crystalGeo,side?orange:teal,g);tip.position.set(.22,1.18,0);tip.scale.set(.065,.16,.05);patrols.push({g,side,offset:i*.035});
-  }
-  animations.push(t=>patrols.forEach(({g,side,offset})=>{let u=((t*.009+offset+(side?.5:0))%1+1)%1;if(side)u=1-u;const p=mid.getPoint(u),dir=mid.getTangent(u);g.position.set(p.x,Math.abs(p.x-riverX(p.z))<2?1.55:height(p.x,p.z)+.08,p.z);g.rotation.y=Math.atan2(dir.x,dir.z)+(side?Math.PI:0);g.position.y+=Math.sin(t*6+offset*20)*.04;}));
+  const meepoBattle=createMeepoBattle(scene,midRoute,camera,reduced);
   // A hawk circles above the river.
   const birds=[];for(let i=0;i<3;i++){const bird=new THREE.Group();const bm=mat('bird',0x292e27);const left=box(bird,-.3,0,0,.6,.035,.15,bm),right=box(bird,.3,0,0,.6,.035,.15,bm);scene.add(bird);birds.push({bird,left,right,p:i*2.1});}
   animations.push(t=>birds.forEach(({bird,left,right,p})=>{const a=t*.13+p;bird.position.set(Math.cos(a)*8,11+Math.sin(a)*1.2,Math.sin(a)*8);bird.rotation.y=-a;left.rotation.z=Math.sin(t*3+p)*.2;right.rotation.z=-Math.sin(t*3+p)*.2;}));
@@ -320,7 +334,7 @@ export function createWorld(onVisit) {
   Object.entries(landmarks).forEach(([id,pos],i)=>{
     const button=document.createElement('button');button.className='landmark';button.dataset.destination=id;button.setAttribute('aria-label',`Explore ${markerNames[id].toLowerCase()}`);
     button.innerHTML=`<span class="marker-gem"><b>${i+1}</b></span><span class="marker-name">${markerNames[id]}</span><span class="marker-line"></span>`;
-    labels.append(button);button.addEventListener('click',()=>onVisit(id));markers.push({id,button,pos:pos.clone().add(new THREE.Vector3(0,id==='bio'?9.1:id==='experience'?8.8:id==='publications'?5.8:4.7,0))});
+    labels.append(button);button.addEventListener('click',()=>onVisit(id));markers.push({id,button,pos:pos.clone().add(new THREE.Vector3(0,id==='bio'?9.1:id==='experience'?8.8:id==='publications'?5.6:6.8,0))});
   });
   const duskBackground=new THREE.Color(0x1b3034),nightBackground=new THREE.Color(0x0a121e);
   let flight=null,night=false,nightMix=0,userInteracting=false,frame=0,last=performance.now(),elapsed=0,paused=false;
@@ -347,6 +361,10 @@ export function createWorld(onVisit) {
     const offset=sm?new THREE.Vector3(24,26,38):new THREE.Vector3(base?19:18,base?18:21,base?25:24);
     return fly(p.clone().add(offset),target,opening?2800:1500,opening);
   }
+  function watchBattle(){
+    const sm=innerWidth<=720;
+    return fly(new THREE.Vector3(sm?12:9,sm?17:13.2,sm?17:13.5),new THREE.Vector3(0,2.3,0),1500);
+  }
   let wasMobile=mobile;
   function resize(){const nowMobile=innerWidth<=720;camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);composer.setSize(innerWidth,innerHeight);if(nowMobile!==wasMobile){controls.maxDistance=nowMobile?190:110;wasMobile=nowMobile;reset(document.querySelector('#intro').classList.contains('explored'));}}
   addEventListener('resize',resize);
@@ -368,6 +386,7 @@ export function createWorld(onVisit) {
     scene.background.lerpColors(duskBackground,nightBackground,nightMix);scene.fog.color.copy(scene.background);
     bloom.strength=.34+nightMix*.2;waterUniforms.time.value=t;waterUniforms.night.value=nightMix;
     for(const fn of animations)fn(t);
+    meepoBattle.update(reduced?0:delta);
     for(const {m,phase} of flames){m.scale.y=.44+Math.sin(t*7+phase)*.07;m.scale.x=.17+Math.sin(t*9+phase)*.025;}
     flags.forEach(({mesh:m,base,phase})=>{const arr=m.geometry.attributes.position.array;for(let i=0;i<arr.length;i+=3){const u=base[i];arr[i+2]=Math.sin(u*4+t*2.4+phase)*.12*u+Math.sin(base[i+1]*3+t*1.8)*.055*u;}m.geometry.attributes.position.needsUpdate=true;});
     for(const marker of markers){temp.copy(marker.pos).project(camera);const x=(temp.x*.5+.5)*innerWidth,y=(-temp.y*.5+.5)*innerHeight;const visible=temp.z<1&&x>15&&x<innerWidth-15&&y>120&&y<innerHeight-155;marker.button.style.left=x+'px';marker.button.style.top=y+'px';marker.button.style.opacity=visible?'1':'0';marker.button.style.visibility=visible?'visible':'hidden';}
@@ -376,5 +395,5 @@ export function createWorld(onVisit) {
     if(frame%60===0){document.body.dataset.drawCalls=renderer.info.render.calls;}
   }
   requestAnimationFrame(tick);
-  return {focus,reset,toggleNight(){night=!night;return night;},get ready(){return ready;},get renderer(){return renderer;},get camera(){return camera;},get scene(){return scene;}};
+  return {focus,reset,watchBattle,get battle(){return meepoBattle.snapshot();},get lane(){return midRoute;},toggleNight(){night=!night;return night;},get ready(){return ready;},get renderer(){return renderer;},get camera(){return camera;},get scene(){return scene;}};
 }

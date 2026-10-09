@@ -20,6 +20,14 @@ Original fan artwork inspired by Dota 2; not affiliated with Valve. Dota 2 belon
 
 ## World destinations and entrance
 
-Bio is at the Oxford-inspired Radiant base, featuring the Radcliffe Camera, Tom Tower, and a college arcade. Experience is at the Cambridge-inspired Dire base, featuring King's College Chapel and a Trinity-inspired gatehouse. Research and Publications occupy the other two landmarks. Keys 1–4 follow that order.
+Bio is at the Oxford-inspired Radiant base, featuring the Radcliffe Camera, Tom Tower, and a college arcade. Experience is at the Cambridge-inspired Dire base, featuring King's College Chapel and a Trinity-inspired gatehouse. Research is a blue spiral monument inspired by the Google DeepMind logo. Publications is an extruded pixel monument inspired by Mistral’s orange-to-red M. Oxford and Cambridge fly their own university crests on animated cloth flags. Keys 1–4 follow that order.
 
 Opening the homepage animates the camera from the island overview into Bio, then displays the biography. Explicit `#world`, `#bio`, `#experience`, `#research`, and `#publications` links remain available; old `#about` and `#journey` links still work. Navigation can interrupt the entrance, and reduced-motion settings skip the camera animation. The architectural meshes are generated in `architecture.js` and batched by material.
+
+## Meepo battle
+
+Three original procedural Meepo models per faction follow the paved middle lane, meet on the bridge, strike with shovels, lose health, fall, and return in fresh waves. Select **Watch the battle**, press **B**, or open `#battle` for the close camera. The default homepage still flies into Bio.
+
+`lane.js` supplies one arc-length centerline and bridge elevation for both scenery and movement. `battle-simulation.js` advances combat at a fixed 60 Hz independently of frame rate; `meepo.js` builds and animates the blue hoods, ears, leather packs and shovels. Reduced-motion mode presents a static battle tableau. The simulation stops advancing while the page is hidden.
+
+Run `npm test` for path containment, elevation continuity, combat lifecycle and refresh-rate checks; run `npm run check` for syntax verification. `landmarks.js` builds the two logo-inspired monuments. University crest images in `assets` are copied from the original academic site's assets; the original checkout is untouched.

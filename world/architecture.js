@@ -220,8 +220,8 @@ export function buildOxfordBase(parent, effects) {
   for (let i = 0; i < 5; i++) box(stonework, .25, .06 + i * .09, 5.03 - i * .3, 1.8, .16, .42, materials.dressings);
   bake(stonework);
   effects.ring(parent, 0, .49, 0, 4.65, effects.teal, .028);
-  effects.flag(parent, -3.8, .5, .25, false, .85);
-  effects.flag(parent, 3.8, .5, .25, false, .85);
+  effects.flag(parent, -3.8, .5, .25, false, 1, 'oxford');
+  effects.flag(parent, 3.8, .5, .25, false, 1, 'oxford');
   const heart = effects.mesh(new THREE.OctahedronGeometry(.22), effects.teal, parent);
   heart.position.set(.25, 8.0, .45);
   effects.animations.push(t => { heart.rotation.y = t * .4; heart.position.y = 8.0 + Math.sin(t) * .1; });
@@ -311,8 +311,8 @@ export function buildCambridgeBase(parent, effects) {
   for (let i = 0; i < 7; i++) box(stonework, -2.8 + i * .49, .51, 3.88, .44, .04, .69, materials.paving);
   bake(stonework);
   effects.ring(parent, 0, .5, 0, 5.16, effects.orange, .026);
-  effects.flag(parent, -4.2, .5, 2.4, true, .85);
-  effects.flag(parent, 3.25, .5, 2.8, true, .85);
+  effects.flag(parent, -4.2, .5, 2.4, true, 1, 'cambridge');
+  effects.flag(parent, 3.25, .5, 2.8, true, 1, 'cambridge');
   effects.point(parent, 2.65, 3.0, .2, 0xffa359, 8, 9);
   effects.point(parent, .55, 2.0, 4.2, 0xff9b4e, 5, 8);
   const ember = effects.mesh(new THREE.OctahedronGeometry(.27), effects.orange, parent);
