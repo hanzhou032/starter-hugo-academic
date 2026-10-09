@@ -6,7 +6,7 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { mergeGeometries } from 'three/addons/BufferGeometryUtils.js';
 import { buildOxfordBase, buildCambridgeBase } from './architecture.js';
-import { buildDeepMind, buildMistral, bakeStatic } from './landmarks.js';
+import { buildGoogle, buildMistral, bakeStatic } from './landmarks.js';
 import { BRIDGE, createLane } from './lane.js';
 import { createMeepoBattle } from './meepo.js';
 
@@ -167,7 +167,7 @@ export function createWorld(onVisit) {
   }
   lane([[-12,11],[-16,7],[-17,-2],[-13,-12],[-5,-15],[6,-14],[12,-10]]);
   lane([[-12,11],[-7,16],[3,16],[13,12],[17,5],[17,-3],[12,-10]]);
-  const landmarks={bio:new THREE.Vector3(-11.7,0,10.5),experience:new THREE.Vector3(11.6,0,-9.3),research:new THREE.Vector3(-11,0,-7),publications:new THREE.Vector3(13.4,0,9.6)};
+  const landmarks={bio:new THREE.Vector3(-11.7,0,10.5),experience:new THREE.Vector3(11.6,0,-9.3),research:new THREE.Vector3(13.4,0,9.6),publications:new THREE.Vector3(-11,0,-7)};
   for(const p of Object.values(landmarks))p.y=height(p.x,p.z);
   const clearOfPaths=(x,z)=>{
     if(Math.hypot(x,z)<8.1)return false;
@@ -279,7 +279,7 @@ export function createWorld(onVisit) {
   const architectureEffects={mesh,ring,flag,point,animations,teal,orange};
   buildOxfordBase(groupAt(-11.7,10.5),architectureEffects);
 
-  buildDeepMind(groupAt(-11,-7),architectureEffects);
+  buildGoogle(groupAt(-11,-7),architectureEffects);
   buildCambridgeBase(groupAt(11.6,-9.3),architectureEffects);
   buildMistral(groupAt(13.4,9.6),architectureEffects);
 
@@ -334,7 +334,7 @@ export function createWorld(onVisit) {
   Object.entries(landmarks).forEach(([id,pos],i)=>{
     const button=document.createElement('button');button.className='landmark';button.dataset.destination=id;button.setAttribute('aria-label',`Explore ${markerNames[id].toLowerCase()}`);
     button.innerHTML=`<span class="marker-gem"><b>${i+1}</b></span><span class="marker-name">${markerNames[id]}</span><span class="marker-line"></span>`;
-    labels.append(button);button.addEventListener('click',()=>onVisit(id));markers.push({id,button,pos:pos.clone().add(new THREE.Vector3(0,id==='bio'?9.1:id==='experience'?8.8:id==='publications'?5.6:6.8,0))});
+    labels.append(button);button.addEventListener('click',()=>onVisit(id));markers.push({id,button,pos:pos.clone().add(new THREE.Vector3(0,id==='bio'?9.1:id==='experience'?8.8:id==='publications'?6.3:5.6,0))});
   });
   const duskBackground=new THREE.Color(0x1b3034),nightBackground=new THREE.Color(0x0a121e);
   let flight=null,night=false,nightMix=0,userInteracting=false,frame=0,last=performance.now(),elapsed=0,paused=false;
