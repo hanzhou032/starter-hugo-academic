@@ -5,8 +5,11 @@ import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { mergeGeometries } from 'three/addons/BufferGeometryUtils.js';
+import { buildOxfordBase, buildCambridgeBase } from './architecture.js';
 
 export function createWorld(onVisit) {
+  let resolveReady;
+  const ready = new Promise(resolve => { resolveReady = resolve; });
   const mobile = matchMedia('(max-width: 720px)').matches;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const scene = new THREE.Scene();
@@ -28,7 +31,7 @@ export function createWorld(onVisit) {
   controls.enableDamping = true; controls.dampingFactor = .05;
   controls.minDistance = 20; controls.maxDistance = mobile ? 190 : 110;
   controls.minPolarAngle = .25; controls.maxPolarAngle = 1.25;
-  controls.maxTargetRadius = 16;
+  controls.maxTargetRadius = 36;
   controls.autoRotate = false; controls.autoRotateSpeed = .13;
   controls.enablePan = true;
   const desktopPosition = new THREE.Vector3(36, 46, 53);
@@ -49,7 +52,7 @@ export function createWorld(onVisit) {
   Object.assign(sun.shadow.camera, { left: -31, right: 31, top: 31, bottom: -31, near: 1, far: 100 });
   sun.shadow.normalBias = .08; sun.shadow.bias = -.0003; scene.add(sun);
   const rim = new THREE.DirectionalLight(0x6ba6bc, 2.1); rim.position.set(18, 20, -23); scene.add(rim);
-  const warm = new THREE.PointLight(0xf77541, 85, 30, 2); warm.position.set(12, 7, -8); scene.add(warm);
+  const warm = new THREE.PointLight(0xf77541, 32, 30, 2); warm.position.set(12, 7, -8); scene.add(warm);
 
   let seed = 7628;
   const rand = () => { seed = (1664525 * seed + 1013904223) >>> 0; return seed / 4294967296; };
@@ -62,7 +65,12 @@ export function createWorld(onVisit) {
     const coast = THREE.MathUtils.smoothstep(22.7-radius(x,z),0,3.5);
     const bank = THREE.MathUtils.smoothstep(Math.abs(x-riverX(z)),1.0,3.4);
     const hill = isDire(x,z) ? .75 + Math.max(0,-z)*.028 : .2;
-    return .32 + (1.5 + hill + noise(x,z)*1.25)*bank*coast;
+    let y = .32 + (1.5 + hill + noise(x,z)*1.25)*bank*coast;
+    for (const [bx,bz,level,r] of [[-11.7,10.5,2.15,5.1],[11.6,-9.3,2.9,5.7]]) {
+      const blend=1-THREE.MathUtils.smoothstep(Math.hypot(x-bx,z-bz),r-.4,r+1.2);
+      y=THREE.MathUtils.lerp(y,level,blend);
+    }
+    return y;
   }
   const mats = {};
   function mat(key,color,props={}) { return mats[key] || (mats[key]=new THREE.MeshStandardMaterial({color,roughness:.95,flatShading:true,...props})); }
@@ -150,12 +158,13 @@ export function createWorld(onVisit) {
   const mid=lane([[-12,11],[-8,7],[-4,3],[0,0],[5,-5],[12,-10]],2.1);
   lane([[-12,11],[-16,7],[-17,-2],[-13,-12],[-5,-15],[6,-14],[12,-10]]);
   lane([[-12,11],[-7,16],[3,16],[13,12],[17,5],[17,-3],[12,-10]]);
-  const landmarks={about:new THREE.Vector3(-11.7,0,10.5),research:new THREE.Vector3(-11,0,-7),publications:new THREE.Vector3(11.6,0,-9.3),journey:new THREE.Vector3(13.4,0,9.6)};
+  const landmarks={bio:new THREE.Vector3(-11.7,0,10.5),experience:new THREE.Vector3(11.6,0,-9.3),research:new THREE.Vector3(-11,0,-7),publications:new THREE.Vector3(13.4,0,9.6)};
   for(const p of Object.values(landmarks))p.y=height(p.x,p.z);
   const clearOfPaths=(x,z)=>{
-    for(const p of Object.values(landmarks)){
+    for(const [id,p] of Object.entries(landmarks)){
       const dx=x-p.x,dz=z-p.z,d=Math.hypot(dx,dz);
-      if(d<4.4||(d<7.2&&dx+dz>0&&Math.abs(dx-dz)<3.3))return false;
+      const clearance=id==='bio'?6.2:id==='experience'?6.8:4.4;
+      if(d<clearance||(d<clearance+2.3&&dx+dz>0&&Math.abs(dx-dz)<3.3))return false;
     }
     for(const c of laneCurves)for(let t=0;t<=1;t+=.025){const p=c.getPoint(t);if(Math.hypot(x-p.x,z-p.z)<1.25)return false;}
     return true;
@@ -225,18 +234,8 @@ export function createWorld(onVisit) {
   }
   [[-4,-1.5],[3,1.4],[-8,5],[5,-6],[-13,7],[10,-6],[-14,-7],[14,7]].forEach(([x,z])=>torch(x,z));
 
-  // The Radiant Ancient: a luminous heart embraced by an old, branching tree.
-  const ancient=groupAt(-11.7,10.5);
-  cone(ancient,0,.13,0,2.5,2.7,.28,stone,12);cone(ancient,0,.38,0,1.9,2.1,.35,trim,10);runeCircle(ancient,2.35,teal);
-  const roots=[];
-  for(let i=0;i<7;i++) {
-    const a=i/7*Math.PI*2;const p1=new THREE.Vector3(Math.cos(a)*2,.4,Math.sin(a)*2),p2=new THREE.Vector3(Math.cos(a)*.9,1.3,Math.sin(a)*.9),p3=new THREE.Vector3(Math.cos(a+.3)*.8,3.8,Math.sin(a+.3)*.8),p4=new THREE.Vector3(Math.cos(a)*1.8,5.1+rand(),Math.sin(a)*1.8);
-    segment(ancient,p1,p2,.3,.23,bark);segment(ancient,p2,p3,.23,.14,bark);segment(ancient,p3,p4,.14,.03,bark);
-    for(let j=0;j<2;j++){const m=mesh(sphereGeo,mat('ancientLeaves',0x88b784),ancient);m.position.copy(p4).add(new THREE.Vector3(range(-.8,.8),range(-.2,.7),range(-.8,.8)));m.scale.set(1.0,.7,.9);}
-  }
-  const heart=mesh(crystalGeo,teal,ancient);heart.position.y=2.9;heart.scale.set(.63,1.5,.63);animations.push(t=>{heart.rotation.y=t*.3;heart.position.y=2.85+Math.sin(t)*.13;});
-  point(ancient,0,3,0,0x8effc7,45,11);flag(ancient,-2.2,0,1.8,false,.9);
-  for(let i=0;i<5;i++){const m=mesh(crystalGeo,teal,ancient);const a=i*1.25;m.scale.set(.1,.25,.1);animations.push(t=>m.position.set(Math.cos(a+t*.13)*1.6,2.3+Math.sin(t+a)*.3,Math.sin(a+t*.13)*1.6));}
+  const architectureEffects={mesh,ring,flag,point,animations,teal,orange};
+  buildOxfordBase(groupAt(-11.7,10.5),architectureEffects);
 
   // The Sanctuary: a circular stone pavilion with an orbiting armillary.
   const sanctuary=groupAt(-11,-7);cone(sanctuary,0,.18,0,2.65,2.85,.36,stone,14);cone(sanctuary,0,.44,0,2.2,2.45,.24,trim,14);runeCircle(sanctuary,2.35,teal);
@@ -250,12 +249,7 @@ export function createWorld(onVisit) {
   for(let i=0;i<3;i++){const r=mesh(new THREE.TorusGeometry(1.05+i*.09,.035,6,64),gold,armillary);r.rotation.set(i*.9,.5+i,0);}
   const orb=mesh(sphereGeo,teal,armillary);orb.scale.setScalar(.43);animations.push(t=>{armillary.rotation.y=t*.17;armillary.rotation.z=Math.sin(t*.24)*.13;});point(sanctuary,0,2.5,0,0x76e9c7,35,9);flag(sanctuary,-2.8,0,.9);
 
-  // The Dire Archive: a monumental dark stone shrine with a levitating ember core.
-  const archive=groupAt(11.6,-9.3);cone(archive,0,.16,0,3,3.2,.32,darkStone,8);cone(archive,0,.47,0,2.5,2.7,.3,stone,8);runeCircle(archive,2.7,orange);
-  for(let i=0;i<5;i++) {const a=i/5*Math.PI*2;const x=Math.cos(a)*1.9,z=Math.sin(a)*1.9;const monolith=cone(archive,x,2.25,z,.28,.7,3.8,darkStone,5);monolith.rotation.z=-Math.cos(a)*.13;monolith.rotation.x=Math.sin(a)*.13;const cap=mesh(crystalGeo,gold,archive);cap.position.set(x,4.24,z);cap.scale.set(.25,.6,.25);}
-  const direCore=mesh(crystalGeo,orange,archive);direCore.position.y=3.0;direCore.scale.set(.73,1.4,.73);animations.push(t=>{direCore.rotation.y=-t*.22;direCore.position.y=3.0+Math.sin(t*.8)*.16;});point(archive,0,3.2,0,0xff853c,60,13);
-  for(let i=0;i<3;i++){const page=box(archive,-.7+i*.7,.9,.1,.55,.12,.7,trim);page.rotation.set(.2,i*.4,.15);}
-  flag(archive,2.9,0,1.2,true);flag(archive,-2.9,0,-.8,true);
+  buildCambridgeBase(groupAt(11.6,-9.3),architectureEffects);
 
   // The Watchtower: masonry, copper roofs, crenellations, and a blue beacon.
   const tower=groupAt(13.4,9.6);cone(tower,0,.15,0,2.4,2.7,.3,darkStone,8);cone(tower,0,.4,0,1.9,2.1,.25,trim,8);
@@ -271,7 +265,7 @@ export function createWorld(onVisit) {
   function defense(x,z,dire=false) {const g=groupAt(x,z);cone(g,0,.13,0,.95,1.1,.26,stone);cone(g,0,1.0,0,.42,.68,1.65,dire?darkStone:stone,6);cone(g,0,1.85,0,.8,.55,.3,trim,6);const head=mesh(crystalGeo,dire?orange:teal,g);head.position.y=2.35;head.scale.set(.31,.65,.31);for(let i=0;i<3;i++){const a=i*Math.PI*2/3;segment(g,new THREE.Vector3(Math.cos(a)*.55,1.8,Math.sin(a)*.55),new THREE.Vector3(Math.cos(a)*.46,2.85,Math.sin(a)*.46),.12,.02,dire?darkStone:stone);}return g;}
   [[-6,5,false],[6,-4,true],[-16,1,false],[-6,-14,false],[7,-14,true],[-4,15,false],[15,1,true],[10,14,true]].forEach(v=>defense(...v));
   function hut(x,z) {const g=groupAt(x,z);box(g,0,.62,0,1.6,1.25,1.3,stone);const roof=cone(g,0,1.75,0,0,1.5,1.45,mat('roof',0x76664b),4);roof.rotation.y=Math.PI/4;box(g,0,.55,.66,.42,.9,.04,darkStone);box(g,.5,.8,.67,.26,.3,.05,orange);flag(g,-1.2,0,.1,false,.6);}
-  hut(-16,10);hut(-6,-10);
+  hut(-17,3);hut(-6,-10);
 
   // Scattered ruins and glowing cracks in the Dire terrain.
   for(let i=0;i<9;i++){const x=range(7,19),z=range(-13,5);if(radius(x,z)>20||!clearOfPaths(x,z))continue;const g=groupAt(x,z);cone(g,0,.5,0,.3,.4,range(.6,1.6),stone,7);const b=box(g,.4,.3,.3,.9,.5,.6,darkStone);b.rotation.set(.3,rand(),.4);}
@@ -322,28 +316,36 @@ export function createWorld(onVisit) {
 
   // HTML landmark labels retain keyboard and screen-reader access.
   const labels=document.querySelector('#world-labels');
-  const markerNames={about:'THE ANCIENT',research:'THE SANCTUARY',publications:'THE ARCHIVE',journey:'THE WATCHTOWER'};
+  const markerNames={bio:'Bio',experience:'Experience',research:'Research',publications:'Publications'};
   Object.entries(landmarks).forEach(([id,pos],i)=>{
     const button=document.createElement('button');button.className='landmark';button.dataset.destination=id;button.setAttribute('aria-label',`Explore ${markerNames[id].toLowerCase()}`);
     button.innerHTML=`<span class="marker-gem"><b>${i+1}</b></span><span class="marker-name">${markerNames[id]}</span><span class="marker-line"></span>`;
-    labels.append(button);button.addEventListener('click',()=>onVisit(id));markers.push({id,button,pos:pos.clone().add(new THREE.Vector3(0,id==='about'?6.1:id==='journey'?5.8:4.7,0))});
+    labels.append(button);button.addEventListener('click',()=>onVisit(id));markers.push({id,button,pos:pos.clone().add(new THREE.Vector3(0,id==='bio'?9.1:id==='experience'?8.8:id==='publications'?5.8:4.7,0))});
   });
   const duskBackground=new THREE.Color(0x1b3034),nightBackground=new THREE.Color(0x0a121e);
   let flight=null,night=false,nightMix=0,userInteracting=false,frame=0,last=performance.now(),elapsed=0,paused=false;
-  controls.addEventListener('start',()=>{flight=null;userInteracting=true;});
+  function cancelFlight(){if(flight){flight.resolve(false);flight=null;}}
+  controls.addEventListener('start',()=>{cancelFlight();userInteracting=true;});
   controls.addEventListener('end',()=>{userInteracting=false;});
   const temp=new THREE.Vector3();
-  function fly(position,target,duration=1600){flight={from:camera.position.clone(),to:position.clone(),fromTarget:controls.target.clone(),toTarget:target.clone(),start:performance.now(),duration:reduced?1:duration};}
+  function fly(position,target,duration=1600,opening=false){
+    cancelFlight();
+    return new Promise(resolve=>{
+      flight={from:camera.position.clone(),to:position.clone(),fromTarget:controls.target.clone(),toTarget:target.clone(),start:performance.now(),duration:reduced?1:duration,opening,resolve};
+    });
+  }
   function reset(explore=false) {
     const sm=innerWidth<=720;
     const target=(sm?mobileTarget:desktopTarget).clone();if(explore)target.set(0,1,0);
     const position=(sm?mobilePosition:desktopPosition).clone();if(explore)position.multiplyScalar(sm?.84:.9);
-    fly(position,target);
+    return fly(position,target);
   }
-  function focus(id) {
-    const p=landmarks[id];if(!p)return;
-    const target=p.clone().add(new THREE.Vector3(3.8,0,-2.1));
-    const offset=new THREE.Vector3(18,21,24);fly(p.clone().add(offset),target,1500);
+  function focus(id,{opening=false}={}) {
+    const p=landmarks[id];if(!p)return Promise.resolve(false);
+    const sm=innerWidth<=720,base=id==='bio'||id==='experience';
+    const target=p.clone().add(sm?new THREE.Vector3(0,-3,0):new THREE.Vector3(5.3,base?1.8:0,-3.5));
+    const offset=sm?new THREE.Vector3(24,26,38):new THREE.Vector3(base?19:18,base?18:21,base?25:24);
+    return fly(p.clone().add(offset),target,opening?2800:1500,opening);
   }
   let wasMobile=mobile;
   function resize(){const nowMobile=innerWidth<=720;camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);composer.setSize(innerWidth,innerHeight);if(nowMobile!==wasMobile){controls.maxDistance=nowMobile?190:110;wasMobile=nowMobile;reset(document.querySelector('#intro').classList.contains('explored'));}}
@@ -353,7 +355,12 @@ export function createWorld(onVisit) {
     requestAnimationFrame(tick);if(paused)return;
     const delta=THREE.MathUtils.clamp((now-last)/1000,0,.05);last=now;elapsed+=delta;frame++;
     const t=reduced?10:elapsed;
-    if(flight){let u=Math.min(1,(now-flight.start)/flight.duration);u=u*u*(3-2*u);camera.position.lerpVectors(flight.from,flight.to,u);controls.target.lerpVectors(flight.fromTarget,flight.toTarget,u);if(u>=1)flight=null;}
+    if(flight){
+      let u=THREE.MathUtils.clamp((now-flight.start)/flight.duration,0,1);u=u*u*u*(u*(u*6-15)+10);
+      camera.position.lerpVectors(flight.from,flight.to,u);controls.target.lerpVectors(flight.fromTarget,flight.toTarget,u);
+      if(flight.opening&&!reduced){camera.position.x+=Math.sin(Math.PI*u)*4;camera.position.y+=Math.sin(Math.PI*u)*3;}
+      if(u>=1){const resolve=flight.resolve;flight=null;resolve(true);}
+    }
     controls.update();
     nightMix=THREE.MathUtils.lerp(nightMix,night?1:0,.025);
     ambient.intensity=1.5-nightMix*.75;sun.intensity=3.1-nightMix*2.55;rim.intensity=1.8+nightMix*.3;
@@ -365,9 +372,9 @@ export function createWorld(onVisit) {
     flags.forEach(({mesh:m,base,phase})=>{const arr=m.geometry.attributes.position.array;for(let i=0;i<arr.length;i+=3){const u=base[i];arr[i+2]=Math.sin(u*4+t*2.4+phase)*.12*u+Math.sin(base[i+1]*3+t*1.8)*.055*u;}m.geometry.attributes.position.needsUpdate=true;});
     for(const marker of markers){temp.copy(marker.pos).project(camera);const x=(temp.x*.5+.5)*innerWidth,y=(-temp.y*.5+.5)*innerHeight;const visible=temp.z<1&&x>15&&x<innerWidth-15&&y>120&&y<innerHeight-155;marker.button.style.left=x+'px';marker.button.style.top=y+'px';marker.button.style.opacity=visible?'1':'0';marker.button.style.visibility=visible?'visible':'hidden';}
     renderer.info.reset();composer.render();
-    if(frame===3){document.querySelector('#loading').classList.add('loaded');document.body.dataset.worldReady='true';}
+    if(frame===3){document.querySelector('#loading').classList.add('loaded');document.body.dataset.worldReady='true';resolveReady();}
     if(frame%60===0){document.body.dataset.drawCalls=renderer.info.render.calls;}
   }
   requestAnimationFrame(tick);
-  return {focus,reset,toggleNight(){night=!night;return night;},get ready(){return true;},get renderer(){return renderer;},get camera(){return camera;},get scene(){return scene;}};
+  return {focus,reset,toggleNight(){night=!night;return night;},get ready(){return ready;},get renderer(){return renderer;},get camera(){return camera;},get scene(){return scene;}};
 }

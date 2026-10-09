@@ -9,6 +9,7 @@ const files = [
   'style.css',
   'app.js',
   'world.js',
+  'architecture.js',
   'assets',
   'vendor',
   'SOURCE-LICENSE.md',
