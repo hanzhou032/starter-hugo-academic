@@ -31,6 +31,9 @@
 /* Keep the larger type clear of adjacent controls and allow narrow content to wrap. */
 .paper-links,.paper-meta{flex-wrap:wrap}
 .content-dialog{overflow-wrap:break-word}
+@media(max-width:359px){
+  .identity small{max-width:115px;line-height:1.5}
+}
 @media(min-width:721px){
   .intro{top:21%}
   body:has(#intro:not(.explored)) .exploration{left:50%;transform:translateX(-50%);padding:8px 12px;background:#102022bf;border:1px solid var(--edge);backdrop-filter:blur(8px)}
