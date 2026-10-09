@@ -9,19 +9,19 @@ export function createBattleSimulation({ spawnDistances = [13, 13], seed = 0x5ee
   const home = side => side ? spawnDistances[1] : -spawnDistances[0];
   const direction = side => side ? -1 : 1;
   const living = u => u.health > 0 && u.state !== 'dead';
-  const nearExit = d => Math.min(d - home(0), home(1) - d) < 4.8;
   const step = 1 / 60;
 
-  function spawn(side, offset = 0) {
-    const lane = laneCounters[side]++ % 3, damage = [[18, 30], [16, 28], [20, 32]][lane];
-    const u = { id: nextId++, side, lane, lateral: (lane - 1) * 1.15, distance: home(side) + direction(side) * offset,
+  function spawn(side, lane = laneCounters[side]) {
+    laneCounters[side] = (lane + 1) % 3;
+    const damage = [[18, 30], [16, 28], [20, 32]][lane];
+    const u = { id: nextId++, side, lane, lateral: (lane - 1) * 1.15, distance: home(side),
       state: 'marching', health: 100, maxHealth: 100, damageMin: damage[0], damageMax: damage[1], lastDamage: null, lastCritical: false,
       age: 0, attackAge: 0, attackDuration: 1.35 + lane * .12, struck: false, target: null, targetBase: null, hitAge: 10 };
     units.push(u); events.push({ type: 'spawn', id: u.id, side, time }); return u;
   }
   function spawnWave(initial = false) {
     for (const side of [0, 1]) {
-      if (initial) for (const offset of [0, 1.6, 3.2]) spawn(side, offset);
+      if (initial) for (const lane of [0, 1, 2]) spawn(side, lane);
       else pending[side] += 3;
     }
     events.push({ type: 'wave', wave, time });
@@ -34,11 +34,15 @@ export function createBattleSimulation({ spawnDistances = [13, 13], seed = 0x5ee
   }
   function releaseReinforcements() {
     for (const side of [0, 1]) {
-      // Every click is kept. Crowded exits queue recruits instead of overlapping
-      // models or creating an unbounded number of expensive rendered actors.
-      if (!pending[side] || units.filter(u => living(u) && u.side === side).length >= 18) continue;
-      if (units.some(u => living(u) && Math.abs(u.distance - home(side)) < COMBAT.spacing + .05)) continue;
-      spawn(side); pending[side]--;
+      // Each column has its own clear exit. Groups can leave together, while
+      // later recruits queue behind their column without overlapping allies.
+      let count = units.filter(u => living(u) && u.side === side).length;
+      while (pending[side] && count < 18) {
+        const lane = [0, 1, 2].map(i => (laneCounters[side] + i) % 3).find(column =>
+          !units.some(u => living(u) && u.lane === column && Math.abs(u.distance - home(side)) < COMBAT.spacing + .05));
+        if (lane === undefined) break;
+        spawn(side, lane); pending[side]--; count++;
+      }
     }
   }
   function setAction(u, state, target = null, targetBase = null) {
@@ -68,7 +72,7 @@ export function createBattleSimulation({ spawnDistances = [13, 13], seed = 0x5ee
     const alive = units.filter(living), movement = [];
     for (const u of alive) {
       const sign = direction(u.side), baseGoal = home(1 - u.side) - sign * COMBAT.reach;
-      const enemies = alive.filter(v => v.side !== u.side && (v.lane === u.lane || nearExit(u.distance) || nearExit(v.distance)) && (v.distance - u.distance) * sign >= -.001)
+      const enemies = alive.filter(v => v.side !== u.side && v.lane === u.lane && (v.distance - u.distance) * sign >= -.001)
         .sort((a, b) => Math.abs(a.distance - u.distance) - Math.abs(b.distance - u.distance));
       const enemy = enemies[0], gap = enemy ? (enemy.distance - u.distance) * sign : Infinity;
       if (gap <= COMBAT.reach + .001) {
@@ -77,7 +81,7 @@ export function createBattleSimulation({ spawnDistances = [13, 13], seed = 0x5ee
       let travel = Math.min(COMBAT.speed * step, Math.max(0, (baseGoal - u.distance) * sign), Math.max(0, (gap - COMBAT.reach) * .5));
       for (const friend of alive) {
         if (friend === u || friend.side !== u.side) continue;
-        if (friend.lane !== u.lane && !nearExit(u.distance + sign * 1.55) && !nearExit(friend.distance)) continue;
+        if (friend.lane !== u.lane) continue;
         const ahead = (friend.distance - u.distance) * sign;
         if (ahead > .001 || (Math.abs(ahead) <= .001 && friend.id < u.id)) travel = Math.min(travel, Math.max(0, ahead - COMBAT.spacing));
       }

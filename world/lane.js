@@ -53,10 +53,8 @@ export function createLane(height = () => 0) {
     const ramp = 1 - smooth(Math.max(0, Math.min(1, fromExit / 2.4)));
     return roadHeight(p) + ramp * .36;
   }
-  function formationLateral(distance, lateral) {
-    const fromExit = Math.min(distance - min, max - distance);
-    return lateral * (.23 + .77 * smooth(Math.max(0, Math.min(1, (fromExit - 1.3) / 3.4))));
-  }
+  // Keep the same three abreast formation from the courtyard to the far base.
+  function formationLateral(distance, lateral) { return lateral; }
   function intersectsCorridor(x, z, radius = 0) {
     // Reserve the whole formation plus ears, swinging shovels and a small margin.
     const clearance = 2.15 + radius;

@@ -1,5 +1,3 @@
-import { createMenuMedley } from './menu-medley.js';
-
 export function createWorldAudio({ onMusicState = () => {} } = {}) {
   const AudioContext = window.AudioContext || window.webkitAudioContext;
   if (!AudioContext) throw new Error('Web Audio unavailable');
@@ -9,8 +7,29 @@ export function createWorldAudio({ onMusicState = () => {} } = {}) {
   effects.gain.value = .65; master.gain.value = 0;
   effects.connect(master); master.connect(limiter); limiter.connect(context.destination);
 
-  const music = createMenuMedley({ onState: onMusicState });
-  let enabled = false, disposed = false, lastImpact = -10, simultaneousHits = 0;
+  // An original local recording; created only by the explicit sound control.
+  const music = new Audio(new URL('./assets/music/islands-of-discovery.mp3', import.meta.url).href);
+  music.id = 'world-soundtrack'; music.preload = 'none'; music.loop = true;
+  document.body.append(music);
+  const musicSource = context.createMediaElementSource(music), musicGain = context.createGain();
+  musicGain.gain.value = .7; musicSource.connect(musicGain); musicGain.connect(master);
+  let enabled = false, disposed = false, lastImpact = -10, simultaneousHits = 0, playbackVersion = 0;
+  async function playMusic() {
+    const request = ++playbackVersion;
+    onMusicState('loading');
+    try {
+      // Call play within the activation gesture, before awaiting anything.
+      if (music.error) music.load();
+      await music.play();
+      if (!disposed && enabled && !document.hidden && request === playbackVersion) onMusicState('playing');
+    } catch (error) {
+      if (!disposed && enabled && request === playbackVersion && error.name !== 'AbortError') onMusicState('unavailable');
+    }
+  }
+  function pauseMusic() {
+    playbackVersion++; music.pause();
+    if (!disposed) onMusicState('paused');
+  }
 
   let noiseSeed = 47329;
   const random = () => { noiseSeed = (1664525 * noiseSeed + 1013904223) >>> 0; return noiseSeed / 4294967296; };
@@ -34,11 +53,11 @@ export function createWorldAudio({ onMusicState = () => {} } = {}) {
     if (disposed) return false;
     enabled = value;
     if (enabled && !document.hidden) {
-      music.setEnabled(true);
+      playMusic();
       await context.resume();
       if (disposed) return false;
     } else {
-      music.setEnabled(false);
+      pauseMusic();
     }
     master.gain.cancelScheduledValues(context.currentTime);
     master.gain.setTargetAtTime(enabled ? .68 : 0, context.currentTime, enabled ? .12 : .045);
@@ -63,16 +82,17 @@ export function createWorldAudio({ onMusicState = () => {} } = {}) {
   function visibility() {
     if (disposed) return;
     if (document.hidden) {
-      music.setEnabled(false); context.suspend().catch(() => {});
+      pauseMusic(); context.suspend().catch(() => {});
     } else if (enabled) {
-      music.setEnabled(true); context.resume().catch(() => {});
+      playMusic(); context.resume().catch(() => {});
     }
   }
   document.addEventListener('visibilitychange', visibility);
   function dispose() {
     if (disposed) return; disposed = true; enabled = false;
     document.removeEventListener('visibilitychange', visibility);
-    music.dispose();
+    pauseMusic(); music.removeAttribute('src'); music.load(); music.remove();
+    musicSource.disconnect(); musicGain.disconnect();
     context.close().catch(() => {});
   }
   return { setEnabled, toggle: () => setEnabled(!enabled), hit, dispose, get enabled() { return enabled; } };

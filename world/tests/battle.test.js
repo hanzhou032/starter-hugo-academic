@@ -86,7 +86,7 @@ test('rapid reinforcements are retained and leave a clear, bounded exit queue', 
       const living = state.units.filter(u => u.side === side && u.health > 0);
       assert.ok(living.length <= 18);
       const home = side ? route.max : route.min;
-      assert.ok(living.filter(u => Math.abs(u.distance - home) < 1.49).length <= 1, 'one recruit at a time clears the exit');
+      for (const lane of [0, 1, 2]) assert.ok(living.filter(u => u.lane === lane && Math.abs(u.distance - home) < 1.49).length <= 1, 'each column clears its own exit');
       for (const u of living) for (const v of living) if (u.id < v.id && u.lane === v.lane) {
         assert.ok(Math.abs(u.distance - v.distance) >= 1.499, 'allies do not overlap in the same lane');
       }
@@ -162,4 +162,24 @@ test('simulation is independent of display refresh rate', () => {
   for (let i = 0; i < 144 * 90; i++) c.advance(1 / 144);
   assert.deepEqual(a.snapshot(), b.snapshot()); assert.deepEqual(a.snapshot(), c.snapshot());
   const events = a.drainEvents(); assert.deepEqual(events, b.drainEvents()); assert.deepEqual(events, c.drainEvents());
+});
+
+// Exercise the approaches where the old single-file rule blocked two attackers.
+test('three columns remain parallel through both approaches and strike each base together', () => {
+  for (let d = route.min; d <= route.max; d += .1) {
+    for (const lateral of [-1.15, 0, 1.15]) assert.equal(route.formationLateral(d, lateral), lateral);
+  }
+  for (const side of [0, 1]) {
+    const sim = makeBattle({ seed: 17, baseHealth: 100000 });
+    sim.units.splice(0, sim.units.length, ...sim.units.filter(u => u.side === side));
+    assert.equal(new Set(sim.units.map(u => u.distance)).size, 1, 'the initial group starts abreast');
+    const goal = side ? route.min + COMBAT.reach : route.max - COMBAT.reach;
+    for (const u of sim.units) u.distance = goal - (side ? -1 : 1) * 2;
+    const events = [];
+    for (let i = 0; i < 180; i++) { sim.advance(1 / 60); events.push(...sim.drainEvents()); }
+    const hits = events.filter(e => e.type === 'base-hit');
+    assert.equal(new Set(hits.map(e => e.attacker)).size, 3, 'all three columns can siege');
+    assert.equal(new Set(hits.slice(0, 3).map(e => e.time)).size, 1, 'first impacts land together');
+    assert.equal(new Set(sim.units.map(u => u.distance)).size, 1, 'attackers hold an even front');
+  }
 });

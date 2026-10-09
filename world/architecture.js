@@ -232,7 +232,8 @@ export function buildOxfordBase(parent, effects) {
 }
 
 function trinityGate(parent) {
-  const gate = group(parent, -3.65, .47, 2.1);
+  // Set the gatehouse behind the broad courtyard entrance, clear of its flank.
+  const gate = group(parent, -3.65, .47, .65);
   box(gate, 0, 1.25, 0, 1.68, 2.5, 1.4, materials.brick);
   arch(gate, 0, .01, .72, 1.13, 1.7, materials.dressings, 0, true);
   arch(gate, 0, .02, .765, .84, 1.47, materials.shadow, 0, true);
@@ -312,7 +313,7 @@ export function buildCambridgeBase(parent, effects) {
   for (let i = 0; i < 7; i++) box(stonework, -2.8 + i * .49, .51, 3.88, .44, .04, .69, materials.paving);
   bake(stonework);
   effects.ring(parent, 0, .5, 0, 5.16, effects.orange, .026);
-  effects.flag(parent, -4.2, .5, 2.4, true, 1, 'cambridge');
+  effects.flag(parent, -4.95, .5, -.7, true, 1, 'cambridge').rotation.y += Math.PI;
   effects.flag(parent, 3.25, .5, 2.8, true, 1, 'cambridge');
   effects.point(parent, 2.65, 3.0, .2, 0xffa359, 8, 9);
   effects.point(parent, .55, 2.0, 4.2, 0xff9b4e, 5, 8);

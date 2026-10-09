@@ -142,7 +142,9 @@ export function createMeepoBattle(scene, route, camera, reduced, onEvent = () =>
         const target = byId.get(event.target);
         const distance = event.type === 'base-hit' ? event.target ? route.max : route.min : target?.distance;
         if (distance !== undefined) {
-          const lateral = event.type === 'hit' ? route.formationLateral(distance, target.lateral) : 0;
+          // Keep concurrent siege impacts in their own column so all damage is legible.
+          const column = event.type === 'hit' ? target.lateral : byId.get(event.attacker)?.lateral ?? 0;
+          const lateral = route.formationLateral(distance, column);
           const p = route.sample(distance, lateral), slot = burstIndex++ % bursts.length, burst = bursts[slot], number = numbers[slot];
           burst.g.position.set(p.x, route.surface(distance, lateral) + 1, p.z); burst.g.visible = !reduced; burst.age = 0;
           const critical = event.critical, ctx = number.canvas.getContext('2d'), text = String(event.damage);

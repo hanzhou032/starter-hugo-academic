@@ -120,8 +120,7 @@ $('#explore').addEventListener('click',()=>{if(gameEnding)return;navigation++;$(
 $('#reset-camera').addEventListener('click',()=>{if(gameEnding)return;closePanel(false);world?.reset($('#intro').classList.contains('explored'));toast('Returned to the realm overview.');});
 $('#time-toggle').addEventListener('click',()=>{if(!world)return;const night=world.toggleNight();$('#realm-time').textContent=night?'NIGHT IN THE REALM':'DUSK IN THE REALM';$('#time-toggle').setAttribute('aria-label',night?'Switch to dusk':'Switch to night');$('#time-toggle').innerHTML=night?'<svg viewBox="0 0 24 24"><path d="M20 14a8 8 0 0 1-10-10 8 8 0 1 0 10 10z"/></svg>':'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l2 2m10 10 2 2M5 19l2-2M17 7l2-2"/></svg>';});
 
-// Start after a real interaction; a manual mute survives a world restart.
-let audioStarted=false;
+// Every page visit starts silent. Only the sound button or M enables audio.
 function updateSoundControls(enabled){
   document.querySelectorAll('#sound-toggle,[data-sound-toggle]').forEach(button=>{
     button.setAttribute('aria-pressed',String(enabled));
@@ -129,27 +128,21 @@ function updateSoundControls(enabled){
     button.innerHTML=enabled?'<svg viewBox="0 0 24 24"><path d="M11 4L5 9H2v6h3l6 5zM15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/></svg>':'<svg viewBox="0 0 24 24"><path d="M11 4L5 9H2v6h3l6 5zM16 9l6 6m0-6-6 6"/></svg>';
   });
 }
-function updateMusicStatus(state,{track,partial}={}){
+function updateMusicStatus(state){
   const status=$('#music-status');
-  status.textContent={playing:`Playing ${track}${partial?' · One source is unavailable.':''}`,loading:'Loading the menu medley…',paused:'Paused',unavailable:'Music could not play. Toggle sound to retry; battle sounds remain available.'}[state];
+  status.textContent={playing:'Playing Islands of Discovery',loading:'Loading Islands of Discovery…',paused:'Muted',unavailable:'Music could not play. Toggle sound to retry; battle sounds remain available.'}[state];
 }
-async function startAudio(event){
-  if(audioStarted||event.target.closest('#sound-toggle,[data-sound-toggle]')||event.metaKey||event.ctrlKey||event.altKey||event.repeat||(event.type==='keydown'&&event.key.toLowerCase()==='m'))return;
-  audioStarted=true;
-  try{if(sessionStorage.getItem('world-sound-muted')==='1')return;}catch{}
-  try{sound ||= createWorldAudio({onMusicState:updateMusicStatus});updateSoundControls(await sound.setEnabled(true));}catch{updateSoundControls(false);}
-}
-document.addEventListener('pointerdown',startAudio,{passive:true});document.addEventListener('keydown',startAudio);
 document.querySelectorAll('#sound-toggle,[data-sound-toggle]').forEach(button=>button.addEventListener('click',async()=>{
-  audioStarted=true;
   try{
     sound ||= createWorldAudio({onMusicState:updateMusicStatus});const enabled=await sound.toggle();updateSoundControls(enabled);
-    try{sessionStorage.setItem('world-sound-muted',enabled?'0':'1');}catch{}
     toast(enabled?'Music and battle sounds on.':'Music and battle sounds muted.');
   }catch{toast('Audio is unavailable in this browser.');}
 }));
 updateSoundControls(false);
-addEventListener('pagehide',event=>{if(!event.persisted)sound?.dispose();});
+addEventListener('pagehide',event=>{
+  if(event.persisted){sound?.setEnabled(false);updateSoundControls(false);}
+  else sound?.dispose();
+});
 function combatSound(event,state){
   const side=state.units.find(u=>u.id===event.attacker)?.side||0;
   sound?.hit({critical:event.critical,base:event.type==='base-hit',pan:side ? .22 : -.22,quiet:dialog.open});

@@ -22,10 +22,15 @@ SOFTWARE.
 
 Additional assets
 
-Music medley: TI8 "Welcome to the Arena" (Chance Thomas), streamed from
-https://chancethomas.com/track/4617170/welcome-to-the-arena, and TI10 Main Menu
-(Gareth Coker), played using the YouTube IFrame API from the Am-My upload at
-https://www.youtube.com/watch?v=VaJNlXkyUt8. Eight-second equal-power crossfades
-are performed during playback. Neither recording is included in this repository
-or covered by the MIT license. Dota 2 and its soundtrack belong to their
-respective rights holders. Battle effects are synthesized by audio.js.
+Original soundtrack: "Islands of Discovery", composed and rendered for this
+portfolio. The melody, harmony, note sequence and arrangement are new; the
+recording does not contain or stream TI8, TI10, or other Dota 2 music. The broad
+fantasy-orchestral direction was inspired by the user's TI8/TI10 references.
+Instrument recordings are from VSCO 2 Community Edition, by Versilian Studios /
+Sam Gossner and contributors (including Ivy Audio), released under CC0-1.0:
+https://github.com/sgossner/VSCO-2-CE
+https://vis.versilstudios.com/vsco-community.html
+The CC0 license is retained at assets/music/VSCO-CC0-LICENSE.txt. The pinned
+sample manifest, original score and reproducible renderer are in scripts/music/.
+This is a sampled orchestral performance, not a live orchestra. No game-music
+recordings or player APIs are included. Battle effects are synthesized by audio.js.

@@ -144,7 +144,7 @@ export function createWorld(onVisit, { onBaseDestroyed = () => {}, onGameOver = 
   laneCurves.push(mid);
   for(let d=midRoute.min;d<=midRoute.max;d+=.48){
     if(Math.abs(d)<BRIDGE.halfLength)continue;
-    for(let lateral=-1.55;lateral<=1.56;lateral+=.62){const p=midRoute.sample(d,lateral),top=midRoute.surface(d),depth=Math.max(.12,top-height(p.x,p.z)+.04);const m=box(scene,p.x,top-depth/2,p.z,.59,depth,.47,stone);m.rotation.y=Math.atan2(p.dx,p.dz);}
+    for(let lateral=-1.86;lateral<=1.87;lateral+=.62){const p=midRoute.sample(d,lateral),top=midRoute.surface(d),depth=Math.max(.12,top-height(p.x,p.z)+.04);const m=box(scene,p.x,top-depth/2,p.z,.59,depth,.47,stone);m.rotation.y=Math.atan2(p.dx,p.dz);}
   }
   lane([[-12,11],[-16,7],[-17,-2],[-13,-12],[-5,-15],[6,-14],[12,-10]]);
   lane([[-12,11],[-7,16],[3,16],[13,12],[17,5],[17,-3],[12,-10]]);
@@ -274,19 +274,20 @@ export function createWorld(onVisit, { onBaseDestroyed = () => {}, onGameOver = 
   const cambridgeBase=buildCambridgeBase(groupAt(11.6,-9.3),architectureEffects);
   buildMistral(groupAt(13.4,9.6),architectureEffects);
 
-  // Real open archways connect the courtyards to the lane. The formation narrows
-  // at these exits, then spreads out well before reaching the bridge.
+  // Broad courtyard arches keep all three combat columns open to the bases.
   const baseExits=[];
   for(const side of [0,1]){
     const d=side?midRoute.max:midRoute.min,p=midRoute.sample(d),gate=new THREE.Group();
     gate.name=side?'cambridge-lane-exit':'oxford-lane-exit';
     gate.position.set(p.x,midRoute.surface(d),p.z);gate.rotation.y=Math.atan2(p.dx,p.dz)+(side?Math.PI:0);scene.add(gate);
-    const shape=new THREE.Shape();shape.moveTo(-1.65,-.12);shape.lineTo(1.65,-.12);shape.lineTo(1.65,3.25);shape.lineTo(-1.65,3.25);shape.closePath();
-    const opening=new THREE.Path();opening.moveTo(-1.25,-.1);opening.lineTo(-1.25,1.55);opening.absarc(0,1.55,1.25,Math.PI,0,true);opening.lineTo(1.25,-.1);opening.closePath();shape.holes.push(opening);
+    // Set the arch back slightly to clear the outer column on Oxford's bend.
+    if(!side){gate.position.x-=p.dx*.14;gate.position.z-=p.dz*.14;}
+    const shape=new THREE.Shape();shape.moveTo(-2.65,-.12);shape.lineTo(2.65,-.12);shape.lineTo(2.65,4.06);shape.lineTo(-2.65,4.06);shape.closePath();
+    const opening=new THREE.Path();opening.moveTo(-2.25,-.1);opening.lineTo(-2.25,1.5);opening.absarc(0,1.5,2.25,Math.PI,0,true);opening.lineTo(2.25,-.1);opening.closePath();shape.holes.push(opening);
     const arch=mesh(new THREE.ExtrudeGeometry(shape,{depth:.58,bevelEnabled:false,curveSegments:16}),side?trim:stone,gate);arch.position.z=-.29;
-    box(gate,0,3.27,0,3.55,.18,.8,trim);
-    for(const x of [-1.47,1.47]){box(gate,x,.12,0,.48,.25,.8,trim);cone(gate,x,3.68,0,0,.2,.55,trim,4);}
-    const gem=mesh(crystalGeo,side?orange:teal,gate);gem.position.set(0,3.12,.38);gem.scale.set(.13,.16,.06);
+    box(gate,0,4.08,0,5.55,.18,.8,trim);
+    for(const x of [-2.47,2.47]){box(gate,x,.12,0,.48,.25,.8,trim);cone(gate,x,4.49,0,0,.2,.55,trim,4);}
+    const gem=mesh(crystalGeo,side?orange:teal,gate);gem.position.set(0,3.94,.38);gem.scale.set(.13,.16,.06);
     bakeStatic(gate);
     baseExits.push(gate);
   }
