@@ -40,9 +40,11 @@ On phones, Bio, Experience, Research, and Publications open in a large reading p
 
 ## Background, river, and teams
 
-The original atmospheric teal background and distance fog are restored, with the original dusk/night color transition. The island renders in a single scene pass before bloom and color output.
+The original atmospheric teal background and distance fog are restored, with the original dusk/night color transition. The main scene renders before bloom and color output; the river also captures a small, cached reflection of the scene.
 
-`water.js` builds a subdivided river surface with flowing normals, depth-dependent color, Fresnel reflection, sunlight highlights, shoreline and support foam, and the bridge's shadow. These are procedural approximations rather than costly scene-reflection passes, keeping the mobile scene responsive.
+`water.js` measures flow distance along the river and samples the terrain for water depth. Five overlapping waves supply both displacement and analytic normals, with tiny ripples filtered out at distant views. Depth-dependent light absorption produces olive shallows and a deeper teal channel; subtle caustics, sunlight, broken shoreline foam, downstream support wakes, and an analytical bridge shadow finish the surface.
+
+A camera mirrored across the water captures real reflections of trees, architecture, and lights into a small HDR texture. An oblique clipping plane removes underwater geometry; the shader softens and distorts the reflected image with the waves and increases its contribution at shallow viewing angles. Reflection resolution is capped at a 768-pixel longest edge on desktop and 384 on phones. Stationary views reuse captures between 30 Hz / 24 Hz updates; camera movement refreshes immediately, and the reflection reuses existing shadow maps. Reduced-motion mode freezes waves and refreshes the reflection only for camera or lighting changes. This is planar reflection and procedural shading, not a fluid simulation or ray-traced refraction.
 
 Meepos wear green hoods for Radiant and red hoods for Dire, with matching lighter trim. They carry their shovels and use their free arms while marching and fighting. The Oxford and Cambridge bases retain their university flags. The fixed Oxford/Radiant and Cambridge/Dire screen labels have been removed; landmark labels still track the scene.
 

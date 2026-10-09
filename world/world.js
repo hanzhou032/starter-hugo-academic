@@ -138,8 +138,8 @@ export function createWorld(onVisit) {
   const sg=new THREE.BufferGeometry();sg.setAttribute('position',new THREE.Float32BufferAttribute(sides,3));sg.setAttribute('color',new THREE.Float32BufferAttribute(sideColors,3));sg.computeVertexNormals();mesh(sg,new THREE.MeshStandardMaterial({vertexColors:true,roughness:1,flatShading:true}));
   for(let i=0;i<66;i++) { const a=rand()*Math.PI*2,r=range(20,22);const m=mesh(rockGeo,mat('cliff',0x535950));m.position.set(Math.cos(a)*r,-range(1.5,5),Math.sin(a)*r);m.scale.set(range(1,2.8),range(1.8,4),range(1,2.8));m.rotation.set(rand(),rand(),rand()); }
 
-  // Flowing, reflective water with a finely subdivided surface and shoreline foam.
-  const water=createRiver(riverX,waterUniforms);water.castShadow=false;scene.add(water);
+  // Terrain-aware water follows the channel and reflects the surrounding world.
+  const water=createRiver(riverX,waterUniforms,{height,reduced});water.castShadow=false;scene.add(water);
   for(let i=0;i<95;i++){const z=range(-21,21);const x=riverX(z)+(rand()>.5?1:-1)*range(2,3.0);randomRock(x,z,range(.15,.55),mat('riverRock',0x8c9380));}
 
   // Three routes through the world, laid by hand from irregular stone slabs.
