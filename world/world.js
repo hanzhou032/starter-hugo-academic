@@ -6,9 +6,11 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { mergeGeometries } from 'three/addons/BufferGeometryUtils.js';
 import { buildOxfordBase, buildCambridgeBase } from './architecture.js';
-import { buildGoogle, buildMistral, bakeStatic } from './landmarks.js';
+import { buildDeepMind, buildMistral, bakeStatic } from './landmarks.js';
 import { BRIDGE, createLane } from './lane.js';
 import { createMeepoBattle } from './meepo.js';
+import { createCosmos } from './cosmos.js';
+import { createRiver } from './water.js';
 
 export function createWorld(onVisit) {
   let resolveReady;
@@ -16,7 +18,7 @@ export function createWorld(onVisit) {
   const mobile = matchMedia('(max-width: 720px)').matches;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x17272c);
+  scene.background = null;
   scene.fog = new THREE.FogExp2(0x17272c, .0065);
   const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
   renderer.setPixelRatio(Math.min(devicePixelRatio, mobile ? 1.5 : 1.7));
@@ -45,7 +47,9 @@ export function createWorld(onVisit) {
   controls.target.copy(mobile ? mobileTarget : desktopTarget);
   controls.update();
   const composer = new EffectComposer(renderer);
-  composer.addPass(new RenderPass(scene, camera));
+  const cosmos=createCosmos(camera,renderer);
+  composer.addPass(new RenderPass(cosmos.scene,camera));
+  const islandPass=new RenderPass(scene,camera);islandPass.clear=false;islandPass.clearDepth=true;composer.addPass(islandPass);
   const bloom = new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), .34, .55, 1.05);
   composer.addPass(bloom); composer.addPass(new OutputPass());
 
@@ -137,15 +141,8 @@ export function createWorld(onVisit) {
   const sg=new THREE.BufferGeometry();sg.setAttribute('position',new THREE.Float32BufferAttribute(sides,3));sg.setAttribute('color',new THREE.Float32BufferAttribute(sideColors,3));sg.computeVertexNormals();mesh(sg,new THREE.MeshStandardMaterial({vertexColors:true,roughness:1,flatShading:true}));
   for(let i=0;i<66;i++) { const a=rand()*Math.PI*2,r=range(20,22);const m=mesh(rockGeo,mat('cliff',0x535950));m.position.set(Math.cos(a)*r,-range(1.5,5),Math.sin(a)*r);m.scale.set(range(1,2.8),range(1.8,4),range(1,2.8));m.rotation.set(rand(),rand(),rand()); }
 
-  // River: animated overlapping currents, ripples, and foam at the banks.
-  const waterVert=[],waterUv=[],waterIndices=[];
-  for(let i=0;i<=160;i++) {const z=-22.4+i*44.8/160,x=riverX(z),edge=Math.sqrt(Math.max(0,22.45**2-z*z));
-    for(let side=0;side<2;side++){waterVert.push(THREE.MathUtils.clamp(x+(side?1:-1)*1.78,-edge,edge),.64,z);waterUv.push(side,i/12);}
-    if(i<160){let n=i*2;waterIndices.push(n,n+2,n+1,n+1,n+2,n+3);}
-  }
-  const wg=new THREE.BufferGeometry();wg.setAttribute('position',new THREE.Float32BufferAttribute(waterVert,3));wg.setAttribute('uv',new THREE.Float32BufferAttribute(waterUv,2));wg.setIndex(waterIndices);wg.computeVertexNormals();
-  const waterMaterial=new THREE.ShaderMaterial({uniforms:waterUniforms,vertexShader:`varying vec2 vUv;varying vec3 vWorld;uniform float time;void main(){vUv=uv;vec3 p=position;p.y+=sin(p.z*2.0+time*1.3)*.035;vWorld=p;gl_Position=projectionMatrix*modelViewMatrix*vec4(p,1.);}`,fragmentShader:`varying vec2 vUv;varying vec3 vWorld;uniform float time;uniform float night;void main(){float wave=sin(vUv.y*10.-time*1.9+sin(vUv.x*16.+vUv.y*2.))*sin(vUv.y*21.-time*1.1+vUv.x*20.);float veins=pow(max(0.,wave),8.);float foam=smoothstep(.7,1.,abs(vUv.x*2.-1.))*(.4+.25*sin(vUv.y*26.-time*2.));vec3 col=mix(vec3(.025,.10,.12),vec3(.08,.22,.2),.4+wave*.18);col+=vec3(.1,.2,.16)*veins*.45+foam*vec3(.1,.17,.12);col=mix(col,col*vec3(.5,.85,1.3),night);gl_FragColor=vec4(col,1.);}`,side:THREE.DoubleSide});
-  const water=mesh(wg,waterMaterial);water.castShadow=false;
+  // Flowing, reflective water with a finely subdivided surface and shoreline foam.
+  const water=createRiver(riverX,waterUniforms);water.castShadow=false;scene.add(water);
   for(let i=0;i<95;i++){const z=range(-21,21);const x=riverX(z)+(rand()>.5?1:-1)*range(2,3.0);randomRock(x,z,range(.15,.55),mat('riverRock',0x8c9380));}
 
   // Three routes through the world, laid by hand from irregular stone slabs.
@@ -279,7 +276,7 @@ export function createWorld(onVisit) {
   const architectureEffects={mesh,ring,flag,point,animations,teal,orange};
   buildOxfordBase(groupAt(-11.7,10.5),architectureEffects);
 
-  buildGoogle(groupAt(-11,-7),architectureEffects);
+  buildDeepMind(groupAt(-11,-7),architectureEffects);
   buildCambridgeBase(groupAt(11.6,-9.3),architectureEffects);
   buildMistral(groupAt(13.4,9.6),architectureEffects);
 
@@ -307,7 +304,7 @@ export function createWorld(onVisit) {
   const pm=new THREE.PointsMaterial({size:.16,map:fogTexture,vertexColors:true,transparent:true,opacity:.9,blending:THREE.AdditiveBlending,depthWrite:false});scene.add(new THREE.Points(pg,pm));
   animations.push(t=>{particleData.forEach((p,i)=>{pp[i*3]=p.x+Math.sin(t*p.s*.4+p.p)*.7;pp[i*3+1]=p.y+Math.sin(t*p.s+p.p)*.45;pp[i*3+2]=p.z+Math.cos(t*p.s*.3+p.p)*.6;});pg.attributes.position.needsUpdate=true;});
 
-  const meepoBattle=createMeepoBattle(scene,midRoute,camera,reduced);
+  const meepoBattle=createMeepoBattle(scene,midRoute,camera,reduced,universityFlag);
   // A hawk circles above the river.
   const birds=[];for(let i=0;i<3;i++){const bird=new THREE.Group();const bm=mat('bird',0x292e27);const left=box(bird,-.3,0,0,.6,.035,.15,bm),right=box(bird,.3,0,0,.6,.035,.15,bm);scene.add(bird);birds.push({bird,left,right,p:i*2.1});}
   animations.push(t=>birds.forEach(({bird,left,right,p})=>{const a=t*.13+p;bird.position.set(Math.cos(a)*8,11+Math.sin(a)*1.2,Math.sin(a)*8);bird.rotation.y=-a;left.rotation.z=Math.sin(t*3+p)*.2;right.rotation.z=-Math.sin(t*3+p)*.2;}));
@@ -334,7 +331,7 @@ export function createWorld(onVisit) {
   Object.entries(landmarks).forEach(([id,pos],i)=>{
     const button=document.createElement('button');button.className='landmark';button.dataset.destination=id;button.setAttribute('aria-label',`Explore ${markerNames[id].toLowerCase()}`);
     button.innerHTML=`<span class="marker-gem"><b>${i+1}</b></span><span class="marker-name">${markerNames[id]}</span><span class="marker-line"></span>`;
-    labels.append(button);button.addEventListener('click',()=>onVisit(id));markers.push({id,button,pos:pos.clone().add(new THREE.Vector3(0,id==='bio'?9.1:id==='experience'?8.8:id==='publications'?6.3:5.6,0))});
+    labels.append(button);button.addEventListener('click',()=>onVisit(id));markers.push({id,button,pos:pos.clone().add(new THREE.Vector3(0,id==='bio'?9.1:id==='experience'?8.8:id==='publications'?6.8:5.6,0))});
   });
   const duskBackground=new THREE.Color(0x1b3034),nightBackground=new THREE.Color(0x0a121e);
   let flight=null,night=false,nightMix=0,userInteracting=false,frame=0,last=performance.now(),elapsed=0,paused=false;
@@ -383,7 +380,8 @@ export function createWorld(onVisit) {
     nightMix=THREE.MathUtils.lerp(nightMix,night?1:0,.025);
     ambient.intensity=1.5-nightMix*.75;sun.intensity=3.1-nightMix*2.55;rim.intensity=1.8+nightMix*.3;
     sun.color.setHex(night?0xa2b8e5:0xffe1a6);renderer.toneMappingExposure=1.15-nightMix*.06;
-    scene.background.lerpColors(duskBackground,nightBackground,nightMix);scene.fog.color.copy(scene.background);
+    scene.fog.color.lerpColors(duskBackground,nightBackground,nightMix);
+    cosmos.update(t,nightMix);
     bloom.strength=.34+nightMix*.2;waterUniforms.time.value=t;waterUniforms.night.value=nightMix;
     for(const fn of animations)fn(t);
     meepoBattle.update(reduced?0:delta);
@@ -395,5 +393,5 @@ export function createWorld(onVisit) {
     if(frame%60===0){document.body.dataset.drawCalls=renderer.info.render.calls;}
   }
   requestAnimationFrame(tick);
-  return {focus,reset,watchBattle,get battle(){return meepoBattle.snapshot();},get lane(){return midRoute;},toggleNight(){night=!night;return night;},get ready(){return ready;},get renderer(){return renderer;},get camera(){return camera;},get scene(){return scene;}};
+  return {focus,reset,watchBattle,get cosmos(){return cosmos.scene;},get battle(){return meepoBattle.snapshot();},get lane(){return midRoute;},toggleNight(){night=!night;return night;},get ready(){return ready;},get renderer(){return renderer;},get camera(){return camera;},get scene(){return scene;}};
 }

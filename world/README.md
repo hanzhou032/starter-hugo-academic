@@ -20,7 +20,7 @@ Original fan artwork inspired by Dota 2; not affiliated with Valve. Dota 2 belon
 
 ## World destinations and entrance
 
-Bio is at the Oxford-inspired Radiant base, featuring the Radcliffe Camera, Tom Tower, and a college arcade. Experience is at the Cambridge-inspired Dire base, featuring King's College Chapel and a Trinity-inspired gatehouse. Research is Mistral’s orange-to-red pixel M on the southeast Dire side. Publications is Google’s four-color G on the northwest Radiant side, extruded from the original site’s SVG artwork. Landmark labels, camera destinations, and minimap links follow this mapping. Oxford and Cambridge fly their own university crests on animated cloth flags. Keys 1–4 follow that order.
+Bio is at the Oxford-inspired Radiant base, featuring the Radcliffe Camera, Tom Tower, and a college arcade. Experience is at the Cambridge-inspired Dire base, featuring King's College Chapel and a Trinity-inspired gatehouse. Research is Mistral’s orange-to-red pixel M on the southeast Dire side. Publications is the restored blue DeepMind spiral on the northwest Radiant side. Landmark labels, camera destinations, and minimap links follow this mapping. Oxford and Cambridge fly their own university crests on animated cloth flags. Keys 1–4 follow that order.
 
 Opening the homepage animates the camera from the island overview into Bio, then displays the biography. Explicit `#world`, `#bio`, `#experience`, `#research`, and `#publications` links remain available; old `#about` and `#journey` links still work. Navigation can interrupt the entrance, and reduced-motion settings skip the camera animation. The architectural meshes are generated in `architecture.js` and batched by material.
 
@@ -34,6 +34,16 @@ Run `npm test` for path containment, elevation continuity, combat lifecycle and 
 
 ## Branding and mobile reading
 
-The header and favicon reuse the bird icon from the original Hugo site (`assets/media/icon.png`, copied into `world/assets/site-logo.png`). Google’s source artwork is preserved in `assets/google.svg`; the four paths in `landmarks.js` reproduce it as a solid 3D monument.
+The header and favicon reuse the bird icon from the original Hugo site (`assets/media/icon.png`, copied into `world/assets/site-logo.png`). The Research and Publications navigation buttons use their original academic icons (✧ and ▤), independently of the two company-inspired 3D monuments.
 
 On phones, Bio, Experience, Research, and Publications open in a large reading panel occupying the screen beneath the top navigation. The bottom destination dock is hidden while reading, and the close button stays available as content scrolls. Closing the panel restores the world controls.
+
+## Space, river, and standards
+
+`cosmos.js` renders an original Stellaris-inspired background with procedural nebulae, stars, a ringed gas giant, a blue planet, stellar routes, and a distant exploration fleet. A separate background render pass keeps every celestial object behind the island at every zoom level. The backdrop responds to camera rotation and respects reduced-motion settings.
+
+`water.js` builds a subdivided river surface with flowing normals, depth-dependent color, Fresnel reflection, sunlight highlights, shoreline and support foam, and the bridge's shadow. These are procedural approximations rather than costly scene-reflection passes, keeping the mobile scene responsive.
+
+Every Radiant Meepo carries an Oxford standard in its left hand; every Dire Meepo carries Cambridge's. The textured cloth waves while moving, follows the character when falling, and returns with each new wave. The fixed Oxford/Radiant and Cambridge/Dire screen labels have been removed; landmark labels still track the scene.
+
+The Experience timeline includes all seven original organization logos: Mistral AI, Google DeepMind, Google Cloud AI Research, Google Research, Cambridge, UCL, and Oxford. They are copied into `assets/logos` from the original academic site.

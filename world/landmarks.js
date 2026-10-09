@@ -4,6 +4,8 @@ import { mergeGeometries } from 'three/addons/BufferGeometryUtils.js';
 const cube = new THREE.BoxGeometry(1, 1, 1);
 const material = (color, extra = {}) => new THREE.MeshStandardMaterial({ color, roughness: .48, ...extra });
 const ivory = material(0xc1c2b0), basalt = material(0x303d46), brass = material(0xbda879, { metalness: .7 });
+const azure = material(0x397cef, { metalness: .35, emissive: 0x195be8, emissiveIntensity: .42 });
+const cyan = material(0x90d7ff, { emissive: 0x409dff, emissiveIntensity: 1.8 });
 function mesh(g, geometry, m, x = 0, y = 0, z = 0) {
   const object = new THREE.Mesh(geometry, m); object.position.set(x, y, z);
   object.castShadow = object.receiveShadow = true; g.add(object); return object;
@@ -19,67 +21,46 @@ export function bakeStatic(g) {
   for (const [m, geometries] of batches) { mesh(g, mergeGeometries(geometries), m); geometries.forEach(geo => geo.dispose()); }
 }
 
-// Exact four-color paths from the original academic site's Google asset.
-// Keep the reference SVG in assets/google.svg; these outlines are extruded into solid meshes.
-const googlePaths = [
-  { color: 0x4285F4, path: 'M -3.264 51.509 C -3.264 50.719 -3.334 49.969 -3.454 49.239 L -14.754 49.239 L -14.754 53.749 L -8.284 53.749 C -8.574 55.229 -9.424 56.479 -10.684 57.329 L -10.684 60.329 L -6.824 60.329 C -4.564 58.239 -3.264 55.159 -3.264 51.509 Z' },
-  { color: 0x34A853, path: 'M -14.754 63.239 C -11.514 63.239 -8.804 62.159 -6.824 60.329 L -10.684 57.329 C -11.764 58.049 -13.134 58.489 -14.754 58.489 C -17.884 58.489 -20.534 56.379 -21.484 53.529 L -25.464 53.529 L -25.464 56.619 C -23.494 60.539 -19.444 63.239 -14.754 63.239 Z' },
-  { color: 0xFBBC05, path: 'M -21.484 53.529 C -21.734 52.809 -21.864 52.039 -21.864 51.239 C -21.864 50.439 -21.724 49.669 -21.484 48.949 L -21.484 45.859 L -25.464 45.859 C -26.284 47.479 -26.754 49.299 -26.754 51.239 C -26.754 53.179 -26.284 54.999 -25.464 56.619 L -21.484 53.529 Z' },
-  { color: 0xEA4335, path: 'M -14.754 43.989 C -12.984 43.989 -11.404 44.599 -10.154 45.789 L -6.734 42.369 C -8.804 40.429 -11.514 39.239 -14.754 39.239 C -19.444 39.239 -23.494 41.939 -25.464 45.859 L -21.484 48.949 C -20.534 46.099 -17.884 43.989 -14.754 43.989 Z' }
-];
-function googleShape(path) {
-  const tokens = path.match(/[MLCZ]|-?\d+(?:\.\d+)?/g), shape = new THREE.Shape();
-  let i = 0;
-  const x = () => (Number(tokens[i++]) + 14.754) / 5.3;
-  const y = () => (51.239 - Number(tokens[i++])) / 5.3;
-  while (i < tokens.length) {
-    const command = tokens[i++];
-    if (command === 'M') shape.moveTo(x(), y());
-    else if (command === 'L') shape.lineTo(x(), y());
-    else if (command === 'C') shape.bezierCurveTo(x(), y(), x(), y(), x(), y());
-    else if (command === 'Z') shape.closePath();
-  }
-  return shape;
-}
-export function buildGoogle(g, { animations, point }) {
-  g.name = 'google-publications';
-  g.userData.logoSource = 'assets/google.svg';
+export function buildDeepMind(g, { animations, point }) {
+  g.name = 'deepmind-publications';
   const pedestal = new THREE.Group(); g.add(pedestal);
   cylinder(pedestal, .16, 3.05, .32, basalt, 3.2);
   cylinder(pedestal, .38, 2.8, .14, brass);
   cylinder(pedestal, .55, 2.62, .24, ivory);
   cylinder(pedestal, .7, 2.18, .08, basalt);
-  const colors = googlePaths.map(({ color }) => material(color, { roughness: .56, metalness: .12, emissive: color, emissiveIntensity: .1 }));
   for (let i = 0; i < 24; i++) {
     const a = i * Math.PI / 12;
-    const bar = box(pedestal, Math.cos(a) * 2.46, .69, Math.sin(a) * 2.46, .07, .035, .22, colors[Math.floor(i / 6)]); bar.rotation.y = -a;
+    const bar = box(pedestal, Math.cos(a) * 2.46, .69, Math.sin(a) * 2.46, .07, .035, .22, cyan); bar.rotation.y = -a;
   }
-  const monument = new THREE.Group(); monument.name = 'google-g-monument';
-  monument.position.y = 3.48; monument.rotation.set(-.08, .58, 0); pedestal.add(monument);
-  googlePaths.forEach(({ path }, i) => {
-    // The source SVG deliberately overlaps its color panels. Preserve its paint
-    // order with a tiny depth offset so their faces never flicker against each other.
-    mesh(monument, new THREE.ExtrudeGeometry(googleShape(path), {
-      depth: .72, bevelEnabled: false, curveSegments: 32,
-    }), colors[i], 0, 0, -.36 + i * .004);
-  });
-  for (const x of [-1.45, 1.45]) {
-    const support = box(pedestal, x * .84, 1.32, -.18, .23, 1.25, .6, ivory); support.rotation.z = x > 0 ? -.25 : .25;
-    box(pedestal, x * .76, .84, -.18, .7, .2, .92, brass);
+  const monument = new THREE.Group(); monument.position.y = 3.66; monument.rotation.set(-.13, .58, 0); pedestal.add(monument);
+  // Two broad, curled blue vanes form an open-center DeepMind-inspired vortex.
+  for (let blade = 0; blade < 2; blade++) {
+    const outer = [], inner = [];
+    for (let i = 0; i <= 90; i++) {
+      const u = i / 90, a = -.9 + u * Math.PI * 1.57 + blade * Math.PI;
+      const r = 2.32 - 1.04 * u;
+      const w = Math.pow(Math.sin(Math.PI * u), .7) * 1.17;
+      outer.push(new THREE.Vector2(Math.cos(a) * r, Math.sin(a) * r));
+      inner.push(new THREE.Vector2(Math.cos(a) * (r - w), Math.sin(a) * (r - w)));
+    }
+    const shape = new THREE.Shape([...outer, ...inner.reverse()]); shape.closePath();
+    const vane = mesh(monument, new THREE.ExtrudeGeometry(shape, { depth: .56, bevelEnabled: true, bevelThickness: .035, bevelSize: .035, bevelSegments: 2, steps: 1 }), azure);
+    vane.position.z = -.28;
   }
-  // Small stacks of journals surround the publication monument.
-  for (const side of [-1, 1]) for (let i = 0; i < 3; i++) {
-    const book = box(pedestal, side * 1.78, .81 + i * .14, 1.03, .84, .11, .57, i === 1 ? colors[side < 0 ? 0 : 1] : ivory);
-    book.rotation.y = side * .13 * (i - 1);
+  const halo = mesh(monument, new THREE.TorusGeometry(2.61, .028, 6, 96), brass);
+  for (const x of [-1.66, 1.66]) {
+    const p = box(pedestal, x * .83, 1.54, 0, .23, 1.86, .52, ivory); p.rotation.z = x > 0 ? -.32 : .32;
+    box(pedestal, x * .69, .9, 0, .68, .2, .82, brass);
   }
   bakeStatic(pedestal);
-  const orbit = new THREE.Group(); g.add(orbit);
-  for (let i = 0; i < 4; i++) {
-    const a = i * Math.PI / 2;
-    mesh(orbit, new THREE.IcosahedronGeometry(.065, 0), colors[i], Math.cos(a) * 2.88, .58, Math.sin(a) * 2.88);
+  const core = mesh(g, new THREE.IcosahedronGeometry(.3, 1), cyan, 0, 3.66, 0);
+  const satellites = new THREE.Group(); satellites.position.y = 3.66; satellites.rotation.set(-.13, .58, 0); g.add(satellites);
+  for (let i = 0; i < 3; i++) {
+    const a = i * Math.PI * 2 / 3;
+    mesh(satellites, new THREE.IcosahedronGeometry(.09, 0), cyan, Math.cos(a) * 2.61, Math.sin(a) * 2.61, 0);
   }
-  animations.push(t => { orbit.rotation.y = t * .1; });
-  point(g, 0, 2.8, 1.4, 0xd1e3ff, 4, 8);
+  point(g, 0, 3.7, 1, 0x347afa, 26, 9);
+  animations.push(t => { core.rotation.set(t * .3, t * .4, 0); core.scale.setScalar(1 + Math.sin(t * 1.7) * .08); satellites.rotation.z = t * .14; });
 }
 
 export function buildMistral(g, { animations, point }) {

@@ -12,7 +12,6 @@
 .battle-button{display:flex;align-items:center;gap:9px;padding:11px 13px;border:1px solid #c8ad7d66;background:#122321d9;color:#ddd1b6;font-size:10px;letter-spacing:.3px}.battle-button>span{font-size:17px;color:var(--gold)}.battle-button kbd{font:8px var(--sans);border:1px solid #c8ad7d40;padding:3px 4px;color:var(--muted)}.battle-button:hover{background:#314039}.battle-caption{display:none;left:3.2%;top:146px;pointer-events:none;max-width:270px}.watching-battle .battle-caption{display:grid;gap:12px}.battle-caption small{font-size:8px;color:#bfc5a8;letter-spacing:3px}.battle-caption small span{margin:0 8px;color:var(--gold)}.battle-caption strong{font:23px var(--serif);letter-spacing:1px}.battle-caption #battle-status{font-size:9px;color:var(--gold)}.battle-description{font-size:10px;color:#a2b1a6}.watching-battle .region-name,.watching-battle .landmark{opacity:0!important;pointer-events:none}.watching-battle .vignette{background:linear-gradient(0deg,#091112dd,transparent 28%,transparent 78%,#09141666)}.watching-battle .exploration{opacity:0;pointer-events:none}
 @media(max-width:720px){.battle-button{padding:8px;font-size:8px;gap:5px;max-width:132px}.battle-button kbd{display:none}.battle-caption{left:23px;top:147px;max-width:215px}.battle-caption strong{font-size:17px}.battle-caption small{font-size:6px;letter-spacing:2px}.battle-caption #battle-status{font-size:7px}.battle-description{display:none}.watching-battle .world-tools{top:244px}.watching-battle .battle-button{display:none}.watching-battle .tool-buttons{flex-direction:row}}
 
-.brand-letter{font-family:var(--sans);font-weight:800;color:#ff963e}.brand-logo{height:28px;object-fit:contain;flex-shrink:0}
 @media(max-width:720px){
   .panel-open .bottom-ui,.panel-open .architecture-caption{display:none}
   .content-dialog>.close-panel{position:sticky;top:0;right:auto;display:grid;place-items:center;width:40px;height:40px;margin:-10px -10px -30px auto;z-index:2;background:#1c2c2b;box-shadow:0 2px 12px #101c2080}
@@ -23,5 +22,7 @@
   .content-dialog .panel-links a,.content-dialog .paper-links a{font-size:11px;padding:9px 11px}
   .content-dialog .paper-search{font-size:16px;padding:13px}
   .content-dialog .paper-filters button{font-size:11px;padding:8px 10px}
-  .brand-logo{height:24px}
 }
+
+.timeline-organization{display:flex;align-items:center;gap:12px;margin:10px 0 8px;min-height:42px}.timeline-organization h3{margin:0}.organization-logo{width:42px;height:42px;object-fit:contain;flex-shrink:0;padding:4px;background:#edf0e8;border:1px solid #c8ad7d55;border-radius:5px}.timeline-organization+p{padding-left:54px}
+@media(max-width:720px){.timeline-organization{gap:11px}.timeline-organization h3{font-size:14px;line-height:1.45}.timeline-organization+p{padding-left:53px}}

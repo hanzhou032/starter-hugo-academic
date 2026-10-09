@@ -26,7 +26,7 @@ function bakeColored(g) {
   g.clear(); const m = new THREE.Mesh(mergeGeometries(geometries), characterMaterial); m.castShadow = m.receiveShadow = true; g.add(m);
   geometries.forEach(geometry => geometry.dispose());
 }
-function createMeepo(side, index) {
+function createMeepo(side, index, flagMaterial) {
   const root = new THREE.Group(); root.name = `${side ? 'dire' : 'radiant'}-meepo-${index + 1}`;
   const body = group(root), torso = group(body), head = group(body, 0, 1.19, .03);
   const accent = side ? 0xc26447 : 0x64bda0;
@@ -66,6 +66,7 @@ function createMeepo(side, index) {
   bakeColored(head);
   head.scale.x = .85;
   const legs = [], arms = [];
+  let banner;
   for (const sign of [-1, 1]) {
     const leg = group(body, sign * .16, .47, 0);
     ellipsoid(leg, 0x4e4d41, 0, -.12, 0, .12, .23, .13);
@@ -87,22 +88,35 @@ function createMeepo(side, index) {
     } else {
       // Coiled rope and digging pouch on the free wrist.
       part(arm, new THREE.TorusGeometry(.1, .025, 5, 12), 0xb39a68, -.09, -.27, .12);
+      part(arm, new THREE.CylinderGeometry(.019, .024, 1.99, 7), 0xb49b66, -.075, .535, .04);
+      part(arm, new THREE.OctahedronGeometry(.065), 0xe1c78b, -.075, 1.59, .04);
+      const crossbar = box(arm, 0xd0ba85, -.075 + .35 * Math.cos(.55), 1.5, .04 - .35 * Math.sin(.55), .7, .028, .028);
+      crossbar.rotation.y = .55;
     }
     bakeColored(arm); arms.push(arm);
+    if (sign === -1) {
+      const geometry = new THREE.PlaneGeometry(.66, .79, 10, 12);
+      geometry.translate(.33, 0, 0); geometry.rotateY(.55); geometry.translate(-.075, 1.09, .055);
+      const university = side ? 'cambridge' : 'oxford';
+      const cloth = new THREE.Mesh(geometry, flagMaterial(university));
+      cloth.name = `meepo-${university}-flag`; cloth.userData.university = university;
+      cloth.castShadow = true; cloth.receiveShadow = true; arm.add(cloth);
+      banner = { cloth, base: geometry.attributes.position.array.slice() };
+    }
   }
-  const health = group(root, 0, 2.37, 0);
+  const health = group(root, 0, 2.85, 0);
   const back = new THREE.Mesh(new THREE.PlaneGeometry(.87, .1), new THREE.MeshBasicMaterial({ color: 0x142324, depthTest: false })); health.add(back);
   const bar = new THREE.Mesh(new THREE.PlaneGeometry(.79, .045), new THREE.MeshBasicMaterial({ color: accent, depthTest: false })); bar.position.z = .001; health.add(bar);
   back.renderOrder = bar.renderOrder = 5;
   const ring = new THREE.Mesh(new THREE.RingGeometry(.32, .36, 32), new THREE.MeshBasicMaterial({ color: accent, transparent: true, opacity: .7, side: THREE.DoubleSide, depthWrite: false }));
   ring.rotation.x = -Math.PI / 2; ring.position.y = .012; root.add(ring);
-  return { root, body, head, arms, legs, health, bar, ring };
+  return { root, body, head, arms, legs, health, bar, ring, banner };
 }
 
-export function createMeepoBattle(scene, route, camera, reduced) {
+export function createMeepoBattle(scene, route, camera, reduced, flagMaterial) {
   const simulation = createBattleSimulation(), actors = [], bursts = [];
   const battle = new THREE.Group(); battle.name = 'meepo-battle'; scene.add(battle);
-  for (let side = 0; side < 2; side++) for (let i = 0; i < 3; i++) { const actor = createMeepo(side, i); battle.add(actor.root); actors.push(actor); }
+  for (let side = 0; side < 2; side++) for (let i = 0; i < 3; i++) { const actor = createMeepo(side, i, flagMaterial); battle.add(actor.root); actors.push(actor); }
   const sparkMaterial = new THREE.MeshBasicMaterial({ color: 0xffd68d, transparent: true, depthWrite: false });
   const sparkGeometry = new THREE.IcosahedronGeometry(.035, 0);
   for (let i = 0; i < 8; i++) {
@@ -133,14 +147,14 @@ export function createMeepoBattle(scene, route, camera, reduced) {
       a.root.rotation.y = Math.atan2(p.dx, p.dz) + (u.side ? Math.PI : 0);
       a.body.rotation.set(0, 0, 0); a.body.position.set(0, 0, 0); a.head.rotation.set(0, 0, 0);
       a.legs[0].rotation.x = a.legs[1].rotation.x = 0;
-      a.arms[0].rotation.set(.18, 0, -.13); a.arms[1].rotation.set(.22, 0, .1);
+      a.arms[0].rotation.set(.03, 0, -.04); a.arms[1].rotation.set(.22, 0, .1);
       a.health.visible = !dead; a.ring.visible = !dead;
       a.health.quaternion.copy(a.root.quaternion).invert().multiply(camera.quaternion);
       a.bar.scale.x = u.health / 100; a.bar.position.x = -(1 - u.health / 100) * .395;
       if (u.state === 'marching') {
         const gait = Math.sin(state.time * 10 + u.lane);
         a.legs[0].rotation.x = gait * .5; a.legs[1].rotation.x = -gait * .5;
-        a.arms[0].rotation.x = -gait * .3; a.arms[1].rotation.x += gait * .16;
+        a.arms[0].rotation.x = -.035 + gait * .07; a.arms[1].rotation.x += gait * .16;
         a.body.position.y = Math.abs(gait) * .055; a.body.rotation.z = gait * .055;
       } else if (u.state === 'fighting') {
         const t = u.attackAge;
@@ -148,7 +162,7 @@ export function createMeepoBattle(scene, route, camera, reduced) {
         if (t < .42) swing = .22 - t / .42 * 1.12;
         else if (t < .59) swing = -.9 + (t - .42) / .17 * 2.5;
         else swing = 1.6 - Math.min(1, (t - .59) / .5) * 1.38;
-        a.arms[1].rotation.x = swing; a.arms[0].rotation.x = .3 + Math.max(0, swing) * .3;
+        a.arms[1].rotation.x = swing; a.arms[0].rotation.x = .04;
         const lunge = Math.sin(Math.min(1, t / .85) * Math.PI) * .15;
         a.body.position.z = lunge; a.body.rotation.x = lunge * .5;
         a.legs[0].rotation.x = -.16; a.legs[1].rotation.x = .18;
@@ -158,8 +172,16 @@ export function createMeepoBattle(scene, route, camera, reduced) {
         a.body.rotation.x = -fall * Math.PI * .49;
         a.body.position.y = .53 * fall; a.body.position.z = -.15 * fall;
         a.arms[1].rotation.x = 1.8 * fall;
+        a.arms[0].rotation.x = .08 * fall;
         if (u.age > 1.85) a.root.scale.setScalar(Math.max(.01, 1 - (u.age - 1.85) / .75));
       }
+      const cloth = a.banner.cloth.geometry.attributes.position, base = a.banner.base;
+      const wind = dead ? Math.max(0, 1 - u.age / .7) : 1;
+      for (let i = 0; i < cloth.array.length; i += 3) {
+        const along = (base[i] + .075) / (.66 * Math.cos(.55));
+        cloth.array[i + 2] = base[i + 2] + Math.sin(along * 5.2 - state.time * 3.2 + u.id) * .07 * along * wind;
+      }
+      cloth.needsUpdate = true;
     }
     const alive = side => state.units.filter(u => u.side === side && u.health > 0).length;
     const phase = state.units.some(u => u.state === 'fighting') ? 'Shovels clash' : state.units.every(u => u.state === 'dead') ? 'Reinforcements incoming' : state.units.some(u => u.state === 'dying') ? 'The dust settles' : 'Marching to mid';
