@@ -7,7 +7,7 @@
     "build": "node scripts/build.mjs",
     "start": "node server.mjs",
     "test": "node --test tests/*.test.js",
-    "check": "node --check app.js && node --check panel-typewriter.js && node --check world.js && node --check architecture.js && node --check landmarks.js && node --check lane.js && node --check battle-simulation.js && node --check meepo.js && node --check water.js && node --check waterfall.js && node --check sky-island.js && node --check base-destruction.js && node --check audio.js"
+    "check": "node --check app.js && node --check panel-typewriter.js && node --check world.js && node --check architecture.js && node --check landmarks.js && node --check lane.js && node --check battle-simulation.js && node --check meepo.js && node --check water.js && node --check waterfall.js && node --check sky-island.js && node --check base-destruction.js && node --check audio.js && node --check youtube-music.js"
   },
   "engines": {
     "node": ">=20"

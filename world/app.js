@@ -130,7 +130,9 @@ function updateSoundControls(enabled){
 }
 function updateMusicStatus(state){
   const status=$('#music-status');
-  status.textContent={playing:'Playing Islands of Discovery',loading:'Loading Islands of Discovery…',paused:'Muted',unavailable:'Music could not play. Toggle sound to retry; battle sounds remain available.'}[state];
+  status.textContent={playing:'Playing 旅人（伴奏） · 王铮亮',loading:'Loading 旅人（伴奏）…',muted:'Muted',paused:'Music paused',interaction:'Press Play in the YouTube player below to listen.',unavailable:'YouTube is unavailable. Toggle sound to retry, or open the recording using the link above.'}[state];
+  if(state==='interaction')toast('Open Controls and press Play in the music player.');
+  if(state==='unavailable')toast('Music could not load. Open Controls to retry or use the YouTube link.');
 }
 document.querySelectorAll('#sound-toggle,[data-sound-toggle]').forEach(button=>button.addEventListener('click',async()=>{
   try{

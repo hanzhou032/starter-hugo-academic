@@ -9,6 +9,7 @@ const files = [
   'style.css',
   'app.js',
   'audio.js',
+  'youtube-music.js',
   'panel-typewriter.js',
   'world.js',
   'architecture.js',

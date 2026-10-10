@@ -38,7 +38,6 @@ On macOS, if Python lacks the system certificate path, set
 `SSL_CERT_FILE=/etc/ssl/cert.pem` for that command. Downloads verify their pinned
 Git blob checksums. Use `--cache PATH` for another external sample cache.
 
-The browser only creates the local audio element after the visitor presses the
-speaker control or M. It loops the rendered MP3, routes it with synthesized
-battle effects through Web Audio, and pauses when the page is hidden. Nothing
-is downloaded from music/video platforms.
+This score and recording are archived. The current site plays the owner's
+selected YouTube upload of 旅人（伴奏） through `youtube-music.js`; this MP3
+is no longer loaded or used as a fallback.

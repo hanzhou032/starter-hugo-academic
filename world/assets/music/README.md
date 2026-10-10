@@ -1,4 +1,8 @@
-# Islands of Discovery
+# Archived soundtrack: Islands of Discovery
+
+This recording is retained for provenance and is no longer played by the site.
+The current soundtrack is the owner-selected YouTube recording of 旅人（伴奏）:
+https://www.youtube.com/watch?v=IIpB4PiIwcI. Its audio is not copied into this repository.
 
 An original composition and sampled orchestral performance made for this
 portfolio, with newly written music inspired by a broad fantasy-orchestral
